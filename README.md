@@ -63,16 +63,33 @@ Open the `server` and `client` in separate VSCode workspaces or open the combine
 
 ### Purpose
 
-2-5 sentences describing what the system does
+The system consists of a web for players so they can find other people to play with. Players are able to create squads when they want to play a match, other players can see these squads and join them to play together. Another feature of the platform are the clans, these are so that players can build bigger communities and interact with other players.
 
 ### Pages
 
-* Home: 1-3 sentences describing what the page displays and what a user can do
-* Shopping cart: ...
-
+- Home page: Welcome message Suggested games, clans overview.
+- Squads tab: Create a squad or find a squad options.
+- Create a squad: Form for creating a squad.
+- Find a squad: Recommended squads, filter by game, search.
+- Create a clan: Form for creating a clan.
+Clan page: Clan name, games played, size of the clan, members list, recent activity.
+- Profile: Overview of your profile, edit function, friends.
+- Game info page: Game name, game description, number of players, suggested squads.
 ### Entity-Relationship (ER) Diagram
 
 ![ER Diagram](./images/er_diagram.png)
+
+The system consists of a team finder app for online games. It is aimed for players of different ages, from teenagers to adults. The system would have the most popular online games in it.
+
+ Players register by choosing a unique username, using their email, creating a password, stating their date of birth and choosing the games that they play by marking them as favorite.
+
+Players can join a squad, these are identified with a unique ID and will only exist if they have players in them, a player creates a squad they can define a description and a maximum size for it, the squad can only be playing one game at the time. Squads have a defined size and if there are no players in it it will be automatically deleted.
+
+The system's games are to be previously defined by an administrator. They can add games, delete games and change the information about the games. The administrator has a name and an unique ID.
+
+Games have a unique name, a number of players and a short description.
+
+Players can create, join and add other players to clans. Clans will stay until they are manually deleted by players and have bigger sizes than squads. Players can also play games with their clan members instead of through a squad.
 
 ## Teaser (MS3)
 
