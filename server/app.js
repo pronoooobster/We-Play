@@ -5,14 +5,20 @@ var path = require('path');
 var cors = require('cors');
 var history = require('connect-history-api-fallback');
 
+// mongo dependencies
+const { MongoClient } = require("mongodb");
+
+// password encoding
+const password = encodeURIComponent("admin");
+
 // Variables
-var mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/animalDevelopmentDB';
+var mongoURI = process.env.MONGODB_URI || `mongodb+srv://admin:${password}@cluster0-webdev.txrmknk.mongodb.net/?retryWrites=true&w=majority`;
 var port = process.env.PORT || 3000;
 
 // Connect to MongoDB
 mongoose.connect(mongoURI).catch(function(err) {
     if (err) {
-        console.error(`Failed to connect to MongoDB with URI: ${mongoURI}`);
+        console.error(`Failed to connect to MongoDB with given URI`);
         console.error(err.stack);
         process.exit(1);
     }
@@ -32,7 +38,7 @@ app.use(cors());
 
 // Import routes
 app.get('/api', function(req, res) {
-    res.json({'message': 'Welcome to your DIT342 backend ExpressJS project!'});
+    res.json({'message': 'Welcome to group 26 backend ExpressJS project!'});
 });
 
 // Catch all non-error handler for api (i.e., 404 Not Found)
