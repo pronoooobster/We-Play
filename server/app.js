@@ -5,6 +5,7 @@ var path = require('path');
 var cors = require('cors');
 var history = require('connect-history-api-fallback');
 var squadController = require('./controller/squad');
+var userController = require('./controller/user');
 var gameController = require('./controller/game');
 var administratorController = require('./controller/administrator');
 
@@ -45,6 +46,7 @@ app.get('/api', function(req, res) {
 });
 
 app.use(squadController);
+app.use(userController);
 app.use(gameController);
 app.use(administratorController);
 
