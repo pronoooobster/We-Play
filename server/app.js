@@ -4,6 +4,7 @@ var morgan = require('morgan');
 var path = require('path');
 var cors = require('cors');
 var history = require('connect-history-api-fallback');
+var squadController = require('./controller/squad');
 
 // mongo dependencies
 const { MongoClient } = require("mongodb");
@@ -40,6 +41,8 @@ app.use(cors());
 app.get('/api', function(req, res) {
     res.json({'message': 'Welcome to group 26 backend ExpressJS project!'});
 });
+
+app.use(squadController);
 
 // Catch all non-error handler for api (i.e., 404 Not Found)
 app.use('/api/*', function (req, res) {

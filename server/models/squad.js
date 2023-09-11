@@ -2,6 +2,11 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 const SquadSchema = new Schema({
+    id: {
+        type: Number,
+        required: true,
+        unique: true
+    },
     name: {
         type: String,
         required: true
@@ -12,7 +17,7 @@ const SquadSchema = new Schema({
     },
     currentPlayers: {
         type: [{ type: Schema.Types.ObjectId, ref: 'User'}],
-        required: true
+        required: false
     },
     description: {
         type: String,
@@ -20,7 +25,7 @@ const SquadSchema = new Schema({
     game: {
         type: Schema.Types.ObjectId,
         ref: 'Game',
-        required: true
+        required: false
     },
 
 });

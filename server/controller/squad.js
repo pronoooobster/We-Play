@@ -1,42 +1,98 @@
 var express = require('express');
 var router = express.Router();
 var Squad = require('../models/squad');
+const squad = require('../models/squad');
 
-router.post('/api/squads', function(req, res, next){
-    var camel = new Squad(req.body);
-    camel.save(function(err, camel) {
-        if (err) { return next(err); }
-        res.status(201).json(camel);
-    })
+router.post('/api/squads', function (req, res, next) {
+    // save the new squad using promises
+    Squad.create(req.body).then(function (squad) {
+        res.send(squad);
+    }).catch(next);
 });
 
-router.get('/api/squads', function(req, res, next) {
-    Squad.find(function(err, squads) {
-        if (err) { return next(err); }
-        res.json({'squads': squads });
-    });
-});
-
-router.get('/api/squads/:id', function(req, res, next) {
-    var id = req.params.id;
-    Squad.findById(id, function(err, camel) {
-        if (err) { return next(err); }
-        if (camel === null) {
-            return res.status(404).json({'message': 'Squad not found!'});
+router.get('/api/squads', async (req, res, next) => {
+    try {
+        const squads = await Squad.find({});
+        if (squads.length === 0) {
+            return res.status(204).json({ 'message': 'No squads' });
         }
-        res.json(camel);
-    });
+
+        res.send(squads);
+    } catch (err) {
+        return next(err);
+    }
 });
 
-router.delete('/api/squads/:id', function(req, res, next) {
-    var id = req.params.id;
-    Squad.findOneAndDelete({_id: id}, function(err, camel) {
-        if (err) { return next(err); }
-        if (camel === null) {
-            return res.status(404).json({'message': 'Squad not found'});
+
+router.get('/api/squads/:id', async (req, res, next) => {
+    try {
+        const squad = await Squad.findOne({ id: req.params.id });
+        if (!squad) {
+            return res.status(204).json({ 'message': 'Squad not found with a given id' });
         }
-        res.json(camel);
-    });
+
+        res.send(squad);
+    } catch (err) {
+        return next(err);
+    }
+});
+
+router.delete('/api/squads/:id', async (req, res, next) => {
+    try {
+        const squad = await Squad.findOneAndDelete({ id: req.params.id });
+        if (!squad) {
+            return res.status(204).json({ 'message': 'Squad not found with a given id' });
+        }   
+
+        res.send(squad);
+    } catch (err) {
+        return next(err);
+    }
+});
+
+router.put('/api/squads/:id', async (req, res, next) => {
+    try {
+        const squad = await Squad.findOneAndUpdate({ id: req.params.id }, req.body);
+        if (!squad) {
+            return res.status(204).json({ 'message': 'Squad not found with a given id' });
+        }
+
+        res.send(squad);
+    } catch (err) {
+        return next(err);
+    }
+});
+
+router.patch('/api/squads/:id', async (req, res, next) => {
+    // be able to change the name, game, description, currentPlayers or maxPlayers
+    try {
+        const squad = await Squad.findOne({ id: req.params.id });
+        if (!squad) {
+            return res.status(204).json({ 'message': 'Squad not found with a given id' });
+        }
+
+        if (req.body.name) {
+            squad.name = req.body.name;
+        }
+        if (req.body.game) {
+            squad.game = req.body.game;
+        }
+        if (req.body.description) {
+            squad.description = req.body.description;
+        }
+        if (req.body.currentPlayers) {
+            squad.currentPlayers = req.body.currentPlayers;
+        }
+        if (req.body.maxPlayers) {
+            squad.maxPlayers = req.body.maxPlayers;
+        }
+
+        squad.save();
+        res.json(squad);
+    } catch (err) {
+        return next(err);
+    }
+
 });
 
 module.exports = router;
