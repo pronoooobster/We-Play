@@ -8,6 +8,7 @@ var squadController = require('./controller/squad');
 var userController = require('./controller/user');
 var gameController = require('./controller/game');
 var administratorController = require('./controller/administrator');
+var clanController = require('./controller/clan');
 
 // mongo dependencies
 const { MongoClient } = require("mongodb");
@@ -49,6 +50,7 @@ app.use(squadController);
 app.use(userController);
 app.use(gameController);
 app.use(administratorController);
+app.use(clanController);
 
 // Catch all non-error handler for api (i.e., 404 Not Found)
 app.use('/api/*', function (req, res) {
