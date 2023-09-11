@@ -5,6 +5,8 @@ var path = require('path');
 var cors = require('cors');
 var history = require('connect-history-api-fallback');
 var squadController = require('./controller/squad');
+var gameController = require('./controller/game');
+var administratorController = require('./controller/administrator');
 
 // mongo dependencies
 const { MongoClient } = require("mongodb");
@@ -43,6 +45,8 @@ app.get('/api', function(req, res) {
 });
 
 app.use(squadController);
+app.use(gameController);
+app.use(administratorController);
 
 // Catch all non-error handler for api (i.e., 404 Not Found)
 app.use('/api/*', function (req, res) {
