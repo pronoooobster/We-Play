@@ -10,8 +10,20 @@ router.post('/api/clans', function (req, res, next) {
 });
 
 router.get('/api/clans', async (req, res, next) => {
+    // sorting clans by size
+    const sort = {};
+    if(req.query.sortBy) {
+        const parts = req.query.sortBy.split(':');
+        sort[parts[0]] = parts[1] === 'desc' ? -1 : 1;
+    }
+    // filtering clans by size
+    const match = {};
+    if(req.query.size) {
+        match.size = req.query.size;
+    }
+
     try {
-        const clans = await Clan.find({});
+        const clans = await Clan.find(match).sort(sort);
         if (clans.length === 0) {
             return res.status(204).json({ 'message': 'No clans' });
         }
@@ -77,14 +89,14 @@ router.get('/api/clans/:id/games', async (req, res, next) => {
     }
 });
 
-router.get('api/clan/:id/users', async (req, res, next) => {
+router.get('/api/clans/:id/users', async (req, res, next) => {
     try {
-        const clan = await Clan.findOne({ name: req.params.id }, req.body).populate('users');
+        const clan = await Clan.findOne({ name: req.params.id }).populate('users');
         if (!clan) {
             return res.status(204).json({ 'message': 'Clan not found with a given id' });
         }
     
-        res.send(Clan.users);
+        res.send(clan.users);
     } catch (err) {
         return next(err);
     }

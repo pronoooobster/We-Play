@@ -9,6 +9,7 @@ const ClanSchema = new Schema({
     },
     size: {
         type: Number,
+        min: [1, 'Clan size must be at least 1'],
         required: true
     },
     gamesList: {
