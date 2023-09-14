@@ -95,4 +95,52 @@ router.patch('/api/users/:id', async (req, res, next) => {
     }
 });
 
+//friends list
+
+router.get('/api/users/:id/friendslist', async (req, res, next) => {
+    try {
+        const user = await User.findOne({ userName: req.params.id }).populate('friendslist');
+        if (!user) {
+            return res.status(204).json({ 'message': 'User not found with a given id' });
+        }
+
+        res.send(user.friendslist);
+    } catch (err) {
+        return next(err);
+    }
+});
+
+router.post('/api/users/:id/friendslist', async (req, res, next) => {
+    try {
+        const user = await User.findOne({ userName: req.params.id }).populate('friendslist');
+        if (!user) {
+            return res.status(204).json({ 'message': 'User not found with a given id' });
+        }
+
+        res.send(user.friendslist);
+    } catch (err) {
+        return next(err);
+    }
+});
+
+//get specific friend
+
+router.get('/api/users/:id/friendslist/:id', async (req, res, next) => {
+    try {
+        const user = await User.findOne({ userName: req.params.id }).populate('friendslist');
+        if(!user) {
+            return res.status(204).json({ 'message': 'User not found with a given id' });
+        }
+    const friend = user.friendslist.find(friend => friend.userName === req.params.id);
+    if (!friend){
+        return res.status(204).json({ 'message': 'Friend not found with a given id' });
+    }
+
+    res.send(friend);
+    } catch (err) {
+        return next(err);
+    }
+});
+
+
 module.exports = router;
