@@ -23,6 +23,10 @@ const UserSchema = new Schema({
     friendslist: {
         type: [{ type: Schema.Types.ObjectId, ref: 'User' }],
         required: false
+    },
+    clansList: {
+        type: [{ type: Schema.Types.ObjectId, ref: 'Clan' }],
+        required: false
     },    
 });
 
