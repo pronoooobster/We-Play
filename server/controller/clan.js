@@ -77,14 +77,14 @@ router.get('/api/clans/:id/games', async (req, res, next) => {
     }
 });
 
-router.get('api/clan/:id/users', async (req, res, next) => {
+router.get('/api/clans/:id/users', async (req, res, next) => {
     try {
         const clan = await Clan.findOne({ name: req.params.id }, req.body).populate('users');
         if (!clan) {
             return res.status(204).json({ 'message': 'Clan not found with a given id' });
         }
     
-        res.send(Clan.users);
+        res.send(clan.users);
     } catch (err) {
         return next(err);
     }
