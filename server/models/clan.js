@@ -11,6 +11,10 @@ const ClanSchema = new Schema({
         type: Number,
         required: true
     },
+    gamesList: {
+        type: [{ type: Schema.Types.ObjectId, ref: 'Game' }],
+        required: false
+    },
     
 });
 
