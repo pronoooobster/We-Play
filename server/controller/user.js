@@ -5,7 +5,8 @@ const user = require('../models/user');
 
 router.post('/api/users', function (req, res, next) {
     User.create(req.body).then(function (user) {
-        res.send(user);
+        // res.send(user);
+        res.status(201).json(user);
     }).catch(next);
 });
 
