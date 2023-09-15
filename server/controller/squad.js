@@ -6,7 +6,7 @@ const squad = require('../models/squad');
 router.post('/api/squads', function (req, res, next) {
     // save the new squad using promises
     Squad.create(req.body).then(function (squad) {
-        res.send(squad);
+        res.status(201).json(squad);
     }).catch(next);
 });
 

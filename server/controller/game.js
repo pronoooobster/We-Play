@@ -5,7 +5,7 @@ var Game = require('../models/game');
 router.post('/api/games', function (req, res, next) {
     // save the new game using promises
     Game.create(req.body).then(function (game) {
-        res.send(game);
+        res.status(201).json(game);
     }).catch(next);
 });
 
