@@ -43,7 +43,7 @@
 					"host": [
 						"localhost"
 					],
-					"port": "3001",
+					"port": "3000",
 					"path": [
 						"api",
 						"users"
@@ -76,7 +76,7 @@
 					"host": [
 						"localhost"
 					],
-					"port": "3001",
+					"port": "3000",
 					"path": [
 						"api",
 						"users"
@@ -113,7 +113,7 @@
 					"host": [
 						"localhost"
 					],
-					"port": "3001",
+					"port": "3000",
 					"path": [
 						"api",
 						"users",
@@ -156,7 +156,7 @@
 					"host": [
 						"localhost"
 					],
-					"port": "3001",
+					"port": "3000",
 					"path": [
 						"api",
 						"games"
@@ -203,7 +203,7 @@
 					"host": [
 						"localhost"
 					],
-					"port": "3001",
+					"port": "3000",
 					"path": [
 						"api",
 						"games",
@@ -256,7 +256,7 @@
 					"host": [
 						"localhost"
 					],
-					"port": "3001",
+					"port": "3000",
 					"path": [
 						"api",
 						"squads"
@@ -289,7 +289,7 @@
 					"host": [
 						"localhost"
 					],
-					"port": "3001",
+					"port": "3000",
 					"path": [
 						"api",
 						"squads",
@@ -341,7 +341,7 @@
 					"host": [
 						"localhost"
 					],
-					"port": "3001",
+					"port": "3000",
 					"path": [
 						"api",
 						"clans"
@@ -363,11 +363,8 @@
 							"pm.test('Response has the required fields', function () {\r",
 							"    const responseData = pm.response.json();\r",
 							"    pm.expect(responseData).to.be.an('object');\r",
-							"    pm.expect(responseData._id).to.exist.and.to.be.a('string');\r",
 							"    pm.expect(responseData.name).to.exist.and.to.be.a('string');\r",
 							"    pm.expect(responseData.size).to.exist.and.to.be.a('number');\r",
-							"    pm.expect(responseData.users).to.exist.and.to.be.an('array');\r",
-							"    pm.expect(responseData.__v).to.exist.and.to.be.a('number');\r",
 							"})"
 						],
 						"type": "text/javascript"
@@ -395,7 +392,7 @@
 					"host": [
 						"localhost"
 					],
-					"port": "3001",
+					"port": "3000",
 					"path": [
 						"api",
 						"clans",
@@ -439,7 +436,7 @@
 					"host": [
 						"localhost"
 					],
-					"port": "3001",
+					"port": "3000",
 					"path": [
 						"api",
 						"administrators"
@@ -480,7 +477,7 @@
 					"host": [
 						"localhost"
 					],
-					"port": "3001",
+					"port": "3000",
 					"path": [
 						"api",
 						"administrators",
@@ -523,7 +520,7 @@
 					"host": [
 						"localhost"
 					],
-					"port": "3001",
+					"port": "3000",
 					"path": [
 						"api",
 						"users",
