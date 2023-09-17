@@ -16,7 +16,7 @@ router.get('/api/administrators', async (req, res, next) => {
             return res.status(204).json({ 'message': 'No administrators' });
         }
 
-        res.send(administrators);
+        res.status(200).json(administrators);
     } catch (err) {
         return next(err);
     }
@@ -29,7 +29,7 @@ router.get('/api/administrators/:id', async (req, res, next) => {
             return res.status(204).json({ 'message': 'Administrator not found with a given id' });
         }
 
-        res.send(administrator);
+        res.status(200).json(administrator);
     } catch (err) {
         return next(err);
     }
@@ -42,7 +42,7 @@ router.delete('/api/administrators/:id', async (req, res, next) => {
             return res.status(204).json({ 'message': 'Administrator not found with a given id' });
         }
 
-        res.send(administrator);
+        res.status(200).json(administrator);
     } catch (err) {
         return next(err);
     }
@@ -55,7 +55,7 @@ router.put('/api/administrators/:id', async (req, res, next) => {
             return res.status(204).json({ 'message': 'Administrator not found with a given id' });
         }
 
-        res.send(administrator);
+        res.status(200).json(administrator);
     } catch (err) {
         return next(err);
     }

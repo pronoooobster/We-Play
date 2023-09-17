@@ -16,7 +16,7 @@ router.get('/api/games', async (req, res, next) => {
             return res.status(204).json({ 'message': 'No games' });
         }
 
-        res.send(games);
+        res.status(200).json(games);
     } catch (err) {
         return next(err);
     }
@@ -29,7 +29,7 @@ router.get('/api/games/:id', async (req, res, next) => {
             return res.status(204).json({ 'message': 'Game not found with a given id' });
         }
 
-        res.send(game);
+        res.status(200).json(game);
     } catch (err) {
         return next(err);
     }
@@ -42,7 +42,7 @@ router.delete('/api/games/:id', async (req, res, next) => {
             return res.status(204).json({ 'message': 'Game not found with a given id' });
         }
 
-        res.send(game);
+        res.status(200).json(game);
     } catch (err) {
         return next(err);
     }
@@ -55,7 +55,7 @@ router.put('/api/games/:id', async (req, res, next) => {
             return res.status(204).json({ 'message': 'Game not found with a given id' });
         }
 
-        res.send(game);
+        res.status(200).json(game);
     } catch (err) {
         return next(err);
     }
@@ -77,7 +77,7 @@ router.patch('/api/games/:id', async (req, res, next) => {
         }
 
         game.save();
-        res.json(game);
+        res.status(200).json(game);
     } catch (err) {
         return next(err);
     }

@@ -17,7 +17,7 @@ router.get('/api/squads', async (req, res, next) => {
             return res.status(204).json({ 'message': 'No squads' });
         }
 
-        res.send(squads);
+        res.status(200).json(squads);
     } catch (err) {
         return next(err);
     }
@@ -31,7 +31,7 @@ router.get('/api/squads/:id', async (req, res, next) => {
             return res.status(204).json({ 'message': 'Squad not found with a given id' });
         }
 
-        res.send(squad);
+        res.status(200).json(squad);
     } catch (err) {
         return next(err);
     }
@@ -44,7 +44,7 @@ router.delete('/api/squads/:id', async (req, res, next) => {
             return res.status(204).json({ 'message': 'Squad not found with a given id' });
         }   
 
-        res.send(squad);
+        res.status(200).json(squad);
     } catch (err) {
         return next(err);
     }
@@ -57,7 +57,7 @@ router.put('/api/squads/:id', async (req, res, next) => {
             return res.status(204).json({ 'message': 'Squad not found with a given id' });
         }
 
-        res.send(squad);
+        res.status(200).json(squad);
     } catch (err) {
         return next(err);
     }
@@ -88,7 +88,7 @@ router.patch('/api/squads/:id', async (req, res, next) => {
         }
 
         squad.save();
-        res.json(squad);
+        res.status(200).json(squad);
     } catch (err) {
         return next(err);
     }
