@@ -42,7 +42,7 @@ router.delete('/api/squads/:id', async (req, res, next) => {
         const squad = await Squad.findOneAndDelete({ id: req.params.id });
         if (!squad) {
             return res.status(204).json({ 'message': 'Squad not found with a given id' });
-        }   
+        }
 
         res.status(200).json(squad);
     } catch (err) {
@@ -93,6 +93,76 @@ router.patch('/api/squads/:id', async (req, res, next) => {
         return next(err);
     }
 
+});
+
+// relationships
+
+router.get('/api/squads/:id/users', async (req, res, next) => {
+    try {
+        const squad = await Squad.findOne({ id: req.params.id }).populate('currentPlayers');
+        if (!squad) {
+            return res.status(204).json({ 'message': 'Squad not found with a given id' });
+        }
+
+        res.send(squad.currentPlayers);
+    } catch (err) {
+        return next(err);
+    }
+});
+
+router.post('/api/squads/:id/users', async (req, res, next) => {
+    try {
+        const squad = await Squad.findOne({ id: req.params.id });
+        if (!squad) {
+            return res.status(204).json({ 'message': 'Squad not found with a given id' });
+        }
+
+        squad.currentPlayers.push(req.body);
+        squad.save();
+        res.json(squad);
+    } catch (err) {
+        return next(err);
+    }
+});
+
+// specific user
+
+router.get('/api/squads/:id/users/:userId', async (req, res, next) => {
+    try {
+        const squad = await Squad.findOne({ id: req.params.id }).populate('currentPlayers');
+        if (!squad) {
+            return res.status(204).json({ 'message': 'Squad not found with a given id' });
+        }
+
+        const user = squad.currentPlayers.find(user => user.userName === req.params.userId);
+        if (!user) {
+            return res.status(204).json({ 'message': 'User not found with a given id' });
+        }
+
+        res.send(user);
+    } catch (err) {
+        return next(err);
+    }
+});
+
+router.delete('/api/squads/:id/users/:userId', async (req, res, next) => {
+    try {
+        const squad = await Squad.findOne({ id: req.params.id }).populate('currentPlayers');
+        if (!squad) {
+            return res.status(204).json({ 'message': 'Squad not found with a given id' });
+        }
+
+        const user = squad.currentPlayers.find(user => user.userName === req.params.userId);
+        if (!user) {
+            return res.status(204).json({ 'message': 'User not found with a given id' });
+        }
+
+        squad.currentPlayers.pull(user);
+        squad.save();
+        res.json(squad);
+    } catch (err) {
+        return next(err);
+    }
 });
 
 module.exports = router;

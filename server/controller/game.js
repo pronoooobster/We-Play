@@ -10,8 +10,13 @@ router.post('/api/games', function (req, res, next) {
 });
 
 router.get('/api/games', async (req, res, next) => {
+    const match = {};
+    if(req.query.teamSize) {
+        match.teamSize = req.query.teamSize;
+    }
+
     try {
-        const games = await Game.find({});
+        const games = await Game.find(match);
         if (games.length === 0) {
             return res.status(204).json({ 'message': 'No games' });
         }

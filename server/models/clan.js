@@ -9,8 +9,17 @@ const ClanSchema = new Schema({
     },
     size: {
         type: Number,
+        min: [1, 'Clan size must be at least 1'],
         required: true
     },
+    gamesList: {
+        type: [{ type: Schema.Types.ObjectId, ref: 'Game' }],
+        required: false
+    },
+    users: {
+        type: [{ type: Schema.Types.ObjectId, ref: 'User'}],
+        required: true
+    }
     
 });
 
