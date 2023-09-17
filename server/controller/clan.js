@@ -16,7 +16,8 @@ router.get('/api/clans', async (req, res, next) => {
             return res.status(204).json({ 'message': 'No clans' });
         }
 
-        res.send(clans);
+        // send the list of clans with 200 status code
+        res.status(200).json(clans);
     } catch (err) {
         return next(err);
     }
@@ -30,7 +31,7 @@ router.get('/api/clans/:id', async (req, res, next) => {
             return res.status(204).json({ 'message': 'Clan not found with a given id' });
         }
 
-        res.send(clan);
+        res.status(200).json(clan);
     } catch (err) {
         return next(err);
     }
@@ -43,7 +44,7 @@ router.delete('/api/clans/:id', async (req, res, next) => {
             return res.status(204).json({ 'message': 'Clan not found with a given id' });
         }
 
-        res.send(clan);
+        res.status(200).json(clan);
     } catch (err) {
         return next(err);
     }
@@ -56,7 +57,7 @@ router.put('/api/clans/:id', async (req, res, next) => {
             return res.status(204).json({ 'message': 'Clan not found with a given id' });
         }
 
-        res.send(clan);
+        res.status(200).json(clan);
     } catch (err) {
         return next(err);
     }

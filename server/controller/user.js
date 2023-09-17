@@ -17,7 +17,7 @@ router.get('/api/users', async (req, res, next) => {
             return res.status(204).json({ 'message': 'No users' });
         }
 
-        res.send(users);
+        res.status(200).json(users);
     } catch (err) {
         return next(err);
     }
@@ -30,7 +30,7 @@ router.get('/api/users/:id', async (req, res, next) => {
             return res.status(204).json({ 'message': 'User not found with a given id' });
         }
 
-        res.send(user);
+        res.status(200).json(user);
     } catch (err) {
         return next(err);
     }
@@ -43,7 +43,7 @@ router.delete('/api/users/:id', async (req, res, next) => {
             return res.status(204).json({ 'message': 'User not found with a given id' });
         }
 
-        res.send(user);
+        res.status(200).json(user);
     } catch (err) {
         return next(err);
     }
@@ -56,7 +56,7 @@ router.put('/api/users/:id', async (req, res, next) => {
             return res.status(204).json({ 'message': 'User not found with a given id' });
         }
 
-        res.send(user);
+        res.status(200).json(user);
     } catch (err) {
         return next(err);
     }
@@ -90,7 +90,7 @@ router.patch('/api/users/:id', async (req, res, next) => {
         }
 
         user.save();
-        res.json(user);
+        res.status(200).json(user);
     } catch (err) {
         return next(err);
     }
