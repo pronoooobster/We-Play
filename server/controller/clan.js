@@ -5,7 +5,7 @@ var Clan = require('../models/clan');
 router.post('/api/clans', function (req, res, next) {
     // save the new clan using promises
     Clan.create(req.body).then(function (clan) {
-        res.send(clan);
+        res.status(201).json(clan);
     }).catch(next);
 });
 

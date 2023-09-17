@@ -8,12 +8,29 @@
 	"item": [
 		{
 			"name": "post user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Response status code is 201', function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"})\r",
+							"pm.test('Friendslist is an array', function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.expect(responseData.friendslist).to.be.an('array');\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "   {\r\n        \"userName\": \"Adam\",\r\n        \"email\": \"adamf\",\r\n        \"date_of_birth\": \"2000-08-05\",\r\n        \"password\": \"agg666\",\r\n        \"friendslist\": [],\r\n        \"clansList\": []\r\n    }",
+					"raw": "   {\r\n        \"userName\": \"Adam\",\r\n        \"email\": \"adamf@yahoo.com\",\r\n        \"date_of_birth\": \"2000-08-05\",\r\n        \"password\": \"agg666\",\r\n        \"friendslist\": [],\r\n        \"clansList\": []\r\n    }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -37,6 +54,19 @@
 		},
 		{
 			"name": "get all users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Response status code is 200', function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -57,6 +87,23 @@
 		},
 		{
 			"name": "get a specific user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Response status code is 200', function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"pm.test('Check userName is not empty', function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.expect(responseData.userName).to.be.a('string').and.to.have.lengthOf.at.least(1, 'Value should not be empty');\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -78,6 +125,19 @@
 		},
 		{
 			"name": "post a game",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Response status code is 201', function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -107,6 +167,33 @@
 		},
 		{
 			"name": "get a specific game",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Response status code is 200', function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"pm.test('Response has required fields', function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData._id).to.exist;\r",
+							"    pm.expect(responseData.name).to.exist;\r",
+							"    pm.expect(responseData.teamSize).to.exist;\r",
+							"    pm.expect(responseData.description).to.exist;\r",
+							"})\r",
+							"pm.test('teamSize is a non-negative integer', function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.teamSize).to.be.a('number');\r",
+							"    pm.expect(responseData.teamSize).to.be.at.least(0);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -128,6 +215,29 @@
 		},
 		{
 			"name": "create squad",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Response status code is 201', function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"})\r",
+							"pm.test('Validate the name is not empty', function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.expect(responseData.name).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, 'Name field should not be empty');\r",
+							"})\r",
+							"pm.test('The maxPlayers field is a non-negative integer', function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.maxPlayers).to.be.a('number');\r",
+							"    pm.expect(responseData.maxPlayers).to.be.at.least(0);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -157,6 +267,19 @@
 		},
 		{
 			"name": "delete a specific squad",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Response status code is 200', function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "DELETE",
 				"header": [],
@@ -178,6 +301,28 @@
 		},
 		{
 			"name": "create a clan",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Response status code is 201', function () {\r",
+							"    pm.expect(pm.response.code).to.equal(201);\r",
+							"})\r",
+							"pm.test('Validate the name is not empty', function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.expect(responseData.name).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, 'Name field should not be empty');\r",
+							"})\r",
+							"pm.test('Size is a non-negative integer', function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.expect(responseData.size).to.be.a('number', 'Size should be a number');\r",
+							"    pm.expect(responseData.size).to.be.at.least(0, 'Size should be non-negative');\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -207,6 +352,25 @@
 		},
 		{
 			"name": "get a specific clan",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Response status code is 200', function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"})\r",
+							"pm.test('Response has the required fields', function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.name).to.exist.and.to.be.a('string');\r",
+							"    pm.expect(responseData.size).to.exist.and.to.be.a('number');\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -240,6 +404,20 @@
 		},
 		{
 			"name": "post an administrator",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Response status code is 201', function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -269,6 +447,27 @@
 		},
 		{
 			"name": "get a specific administrator",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Response status code is 200', function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"pm.test('Response has the required fields', function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData._id).to.exist;\r",
+							"    pm.expect(responseData.name).to.exist;\r",
+							"    pm.expect(responseData.id).to.exist;\r",
+							"    pm.expect(responseData.__v).to.exist;\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -290,12 +489,25 @@
 		},
 		{
 			"name": "patch user's data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Response status code is 200', function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "PATCH",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\":\"aaaadddammmm\"\r\n}",
+					"raw": "{\r\n    \"email\":\"aaaadddammmm@student.chalmers.se\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

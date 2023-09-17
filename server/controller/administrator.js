@@ -5,7 +5,7 @@ var Administrator = require('../models/administrator');
 router.post('/api/administrators', function (req, res, next) {
     // save the new game using promises
     Administrator.create(req.body).then(function (administrator) {
-        res.send(administrator);
+        res.status(201).json(administrator);
     }).catch(next);
 });
 
