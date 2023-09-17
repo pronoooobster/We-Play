@@ -65,8 +65,24 @@
 						],
 						"type": "text/javascript"
 					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"users"
+					]
 				}
-			],
+			},
+			"response": []
+		},
+		{
+			"name": "get all users",
 			"request": {
 				"method": "GET",
 				"header": [],
