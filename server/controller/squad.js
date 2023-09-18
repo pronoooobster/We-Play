@@ -31,7 +31,21 @@ router.get('/:id', async (req, res, next) => {
             return res.status(204).json({ 'message': 'Squad not found with a given id' });
         }
 
-        res.status(200).json(squad);
+        const response = {
+            id: squad.id,
+            name: squad.name,
+            game: squad.game,
+            description: squad.description,
+            currentPlayers: squad.currentPlayers,
+            maxPlayers: squad.maxPlayers,
+            _links: {
+                self: { href: `http://localhost:3000/api/squads/${squad.id}` },
+                collection: { href: 'http://localhost:3000/api/squads' },
+                game: { href: `http://localhost:3000/api/squads/${squad.game}` },
+            },
+        };
+
+        res.status(200).json(response);
     } catch (err) {
         return next(err);
     }

@@ -178,7 +178,6 @@
 							"pm.test('Response has required fields', function () {\r",
 							"    const responseData = pm.response.json();\r",
 							"    pm.expect(responseData).to.be.an('object');\r",
-							"    pm.expect(responseData._id).to.exist;\r",
 							"    pm.expect(responseData.name).to.exist;\r",
 							"    pm.expect(responseData.teamSize).to.exist;\r",
 							"    pm.expect(responseData.description).to.exist;\r",
