@@ -2,14 +2,14 @@ var express = require('express');
 var router = express.Router();
 var Administrator = require('../models/administrator');
 
-router.post('/api/administrators', function (req, res, next) {
+router.post('/', function (req, res, next) {
     // save the new game using promises
     Administrator.create(req.body).then(function (administrator) {
         res.status(201).json(administrator);
     }).catch(next);
 });
 
-router.get('/api/administrators', async (req, res, next) => {
+router.get('/', async (req, res, next) => {
     try {
         const administrators = await Administrator.find({});
         if (administrators.length === 0) {
@@ -22,7 +22,7 @@ router.get('/api/administrators', async (req, res, next) => {
     }
 });
 
-router.get('/api/administrators/:id', async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
     try {
         const administrator = await Administrator.findOne({ id: req.params.id });
         if (!administrator) {
@@ -35,7 +35,7 @@ router.get('/api/administrators/:id', async (req, res, next) => {
     }
 });
 
-router.delete('/api/administrators/:id', async (req, res, next) => {
+router.delete('/:id', async (req, res, next) => {
     try {
         const administrator = await Administrator.findOneAndDelete({ id: req.params.id });
         if (!administrator) {
@@ -48,7 +48,7 @@ router.delete('/api/administrators/:id', async (req, res, next) => {
     }
 });
 
-router.put('/api/administrators/:id', async (req, res, next) => {
+router.put('/:id', async (req, res, next) => {
     try {
         const administrator = await Administrator.findOneAndUpdate({ id: req.params.id }, req.body);
         if (!administrator) {

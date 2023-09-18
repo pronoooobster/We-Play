@@ -3,14 +3,14 @@ var router = express.Router();
 var User = require('../models/user');
 const user = require('../models/user');
 
-router.post('/api/users', function (req, res, next) {
+router.post('/', function (req, res, next) {
     User.create(req.body).then(function (user) {
         // res.send(user);
         res.status(201).json(user);
     }).catch(next);
 });
 
-router.get('/api/users', async (req, res, next) => {
+router.get('/', async (req, res, next) => {
     try {
         const users = await User.find({});
         if (users.length === 0) {
@@ -23,7 +23,7 @@ router.get('/api/users', async (req, res, next) => {
     }
 });
 
-router.get('/api/users/:id', async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
     try {
         const user = await User.findOne({ userName: req.params.id });
         if (!user) {
@@ -36,7 +36,7 @@ router.get('/api/users/:id', async (req, res, next) => {
     }
 });
 
-router.delete('/api/users/:id', async (req, res, next) => {
+router.delete('/:id', async (req, res, next) => {
     try {
         const user = await User.findOneAndDelete({ userName: req.params.id });
         if (!user) {
@@ -49,7 +49,7 @@ router.delete('/api/users/:id', async (req, res, next) => {
     }
 });
 
-router.put('/api/users/:id', async (req, res, next) => {
+router.put('/:id', async (req, res, next) => {
     try{
         const user = await User.findOneAndUpdate({ userName: req.params.id }, req.body);
         if (!user) {
@@ -62,7 +62,7 @@ router.put('/api/users/:id', async (req, res, next) => {
     }
 });
 
-router.patch('/api/users/:id', async (req, res, next) => {
+router.patch('/:id', async (req, res, next) => {
     try{
         const user = await User.findOne({ userName: req.params.id });
         if (!user) {
@@ -98,7 +98,7 @@ router.patch('/api/users/:id', async (req, res, next) => {
 
 // relationships
 
-router.get('/api/users/:id/clans', async (req, res, next) => {
+router.get('/:id/clans', async (req, res, next) => {
     try {
         const user = await User.findOne({ userName: req.params.id }).populate('clansList');
         if (!user) {
@@ -111,7 +111,7 @@ router.get('/api/users/:id/clans', async (req, res, next) => {
     }
 });
 
-router.post('/api/users/:id/clans', async (req, res, next) => {
+router.post('/:id/clans', async (req, res, next) => {
     try {
         const user = await User.findOne({ userName: req.params.id });
         if (!user) {
@@ -128,7 +128,7 @@ router.post('/api/users/:id/clans', async (req, res, next) => {
 
 // specific clan
 
-router.get('/api/users/:id/clans/:clanId', async (req, res, next) => {
+router.get('/:id/clans/:clanId', async (req, res, next) => {
     try {
         const user = await User.findOne({ userName: req.params.id }).populate('clansList');
         if (!user) {
@@ -146,7 +146,7 @@ router.get('/api/users/:id/clans/:clanId', async (req, res, next) => {
     }
 });
 
-router.delete('/api/users/:id/clans/:clanId', async (req, res, next) => {
+router.delete('/:id/clans/:clanId', async (req, res, next) => {
     try {
         const user = await User.findOne({ userName: req.params.id }).populate('clansList');
         if (!user) {
@@ -168,7 +168,7 @@ router.delete('/api/users/:id/clans/:clanId', async (req, res, next) => {
 
 //friends list
 
-router.get('/api/users/:id/friendslist', async (req, res, next) => {
+router.get('/:id/friendslist', async (req, res, next) => {
     try {
         const user = await User.findOne({ userName: req.params.id }).populate('friendslist');
         if (!user) {
@@ -181,7 +181,7 @@ router.get('/api/users/:id/friendslist', async (req, res, next) => {
     }
 });
 
-router.post('/api/users/:id/friendslist', async (req, res, next) => {
+router.post('/:id/friendslist', async (req, res, next) => {
     try {
         const user = await User.findOne({ userName: req.params.id }).populate('friendslist');
         if (!user) {
@@ -196,7 +196,7 @@ router.post('/api/users/:id/friendslist', async (req, res, next) => {
 
 //get specific friend
 
-router.get('/api/users/:id/friendslist/:id', async (req, res, next) => {
+router.get('/:id/friendslist/:id', async (req, res, next) => {
     try {
         const user = await User.findOne({ userName: req.params.id }).populate('friendslist');
         if(!user) {

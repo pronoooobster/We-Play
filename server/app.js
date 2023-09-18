@@ -21,7 +21,7 @@ var mongoURI = process.env.MONGODB_URI || `mongodb+srv://admin:${password}@clust
 var port = process.env.PORT || 3000;
 
 // Connect to MongoDB
-mongoose.connect(mongoURI).catch(function(err) {
+mongoose.connect(mongoURI).catch(function (err) {
     if (err) {
         console.error(`Failed to connect to MongoDB with given URI`);
         console.error(err.stack);
@@ -42,15 +42,15 @@ app.options('*', cors());
 app.use(cors());
 
 // Import routes
-app.get('/api', function(req, res) {
-    res.json({'message': 'Welcome to group 26 backend ExpressJS project!'});
+app.get('/api', function (req, res) {
+    res.json({ 'message': 'Welcome to group 26 backend ExpressJS project!' });
 });
 
-app.use(squadController);
-app.use(userController);
-app.use(gameController);
-app.use(administratorController);
-app.use(clanController);
+app.use('/api/squads', squadController);
+app.use('/api/users',userController);
+app.use('/api/games',gameController);
+app.use('/api/administrators',administratorController);
+app.use('/api/clans', clanController);
 
 // Catch all non-error handler for api (i.e., 404 Not Found)
 app.use('/api/*', function (req, res) {
@@ -68,7 +68,7 @@ app.use(express.static(client));
 // Error handler (i.e., when exception is thrown) must be registered last
 var env = app.get('env');
 // eslint-disable-next-line no-unused-vars
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
     console.error(err.stack);
     var err_res = {
         'message': err.message,
@@ -82,7 +82,7 @@ app.use(function(err, req, res, next) {
     res.json(err_res);
 });
 
-app.listen(port, function(err) {
+app.listen(port, function (err) {
     if (err) throw err;
     console.log(`Express server listening on port ${port}, in ${env} mode`);
     console.log(`Backend: http://localhost:${port}/api/`);
