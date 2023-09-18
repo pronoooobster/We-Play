@@ -3,14 +3,14 @@ var router = express.Router();
 var Squad = require('../models/squad');
 const squad = require('../models/squad');
 
-router.post('/api/squads', function (req, res, next) {
+router.post('/', function (req, res, next) {
     // save the new squad using promises
     Squad.create(req.body).then(function (squad) {
         res.status(201).json(squad);
     }).catch(next);
 });
 
-router.get('/api/squads', async (req, res, next) => {
+router.get('/', async (req, res, next) => {
     try {
         const squads = await Squad.find({});
         if (squads.length === 0) {
@@ -24,7 +24,7 @@ router.get('/api/squads', async (req, res, next) => {
 });
 
 
-router.get('/api/squads/:id', async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
     try {
         const squad = await Squad.findOne({ id: req.params.id });
         if (!squad) {
@@ -37,7 +37,7 @@ router.get('/api/squads/:id', async (req, res, next) => {
     }
 });
 
-router.delete('/api/squads/:id', async (req, res, next) => {
+router.delete('/:id', async (req, res, next) => {
     try {
         const squad = await Squad.findOneAndDelete({ id: req.params.id });
         if (!squad) {
@@ -50,7 +50,7 @@ router.delete('/api/squads/:id', async (req, res, next) => {
     }
 });
 
-router.put('/api/squads/:id', async (req, res, next) => {
+router.put('/:id', async (req, res, next) => {
     try {
         const squad = await Squad.findOneAndUpdate({ id: req.params.id }, req.body);
         if (!squad) {
@@ -63,7 +63,7 @@ router.put('/api/squads/:id', async (req, res, next) => {
     }
 });
 
-router.patch('/api/squads/:id', async (req, res, next) => {
+router.patch('/:id', async (req, res, next) => {
     // be able to change the name, game, description, currentPlayers or maxPlayers
     try {
         const squad = await Squad.findOne({ id: req.params.id });
@@ -97,7 +97,7 @@ router.patch('/api/squads/:id', async (req, res, next) => {
 
 // relationships
 
-router.get('/api/squads/:id/users', async (req, res, next) => {
+router.get('/:id/users', async (req, res, next) => {
     try {
         const squad = await Squad.findOne({ id: req.params.id }).populate('currentPlayers');
         if (!squad) {
@@ -110,7 +110,7 @@ router.get('/api/squads/:id/users', async (req, res, next) => {
     }
 });
 
-router.post('/api/squads/:id/users', async (req, res, next) => {
+router.post('/:id/users', async (req, res, next) => {
     try {
         const squad = await Squad.findOne({ id: req.params.id });
         if (!squad) {
@@ -127,7 +127,7 @@ router.post('/api/squads/:id/users', async (req, res, next) => {
 
 // specific user
 
-router.get('/api/squads/:id/users/:userId', async (req, res, next) => {
+router.get('/:id/users/:userId', async (req, res, next) => {
     try {
         const squad = await Squad.findOne({ id: req.params.id }).populate('currentPlayers');
         if (!squad) {
@@ -145,7 +145,7 @@ router.get('/api/squads/:id/users/:userId', async (req, res, next) => {
     }
 });
 
-router.delete('/api/squads/:id/users/:userId', async (req, res, next) => {
+router.delete('/:id/users/:userId', async (req, res, next) => {
     try {
         const squad = await Squad.findOne({ id: req.params.id }).populate('currentPlayers');
         if (!squad) {

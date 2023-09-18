@@ -2,14 +2,14 @@ var express = require('express');
 var router = express.Router();
 var Game = require('../models/game');
 
-router.post('/api/games', function (req, res, next) {
+router.post('/', function (req, res, next) {
     // save the new game using promises
     Game.create(req.body).then(function (game) {
         res.status(201).json(game);
     }).catch(next);
 });
 
-router.get('/api/games', async (req, res, next) => {
+router.get('/', async (req, res, next) => {
     const match = {};
     if(req.query.teamSize) {
         match.teamSize = req.query.teamSize;
@@ -27,7 +27,7 @@ router.get('/api/games', async (req, res, next) => {
     }
 });
 
-router.get('/api/games/:id', async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
     try {
         const game = await Game.findOne({ name: req.params.id });
         if (!game) {
@@ -40,7 +40,7 @@ router.get('/api/games/:id', async (req, res, next) => {
     }
 });
 
-router.delete('/api/games/:id', async (req, res, next) => {
+router.delete('/:id', async (req, res, next) => {
     try {
         const game = await Game.findOneAndDelete({ name: req.params.id });
         if (!game) {
@@ -53,7 +53,7 @@ router.delete('/api/games/:id', async (req, res, next) => {
     }
 });
 
-router.put('/api/games/:id', async (req, res, next) => {
+router.put('/:id', async (req, res, next) => {
     try {
         const game = await Game.findOneAndUpdate({ name: req.params.id }, req.body);
         if (!game) {
@@ -66,7 +66,7 @@ router.put('/api/games/:id', async (req, res, next) => {
     }
 });
 
-router.patch('/api/games/:id', async (req, res, next) => {
+router.patch('/:id', async (req, res, next) => {
     // be able to change the team size or description
     try {
         const game = await Game.findOne({ name: req.params.id });

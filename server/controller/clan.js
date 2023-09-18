@@ -2,14 +2,14 @@ var express = require('express');
 var router = express.Router();
 var Clan = require('../models/clan');
 
-router.post('/api/clans', function (req, res, next) {
+router.post('/', function (req, res, next) {
     // save the new clan using promises
     Clan.create(req.body).then(function (clan) {
         res.status(201).json(clan);
     }).catch(next);
 });
 
-router.get('/api/clans', async (req, res, next) => {
+router.get('/', async (req, res, next) => {
     // sorting clans by size
     const sort = {};
     if(req.query.sortBy) {
@@ -36,7 +36,7 @@ router.get('/api/clans', async (req, res, next) => {
 });
 
 
-router.get('/api/clans/:id', async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
     try {
         const clan = await Clan.findOne({ name: req.params.id });
         if (!clan) {
@@ -49,7 +49,7 @@ router.get('/api/clans/:id', async (req, res, next) => {
     }
 });
 
-router.delete('/api/clans/:id', async (req, res, next) => {
+router.delete('/:id', async (req, res, next) => {
     try {
         const clan = await Clan.findOneAndDelete({ name: req.params.id });
         if (!clan) {
@@ -62,7 +62,7 @@ router.delete('/api/clans/:id', async (req, res, next) => {
     }
 });
 
-router.put('/api/clans/:id', async (req, res, next) => {
+router.put('/:id', async (req, res, next) => {
     try {
         const clan = await Clan.findOneAndUpdate({ name: req.params.id }, req.body);
         if (!clan) {
@@ -77,7 +77,7 @@ router.put('/api/clans/:id', async (req, res, next) => {
 
 // relationships
 
-router.get('/api/clans/:id/games', async (req, res, next) => {
+router.get('/:id/games', async (req, res, next) => {
     try {
         const clan = await Clan.findOne({ name: req.params.id }).populate('gamesList');
         if (!clan) {
@@ -90,7 +90,7 @@ router.get('/api/clans/:id/games', async (req, res, next) => {
     }
 });
 
-router.get('/api/clans/:id/users', async (req, res, next) => {
+router.get('/:id/users', async (req, res, next) => {
     try {
         const clan = await Clan.findOne({ name: req.params.id }).populate('users');
         if (!clan) {
@@ -104,7 +104,7 @@ router.get('/api/clans/:id/users', async (req, res, next) => {
 });
 
 
-router.post('/api/clans/:id/users', async (req, res, next) => {
+router.post('/:id/users', async (req, res, next) => {
     try {
         const clan = await Clan.findOne({ name: req.params.id });
         if (!clan) {
@@ -119,7 +119,7 @@ router.post('/api/clans/:id/users', async (req, res, next) => {
     }
 });
 
-router.post('/api/clans/:id/games', async (req, res, next) => {
+router.post('/:id/games', async (req, res, next) => {
     try {
         const clan = await Clan.findOne({ name: req.params.id });
         if (!clan) {
@@ -136,7 +136,7 @@ router.post('/api/clans/:id/games', async (req, res, next) => {
 
 // specific game/user
 
-router.get('/api/clans/:id/users/:userId', async (req, res, next) => {
+router.get('/:id/users/:userId', async (req, res, next) => {
     try {
         const clan = await Clan.findOne({ name: req.params.id }).populate('users');
         if (!clan) {
@@ -154,7 +154,7 @@ router.get('/api/clans/:id/users/:userId', async (req, res, next) => {
     }
 });
 
-router.get('/api/clans/:id/games/:gameId', async (req, res, next) => {
+router.get('/:id/games/:gameId', async (req, res, next) => {
     try {
         const clan = await Clan.findOne({ name: req.params.id }).populate('gamesList');
         if (!clan) {
@@ -173,7 +173,7 @@ router.get('/api/clans/:id/games/:gameId', async (req, res, next) => {
     }
 });
 
-router.delete('/api/clans/:id/games/:gameId', async (req, res, next) => {
+router.delete('/:id/games/:gameId', async (req, res, next) => {
     try {
         const clan = await Clan.findOne({ name: req.params.id }).populate('gamesList');
         if (!clan) {
@@ -194,7 +194,7 @@ router.delete('/api/clans/:id/games/:gameId', async (req, res, next) => {
     }
 });
 
-router.delete('/api/clans/:id/users/:userId', async (req, res, next) => {
+router.delete('/:id/users/:userId', async (req, res, next) => {
     try {
         const clan = await Clan.findOne({ name: req.params.id }).populate('users');
         if (!clan) {
