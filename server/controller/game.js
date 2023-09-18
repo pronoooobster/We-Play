@@ -34,7 +34,17 @@ router.get('/:id', async (req, res, next) => {
             return res.status(204).json({ 'message': 'Game not found with a given id' });
         }
 
-        res.status(200).json(game);
+        const response = {
+            name: game.name,
+            teamSize: game.teamSize,
+            description: game.description,
+            _links: {
+                self: { href: `http://localhost:3000/api/games/${game.name}` },
+                collection: { href: 'http://localhost:3000/api/games' },
+            },
+        };
+
+        res.status(200).json(response);
     } catch (err) {
         return next(err);
     }

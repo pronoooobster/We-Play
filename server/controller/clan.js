@@ -43,7 +43,21 @@ router.get('/:id', async (req, res, next) => {
             return res.status(204).json({ 'message': 'Clan not found with a given id' });
         }
 
-        res.status(200).json(clan);
+        const response = {
+            name: clan.name,
+            size: clan.size,
+            gamesList: clan.gamesList,
+            users : clan.users,
+            _links: {
+                self: { href: `http://localhost:3000/api/clans/${clan.name}` },
+                collection: { href: 'http://localhost:3000/api/clans' },
+                games: { href: `http://localhost:3000/api/clans/${clan.name}/games` },
+                users: { href: `http://localhost:3000/api/clans/${clan.name}/users` },
+            },
+        };
+
+
+        res.status(200).json(response);
     } catch (err) {
         return next(err);
     }

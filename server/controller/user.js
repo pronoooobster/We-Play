@@ -30,7 +30,20 @@ router.get('/:id', async (req, res, next) => {
             return res.status(204).json({ 'message': 'User not found with a given id' });
         }
 
-        res.status(200).json(user);
+        const response = {
+            userName: user.userName,
+            email: user.email,
+            date_of_birth: user.date_of_birth,
+            friendslist: user.friendslist,
+            clansList: user.clansList,
+            _links: {
+                self: { href: `http://localhost:3000/api/users/${user.userName}` },
+                collection: { href: 'http://localhost:3000/api/users' },
+                clans: { href: `http://localhost:3000/api/users/${user.userName}/clans` },
+                friendslist: { href: `http://localhost:3000/api/users/${user.userName}/friendslist` },
+            },
+        };  
+        res.status(200).json(response);
     } catch (err) {
         return next(err);
     }
