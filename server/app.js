@@ -7,7 +7,6 @@ var history = require('connect-history-api-fallback');
 var squadController = require('./controller/squad');
 var userController = require('./controller/user');
 var gameController = require('./controller/game');
-var administratorController = require('./controller/administrator');
 var clanController = require('./controller/clan');
 
 // mongo dependencies
@@ -49,7 +48,6 @@ app.get('/api', function (req, res) {
 app.use('/api/squads', squadController);
 app.use('/api/users',userController);
 app.use('/api/games',gameController);
-app.use('/api/administrators',administratorController);
 app.use('/api/clans', clanController);
 
 // Catch all non-error handler for api (i.e., 404 Not Found)

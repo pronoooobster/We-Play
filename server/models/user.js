@@ -1,5 +1,7 @@
 var mongoose = require ('mongoose');
 var Schema = mongoose.Schema;
+var bcrypt = require('bcrypt');
+var SALT_WORK_FACTOR = 10;
 
 const UserSchema = new Schema({
     userName: {
@@ -39,7 +41,39 @@ const UserSchema = new Schema({
     clansList: {
         type: [{ type: Schema.Types.ObjectId, ref: 'Clan' }],
         required: false
-    },    
+    },
+    isAdmin: {
+        type: Boolean,
+        required: false,
+        default: false
+    },
 });
+
+UserSchema.pre('save', function(next) {
+    var user = this;
+    // if the user password was modified
+    if (!user.isModified('password')) return next();
+ 
+    // generate a salt
+    bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+        if (err) return next(err);
+ 
+        bcrypt.hash(user.password, salt, function(err, hash) {
+            if (err) return next(err);
+ 
+            user.password = hash;
+            next();
+        });
+    });
+});
+
+UserSchema.methods.comparePassword = function(candidatePassword, cb) {
+    // compare the candidate password with the password stored in the database
+    bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+        if (err) return cb(err);
+ 
+        cb(null, isMatch);
+    });
+};
 
 module.exports = mongoose.model('User', UserSchema);
