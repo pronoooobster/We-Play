@@ -250,7 +250,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/squads",
+					"raw": "http://localhost:3000/api/v1/squads",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -258,6 +258,7 @@
 					"port": "3001",
 					"path": [
 						"api",
+						"v1",
 						"squads"
 					]
 				}
@@ -283,7 +284,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/api/squads/3",
+					"raw": "http://localhost:3000/api/v1/squads/3",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -291,6 +292,7 @@
 					"port": "3001",
 					"path": [
 						"api",
+						"v1",
 						"squads",
 						"3"
 					]
