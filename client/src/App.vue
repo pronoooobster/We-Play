@@ -1,19 +1,26 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link>
-    </div>
-    <!-- Render the content of the current page view -->
-    <router-view/>
-  </div>
+  <HomePage/>
 </template>
 
+<script>
+import HomePage from './components/HomePage.vue'
+
+export default {
+  name: 'App',
+  components: {
+    HomePage
+  }
+}
+</script>
+
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Press+Start+2P&family=Roboto:wght@500&display=swap');
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  margin-top: 0px;
 }
 </style>
