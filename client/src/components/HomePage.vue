@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container">
           <a class="navbar-brand" href="">Navbar</a>
@@ -60,7 +60,8 @@ export default {
 
     const uiConfig = {
       signInFlow: 'popup',
-      signinSuccessUrl: 'http://localhost:8080/',
+      // go to the dashboard page after signing in
+      signinSuccessUrl: '/dashboard',
       signInOptions: [
         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
         {

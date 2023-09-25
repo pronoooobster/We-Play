@@ -1,15 +1,17 @@
 <template>
-  <HomePage/>
+  <router-view />
 </template>
 
 <script>
-import HomePage from './components/HomePage.vue'
+// import HomePage from './components/HomePage.vue'
+// import DashboardPage from './components/DashboardPage.vue'
 
 export default {
   name: 'App',
-  components: {
-    HomePage
-  }
+  // components: {
+  //   HomePage,
+  //   DashboardPage
+  // }
 }
 </script>
 
