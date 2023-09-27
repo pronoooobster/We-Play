@@ -9,16 +9,6 @@ const UserSchema = new Schema({
         required: true,
         unique: true
     },
-    date_of_birth: {
-        type: Date,
-        validate: {
-            validator: function(v) {
-              return v < Date.now();
-            },
-            message: props => `${props.value} is not a valid date of birth!`
-        },
-        required: true
-    },
     friendslist: {
         type: [{ type: Schema.Types.ObjectId, ref: 'User' }],
         required: false

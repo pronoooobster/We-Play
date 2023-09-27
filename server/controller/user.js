@@ -33,7 +33,6 @@ router.get('/:id', async (req, res, next) => {
         const response = {
             UID: user.UID,
             email: user.email,
-            date_of_birth: user.date_of_birth,
             friendslist: user.friendslist,
             clansList: user.clansList,
             _links: {
@@ -88,14 +87,6 @@ router.patch('/:id', async (req, res, next) => {
 
         if (req.body.email) {
             user.email = req.body.email;
-        }
-
-        if (req.body.date_of_birth) {
-            user.date_of_birth = req.body.date_of_birth;
-        }
-
-        if (req.body.password) {
-            user.password = req.body.password;
         }
 
         if (req.body.friendslist) {

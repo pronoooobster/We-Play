@@ -30,7 +30,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "   {\r\n        \"UID\": \"Adam\",\r\n        \"email\": \"adamf@yahoo.com\",\r\n        \"date_of_birth\": \"2000-08-05\",\r\n        \"password\": \"agg666\",\r\n        \"friendslist\": [],\r\n        \"clansList\": []\r\n    }",
+					"raw": "   {\r\n        \"UID\": \"Adam\",\r\n        \"email\": \"adamf@yahoo.com\",\r\n        \"friendslist\": [],\r\n        \"clansList\": []\r\n    }",
 					"options": {
 						"raw": {
 							"language": "json"

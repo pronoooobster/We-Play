@@ -1,27 +1,5 @@
 <template>
   <div>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container">
-          <a class="navbar-brand" href="">Navbar</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-              <ul class="navbar-nav ms-auto">
-                  <li class="nav-item">
-                      <a class="nav-link" href="">Contact</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="">Pricing</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="">Download</a>
-                  </li>
-              </ul>
-          </div>
-      </div>
-    </nav>
-
     <!-- weplay logo -->
     <img src="../assets/logo.png" alt="WePlay Logo" style="max-width: 20%; height: auto; margin: 20px;">
 
@@ -52,6 +30,8 @@ import 'firebaseui/dist/firebaseui.css'
 import { onMounted, onBeforeUnmount } from 'vue';
 
 import router from "@/router";
+
+import axios from 'axios'
 
 export default {
   name: 'HomePage',
@@ -109,10 +89,27 @@ export default {
             });
           }
 
+          // try to get the current user's data from the database
+          axios.get('http://localhost:3000/api/users/' + authResult.user.uid).then((response) => {
+            // if it gives back an empty object
+            if (response.data == '') {
+              // create a new user
+              axios.post('http://localhost:3000/api/users', {
+                "UID": authResult.user.uid
+              }).then((response) => {
+                console.log(response)
+              }).catch((error) => {
+                console.log(error)
+              })
+            }
+          }).catch((error) => {
+            console.log(error)
+          })
+
           console.log(authResult)
 
-          // so it doesn't refresh the page
-          return true;
+          // refresh the page or not
+          return false;
         },
         uiShown: function() {
           // The widget is rendered.
