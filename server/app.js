@@ -4,6 +4,8 @@ var morgan = require('morgan');
 var path = require('path');
 var cors = require('cors');
 var history = require('connect-history-api-fallback');
+var methodOverride = require('method-override');
+
 var squadController = require('./controller/squad');
 var userController = require('./controller/user');
 var gameController = require('./controller/game');
@@ -34,6 +36,8 @@ var app = express();
 // Parse requests of content-type 'application/json'
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+//HTTP method override
+app.use(methodOverride('_method'));
 // HTTP request logger
 app.use(morgan('dev'));
 // Enable cross-origin resource sharing for frontend must be registered before api
@@ -45,7 +49,7 @@ app.get('/api', function (req, res) {
     res.json({ 'message': 'Welcome to group 26 backend ExpressJS project!' });
 });
 
-app.use('/api/squads', squadController);
+app.use('/api/v1/squads', squadController);
 app.use('/api/users',userController);
 app.use('/api/games',gameController);
 app.use('/api/clans', clanController);

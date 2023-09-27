@@ -11,6 +11,7 @@
     "node": "18.x"
   },
   "dependencies": {
+    "method-override": "^3.0.0",
     "mongodb": "^6.0.0"
   }
 }

@@ -39,9 +39,9 @@ router.get('/:id', async (req, res, next) => {
             currentPlayers: squad.currentPlayers,
             maxPlayers: squad.maxPlayers,
             _links: {
-                self: { href: `http://localhost:3000/api/squads/${squad.id}` },
-                collection: { href: 'http://localhost:3000/api/squads' },
-                game: { href: `http://localhost:3000/api/squads/${squad.game}` },
+                self: { href: `http://localhost:3000/api/v1/squads/${squad.id}` },
+                collection: { href: 'http://localhost:3000/api/v1/squads' },
+                game: { href: `http://localhost:3000/api/v1/squads/${squad.game}` },
             },
         };
 
