@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1 v-if="user">Welcome, {{ user.displayName }}</h1>
-        <button @click="signOut">Sign Out</button>
+        <button type="button" class="btn btn-primary" @click="signOut">Sign Out</button>
     </div>
 </template>
   
