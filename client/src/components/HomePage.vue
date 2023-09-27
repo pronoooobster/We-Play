@@ -27,6 +27,14 @@
 
     <h1> Welcome to WePlay! </h1>
     <div id="firebaseui-auth-container"></div>
+    <!-- put a remember me checkbox -->
+    <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+      <!-- Remember me checkbox -->
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="remember-me">
+        <label class="form-check-label" for="flexSwitchCheckDefault">Remember me 😉</label>
+      </div>
+    </div>
     <div id="loader">Loading...</div>
     <br>
   </div>
@@ -41,7 +49,9 @@ import firebase from 'firebase/compat/app';
 firebase.initializeApp(firebaseConfig);import * as firebaseui from 'firebaseui'
 import 'firebaseui/dist/firebaseui.css'
 
-import { onMounted } from 'vue';
+import { onMounted, onBeforeUnmount } from 'vue';
+
+import router from "@/router";
 
 export default {
   name: 'HomePage',
@@ -49,6 +59,16 @@ export default {
     msg: String
   },
   setup() {
+    // if the user is logged in, redirect to dashboard
+    const authListener = firebase.auth().onAuthStateChanged(function(user) {
+        if (user) { // not logged in
+            router.push('/dashboard')
+        }
+    })
+    onBeforeUnmount(() => {
+        authListener()
+    })
+
     onMounted(() => {
       const uiConfig = {
       signInFlow: 'popup',
@@ -68,6 +88,27 @@ export default {
       ],
       callbacks: {
         signInSuccessWithAuthResult: function (authResult) {
+          // if the remember me switch is on
+          if (document.getElementById('remember-me').checked) {
+            firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+            .then(() => {
+              // Signed in 
+              // ...
+            })
+            .catch((error) => {
+              console.log(error)
+            });
+          } else {
+            firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+            .then(() => {
+              // Signed in 
+              // ...
+            })
+            .catch((error) => {
+              console.log(error)
+            });
+          }
+
           console.log(authResult)
 
           // so it doesn't refresh the page
