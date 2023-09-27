@@ -3,6 +3,7 @@ import HomePage from "@/components/HomePage.vue"
 import DashboardPage from "@/components/DashboardPage.vue"
 import PageNotFound from "@/components/PageNotFound.vue"
 
+
 const routes = [
     {
         path: "/",
