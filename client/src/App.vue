@@ -16,7 +16,7 @@ export default {
 </script>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Press+Start+2P&family=Roboto:wght@500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Martian+Mono&family=Poppins:wght@700&family=Press+Start+2P&family=Roboto:wght@500&display=swap');
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
