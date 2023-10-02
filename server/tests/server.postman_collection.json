@@ -30,7 +30,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "   {\r\n        \"userName\": \"Adam\",\r\n        \"email\": \"adamf@yahoo.com\",\r\n        \"date_of_birth\": \"2000-08-05\",\r\n        \"password\": \"agg666\",\r\n        \"friendslist\": [],\r\n        \"clansList\": []\r\n    }",
+					"raw": "   {\r\n        \"UID\": \"Adam\",\r\n        \"email\": \"adamf@yahoo.com\",\r\n        \"friendslist\": [],\r\n        \"clansList\": []\r\n    }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -95,9 +95,9 @@
 							"pm.test('Response status code is 200', function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"})\r",
-							"pm.test('Check userName is not empty', function () {\r",
+							"pm.test('Check UID is not empty', function () {\r",
 							"    const responseData = pm.response.json();\r",
-							"    pm.expect(responseData.userName).to.be.a('string').and.to.have.lengthOf.at.least(1, 'Value should not be empty');\r",
+							"    pm.expect(responseData.UID).to.be.a('string').and.to.have.lengthOf.at.least(1, 'Value should not be empty');\r",
 							"})"
 						],
 						"type": "text/javascript"

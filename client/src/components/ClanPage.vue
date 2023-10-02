@@ -23,6 +23,8 @@ import { ref, onMounted, watch } from 'vue';
 
 export default {
 
+  props: ["id"],
+
   setup(props) {
     const clan = ref(null);
 

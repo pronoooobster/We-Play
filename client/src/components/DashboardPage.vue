@@ -1,22 +1,23 @@
 <template>
-    <div class="top-bar">
-        <div class="logo">
-            <img src="../assets/Weyellow.png" alt="WePlay Yellow">
-        </div>
-        <div class="menu">
-            <ul>
-                <li><a href="/squads">Squads</a></li>
-                <li><a href="/clans">Clans</a></li>
-                <li><a href="/games">Games</a></li>
-                <li><a href="/friends">Friends</a></li>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #1F1F1F;">
+        <a class="navbar-brand" id="weyellow" href="/"><img src="../assets/Weyellow.png" alt="WePlay Yellow" width="153"
+                height="153"></a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- <button @click="goToClanPage('grp26')">View Clan 26</button> -->
+
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="/squads">Squads</a></li>
+                <li class="nav-item"><a class="nav-link" href="/clans">Clans</a></li>
+                <li class="nav-item"><a class="nav-link" href="/games">Games</a></li>
+                <li class="nav-item"><a class="nav-link" href="/friends">Friends</a></li>
             </ul>
         </div>
-    </div>
-    <!-- <button @click="goToClanPage('grp26')">View Clan 1</button> -->
-    <div>
-        <h1 v-if="user">Welcome, {{ user.displayName }}</h1>
-        <button @click="signOut">Sign Out</button>
-    </div>
+    </nav>
 </template>
   
 <script>
@@ -78,39 +79,12 @@ export default {
 </script>
 
 <style scoped>
-.top-bar {
-    background-color: #1F1F1F;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 20px;
-    margin-bottom: 720px;
-    width: align-self;
-    height: 112px;
-    flex-shrink: 0;
+.navbar {
+    height: 130px;
 }
 
-.logo img {
-    max-height: 153px;
-    max-width: 153px;
-    box-sizing: border-box;
-    margin-right: 10px;
-}
-
-.menu ul {
-    list-style: none;
-    display: flex;
-    gap: 45px;
-    margin-right: auto;
-    margin-bottom: 41px;
-    margin-top: 41px;
-    margin-right: 2300px;
-}
-
-.menu a {
+.nav-link {
     text-decoration: none;
-    width: 89px;
-    height: 30px;
     color: #9EB3C2;
     text-align: left;
     font-family: Martian Mono Condensed;
@@ -118,6 +92,9 @@ export default {
     font-style: normal;
     font-weight: 300;
     line-height: normal;
+}
 
+.navbar-nav {
+    gap: 40px;
 }
 </style>
