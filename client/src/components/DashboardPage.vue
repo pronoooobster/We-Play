@@ -12,6 +12,7 @@
             </ul>
         </div>
     </div>
+    <!-- <button @click="goToClanPage('grp26')">View Clan 1</button> -->
     <div>
         <h1 v-if="user">Welcome, {{ user.displayName }}</h1>
         <button @click="signOut">Sign Out</button>
@@ -29,7 +30,8 @@ import { onBeforeUnmount } from "vue";
 export default {
     data() {
         return {
-            user: null
+            user: null,
+            id: null
         };
     },
     setup() {
@@ -66,7 +68,11 @@ export default {
                 .catch(error => {
                     console.error("Error signing out:", error);
                 });
-        }
+        },
+
+        //goToClanPage(id) {
+        //    this.$router.push({ name: 'ClanPage', params: { id } });
+        //},
     }
 };
 </script>
