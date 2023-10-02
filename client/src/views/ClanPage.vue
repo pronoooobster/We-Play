@@ -19,7 +19,7 @@
 <script>
 
 const axios = require('axios');
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted } from 'vue';
 
 export default {
 
@@ -33,13 +33,11 @@ export default {
       axios.get(`http://localhost:3000/api/clans/${props.id}`)
         .then(response => {
 
-          console.log(`http://localhost:3000/api/clans/${props.id}`)
-
-          if (response.data) {
+          if (response.data && response.data.name) {
             clan.value = response.data;
           }
           else {
-            console.error('Invalid or missing data in the response:', response);
+            console.error('Invalid or missing data in the response.');
           }
         })
         .catch(error => {
@@ -48,10 +46,6 @@ export default {
     };
 
     onMounted(() => {
-      fetchClanData();
-    });
-
-    watch(() => props.id, () => {
       fetchClanData();
     });
 
