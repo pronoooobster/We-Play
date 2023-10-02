@@ -1,9 +1,9 @@
 import { createWebHistory, createRouter } from "vue-router";
-import HomePage from "@/components/HomePage.vue";
-import DashboardPage from "@/components/DashboardPage.vue";
-import ClanPage from "@/components/ClanPage.vue";
-import UserProfile from "@/components/UserProfile.vue";
-import PageNotFound from "@/components/PageNotFound.vue";
+import HomePage from "@/views/HomePage.vue";
+import DashboardPage from "@/views/DashboardPage.vue";
+import ClanPage from "@/views/ClanPage.vue";
+import UserProfile from "@/views/UserProfile.vue";
+import PageNotFound from "@/views/PageNotFound.vue";
 
 
 const routes = [
