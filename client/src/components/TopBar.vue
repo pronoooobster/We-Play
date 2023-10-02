@@ -15,13 +15,62 @@
                 <li class="nav-item"><a class="nav-link" href="/friends">Friends</a></li>
             </ul>
         </div>
+
+        <!-- google profile picture image with sign out option -->
+        <div v-if="user" class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                <img v-if="user.photoURL" :src="user.photoURL" alt="Profile Picture" class="profile-img" width="50" height="50">
+                <img v-else src="../assets/default-profile.png" alt="Profile Picture" class="profile-img" width="50" height="50">
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>
+                <li><a class="dropdown-item" href="#" @click="signOut">Sign Out</a></li>
+            </ul>
+        </div>
+
     </nav>
 </template>
 
 <script>
+
+// import firebase from "firebase/compat/app";
+import { getAuth, signOut as firebaseSignOut } from "firebase/auth"; // Import Firebase authentication
+import router from "@/router";
+
+// import { onBeforeUnmount } from "vue";
+
 export default {
-    name: 'TopBar'
+    name: 'TopBar',
+
+    data() {
+        return {
+            user: null,
+        }
+    },
+    created() {
+        const auth = getAuth(); // Get the authentication instance
+
+        // Listen for Firebase authentication state changes
+        auth.onAuthStateChanged(user => {
+            this.user = user;
+        });
+    },
+    methods: {
+        signOut() {
+            const auth = getAuth(); // Get the authentication instance
+
+            firebaseSignOut(auth)
+                .then(() => {
+                    router.push("/"); // Redirect to the login page after sign out
+                })
+                .catch(error => {
+                    console.error("Error signing out:", error);
+                });
+        }
+    }
 }
+
 </script>
 
 <style>
@@ -38,6 +87,29 @@ export default {
     font-style: normal;
     font-weight: 300;
     line-height: normal;
+}
+
+.profile-img {
+    border-radius: 30%;
+    margin: 5%;
+}
+
+.dropdown {
+    margin: 3%;
+    background-color: transparent;
+}
+
+.dropdown-toggle {
+    background-color: transparent;
+    border: none;
+}
+
+.dropdown-menu {
+    margin: 5%;
+}
+
+.dropdown-item {
+    font-family: 'Martian Mono';
 }
 
 .navbar-nav {

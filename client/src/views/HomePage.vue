@@ -58,13 +58,8 @@ export default {
         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
         {
           provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-          // Whether the display name should be displayed in Sign Up page.
-          requireDisplayName: true,
-          signInMethod: 'password',
-          disableSignUp: {
-            status: false
-          }
-        }
+          signInMethod: firebase.auth.EmailAuthProvider.EMAIL_LINK_SIGN_IN_METHOD
+        },
       ],
       callbacks: {
         signInSuccessWithAuthResult: function (authResult) {
