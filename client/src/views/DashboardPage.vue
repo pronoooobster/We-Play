@@ -1,20 +1,23 @@
-<script setup>
-import TopBar from "@/components/TopBar.vue";
-
-</script>
-    <template>
+<template>
+    <div>
         <TopBar />
+    </div>
 </template>
   
 <script>
 
+import TopBar from "@/components/TopBar.vue";
+
 import firebase from "firebase/compat/app";
-import { getAuth, signOut as firebaseSignOut } from "firebase/auth"; // Import Firebase authentication
+import { getAuth } from "firebase/auth"; // Import Firebase authentication
 import router from "@/router";
 import { onBeforeUnmount } from "vue";
 
 
 export default {
+    components: {
+        TopBar
+    },
     data() {
         return {
             user: null
@@ -43,18 +46,5 @@ export default {
             this.user = user;
         });
     },
-    methods: {
-        signOut() {
-            const auth = getAuth(); // Get the authentication instance
-
-            firebaseSignOut(auth)
-                .then(() => {
-                    this.$router.push("/"); // Redirect to the login page after sign out
-                })
-                .catch(error => {
-                    console.error("Error signing out:", error);
-                });
-        }
-    }
 };
 </script>
