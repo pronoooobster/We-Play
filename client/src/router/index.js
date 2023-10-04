@@ -2,7 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import HomePage from "@/views/HomePage.vue";
 import DashboardPage from "@/views/DashboardPage.vue";
 import ClanPage from "@/views/ClanPage.vue";
-import UserProfile from "@/views/UserProfile.vue";
+import UserProfilePage from "@/views/UserProfilePage.vue";
 import PageNotFound from "@/views/PageNotFound.vue";
 
 
@@ -26,7 +26,7 @@ const routes = [
   {
     path: "/profile",
     name: "Profile",
-    component: UserProfile,
+    component: UserProfilePage,
   },
   {
     path: "/:catchAll(.*)",

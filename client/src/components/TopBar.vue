@@ -25,6 +25,7 @@
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                 <li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>
+                <li><a class="dropdown-item" href="/profile">Profile</a></li>
                 <li><a class="dropdown-item" href="#" @click="signOut">Sign Out</a></li>
             </ul>
         </div>
