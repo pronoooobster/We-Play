@@ -18,9 +18,10 @@ const routes = [
     component: DashboardPage,
   },
   {
-    path: "/clan",
-    name: "Clan",
+    path: "/clans/:id",
+    name: "ClanPage",
     component: ClanPage,
+    props: true
   },
   {
     path: "/profile",

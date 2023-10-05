@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
-const user = require('../models/user');
 
 router.post('/', function (req, res, next) {
     User.create(req.body).then(function (user) {
@@ -25,21 +24,21 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
     try {
-        const user = await User.findOne({ UID: req.params.id });
+        const user = await User.findOne({ _id: req.params.id });
         if (!user) {
             return res.status(204).json({ 'message': 'User not found with a given id' });
         }
 
         const response = {
-            UID: user.UID,
+            _id: user._id,
             email: user.email,
             friendslist: user.friendslist,
             clansList: user.clansList,
             _links: {
-                self: { href: `http://localhost:3000/api/users/${user.UID}` },
+                self: { href: `http://localhost:3000/api/users/${user._id}` },
                 collection: { href: 'http://localhost:3000/api/users' },
-                clans: { href: `http://localhost:3000/api/users/${user.UID}/clans` },
-                friendslist: { href: `http://localhost:3000/api/users/${user.UID}/friendslist` },
+                clans: { href: `http://localhost:3000/api/users/${user._id}/clans` },
+                friendslist: { href: `http://localhost:3000/api/users/${user._id}/friendslist` },
             },
         };  
         res.status(200).json(response);
@@ -50,7 +49,7 @@ router.get('/:id', async (req, res, next) => {
 
 router.delete('/:id', async (req, res, next) => {
     try {
-        const user = await User.findOneAndDelete({ UID: req.params.id });
+        const user = await User.findOneAndDelete({ _id: req.params.id });
         if (!user) {
             return res.status(204).json({ 'message': 'User not found with a given id' });
         }
@@ -63,7 +62,7 @@ router.delete('/:id', async (req, res, next) => {
 
 router.put('/:id', async (req, res, next) => {
     try{
-        const user = await User.findOneAndUpdate({ UID: req.params.id }, req.body);
+        const user = await User.findOneAndUpdate({ _id: req.params.id }, req.body);
         if (!user) {
             return res.status(204).json({ 'message': 'User not found with a given id' });
         }
@@ -76,13 +75,13 @@ router.put('/:id', async (req, res, next) => {
 
 router.patch('/:id', async (req, res, next) => {
     try{
-        const user = await User.findOne({ UID: req.params.id });
+        const user = await User.findOne({ _id: req.params.id });
         if (!user) {
             return res.status(204).json({ 'message': 'User not found with a given id' });
         }
 
-        if (req.body.UID) {
-            user.UID = req.body.UID;
+        if (req.body._id) {
+            user._id = req.body._id;
         }
 
         if (req.body.email) {
@@ -104,7 +103,7 @@ router.patch('/:id', async (req, res, next) => {
 
 router.get('/:id/clans', async (req, res, next) => {
     try {
-        const user = await User.findOne({ UID: req.params.id }).populate('clansList');
+        const user = await User.findOne({ _id: req.params.id }).populate('clansList');
         if (!user) {
             return res.status(204).json({ 'message': 'User not found with a given id' });
         }
@@ -117,7 +116,7 @@ router.get('/:id/clans', async (req, res, next) => {
 
 router.post('/:id/clans', async (req, res, next) => {
     try {
-        const user = await User.findOne({ UID: req.params.id });
+        const user = await User.findOne({ _id: req.params.id });
         if (!user) {
             return res.status(204).json({ 'message': 'User not found with a given id' });
         }
@@ -134,7 +133,7 @@ router.post('/:id/clans', async (req, res, next) => {
 
 router.get('/:id/clans/:clanId', async (req, res, next) => {
     try {
-        const user = await User.findOne({ UID: req.params.id }).populate('clansList');
+        const user = await User.findOne({ _id: req.params.id }).populate('clansList');
         if (!user) {
             return res.status(204).json({ 'message': 'User not found with a given id' });
         }
@@ -152,7 +151,7 @@ router.get('/:id/clans/:clanId', async (req, res, next) => {
 
 router.delete('/:id/clans/:clanId', async (req, res, next) => {
     try {
-        const user = await User.findOne({ UID: req.params.id }).populate('clansList');
+        const user = await User.findOne({ _id: req.params.id }).populate('clansList');
         if (!user) {
             return res.status(204).json({ 'message': 'User not found with a given id' });
         }
@@ -174,7 +173,7 @@ router.delete('/:id/clans/:clanId', async (req, res, next) => {
 
 router.get('/:id/friendslist', async (req, res, next) => {
     try {
-        const user = await User.findOne({ UID: req.params.id }).populate('friendslist');
+        const user = await User.findOne({ _id: req.params.id }).populate('friendslist');
         if (!user) {
             return res.status(204).json({ 'message': 'User not found with a given id' });
         }
@@ -187,7 +186,7 @@ router.get('/:id/friendslist', async (req, res, next) => {
 
 router.post('/:id/friendslist', async (req, res, next) => {
     try {
-        const user = await User.findOne({ UID: req.params.id }).populate('friendslist');
+        const user = await User.findOne({ _id: req.params.id }).populate('friendslist');
         if (!user) {
             return res.status(204).json({ 'message': 'User not found with a given id' });
         }
@@ -202,11 +201,11 @@ router.post('/:id/friendslist', async (req, res, next) => {
 
 router.get('/:id/friendslist/:id', async (req, res, next) => {
     try {
-        const user = await User.findOne({ UID: req.params.id }).populate('friendslist');
+        const user = await User.findOne({ _id: req.params.id }).populate('friendslist');
         if(!user) {
             return res.status(204).json({ 'message': 'User not found with a given id' });
         }
-    const friend = user.friendslist.find(friend => friend.UID === req.params.id);
+    const friend = user.friendslist.find(friend => friend._id === req.params.id);
     if (!friend){
         return res.status(204).json({ 'message': 'Friend not found with a given id' });
     }

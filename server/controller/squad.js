@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var Squad = require('../models/squad');
-const squad = require('../models/squad');
 
 router.post('/', function (req, res, next) {
     // save the new squad using promises
@@ -148,7 +147,7 @@ router.get('/:id/users/:userId', async (req, res, next) => {
             return res.status(204).json({ 'message': 'Squad not found with a given id' });
         }
 
-        const user = squad.currentPlayers.find(user => user.userName === req.params.userId);
+        const user = squad.currentPlayers.find(user => user._id === req.params.userId);
         if (!user) {
             return res.status(204).json({ 'message': 'User not found with a given id' });
         }
@@ -166,7 +165,7 @@ router.delete('/:id/users/:userId', async (req, res, next) => {
             return res.status(204).json({ 'message': 'Squad not found with a given id' });
         }
 
-        const user = squad.currentPlayers.find(user => user.userName === req.params.userId);
+        const user = squad.currentPlayers.find(user => user._id === req.params.userId);
         if (!user) {
             return res.status(204).json({ 'message': 'User not found with a given id' });
         }

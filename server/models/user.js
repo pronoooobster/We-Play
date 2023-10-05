@@ -1,13 +1,10 @@
-var mongoose = require ('mongoose');
+var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var bcrypt = require('bcrypt');
-var SALT_WORK_FACTOR = 10;
 
 const UserSchema = new Schema({
-    UID: {
+    _id: {
         type: String,
         required: true,
-        unique: true
     },
     friendslist: {
         type: [{ type: Schema.Types.ObjectId, ref: 'User' }],

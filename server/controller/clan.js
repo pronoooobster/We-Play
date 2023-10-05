@@ -157,7 +157,7 @@ router.get('/:id/users/:userId', async (req, res, next) => {
             return res.status(204).json({ 'message': 'Clan not found with a given id' });
         }
 
-        const user = clan.users.find(user => user.userName === req.params.userId);
+        const user = clan.users.find(user => user._id === req.params.userId);
         if (!user) {
             return res.status(204).json({ 'message': 'User not found with a given id' });
         }
@@ -215,7 +215,7 @@ router.delete('/:id/users/:userId', async (req, res, next) => {
             return res.status(204).json({ 'message': 'Clan not found with a given id' });
         }
 
-        const user = clan.users.find(user => user.userName === req.params.userId);
+        const user = clan.users.find(user => user._id === req.params.userId);
         if (!user) {
             return res.status(204).json({ 'message': 'User not found with a given id' });
         }
