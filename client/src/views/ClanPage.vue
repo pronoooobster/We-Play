@@ -1,10 +1,16 @@
 <template>
   <div>
-    <div v-if="clan && clan.name">
-      <p>Clan name: {{ clan.name }}</p>
-      <p>Clan size: {{ clan.size }}</p>
-      <div v-if="clan.users.length > 0">
-        <p>Clan members: {{ clan.users }}</p>
+    <TopBar />
+  </div>
+  <div class="page">
+    <div class="card-1 mx-auto" v-if="clan && clan.name">
+      <h1 class="display-1"> {{ clan.name }}</h1>
+      <p class="clan-size">Size: {{ clan.size }}</p>
+      <div class="clan-users" v-if="clan.users.length > 0">
+        <p> Members:</p>
+        <p class="users" v-for="(user, index) in clan.users" :key="index">
+          {{ user }}
+        </p>
       </div>
       <div v-else>
         The clan is empty
@@ -21,7 +27,13 @@
 const axios = require('axios');
 import { ref, onMounted } from 'vue';
 
+import TopBar from "@/components/TopBar.vue";
+
 export default {
+
+  components: {
+    TopBar
+  },
 
   props: ["id"],
 
@@ -57,3 +69,22 @@ export default {
 }
 
 </script>
+
+<style>
+
+*{
+  font-family: 'Martian Mono';
+}
+
+body {
+  background-color: black;
+}
+
+.card-1 {
+  margin: 4%;
+  background-color: #fed665!important;
+  width: 40rem;
+  border-radius: 30px;
+}
+
+</style>
