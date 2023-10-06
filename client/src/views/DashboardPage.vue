@@ -7,7 +7,6 @@
 <script>
 
 import TopBar from "@/components/TopBar.vue";
-
 import firebase from "firebase/compat/app";
 import { getAuth } from "firebase/auth"; // Import Firebase authentication
 import router from "@/router";
