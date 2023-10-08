@@ -1,7 +1,17 @@
 <template>
   <div>
-    <h1>Game Elements</h1>
-    <p> {{ gamesFromApi }}</p>
+    <h1 style="font-family: 'Press Start 2P'; margin-top: 10px;">Games</h1>
+    <ul v-for= "game in gamesFromApi" :key="game.id" class="games">
+        <div class="card" style="width: 400px;">
+            <img :src="game.background_image" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{ game.name }}</h5>
+                <v-if game.description><p class="card-text">{{ game.description }}</p></v-if>
+                <v-else><p class="card-text">No description available</p></v-else>
+                <!-- TODO: Find a way of finding the description, styling page :D -->
+            </div>
+        </div>
+    </ul>
   </div>
 </template>
 
@@ -27,7 +37,7 @@ export default {
                 //TODO: change to the real file and figure out how to take it from the JSON
                 // const response = await fetch(require("@/assets/games.json")); 
                 // this.gamesFromFile = await response.json();
-                this.gamesFromFile = ["The Witcher 3: Wild Hunt", "The Elder Scrolls V: Skyrim", "Grand Theft Auto V", "The Legend of Zelda: Breath of the Wild", "Red Dead Redemption 2", "Mass Effect 2", "The Last of Us", "God of War", "The Witcher 3: Wild Hunt", "The Elder Scrolls V: Skyrim", "Grand Theft Auto V", "The Legend of Zelda: Breath of the Wild", "Red Dead Redemption 2", "Mass Effect 2", "The Last of Us", "God of War"];
+                this.gamesFromFile = ["Tetris", "Valorant", "CS:GO", "Minecraft"];
                 console.log(this.gamesFromFile);
 
             } catch (error) {
@@ -39,6 +49,7 @@ export default {
                 //loop through the array of games using as refference the names stated on the JSON file
                 for (const gameName of this.gamesFromFile){
                     const response = await axios.get(`https://api.rawg.io/api/games?key=4179ef8b1acb4bae99d6f2675731f8a3&search=${gameName}`); //get the game from the API
+                    //maybe add a find by ID to get the description, but his would send too many requests
                     const data = response.data.results[0]; //get the first result
                 if (data){
                     this.gamesFromApi.push(data); //add the game to the array
@@ -51,8 +62,16 @@ export default {
         }
     }
 }
-
-
-
-
 </script>
+
+<style scoped>
+.games {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    list-style: none;
+    padding: 0;
+}
+
+
+</style>
