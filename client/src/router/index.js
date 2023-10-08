@@ -4,6 +4,7 @@ import DashboardPage from "@/views/DashboardPage.vue";
 import ClanPage from "@/views/ClanPage.vue";
 import UserProfilePage from "@/views/UserProfilePage.vue";
 import PageNotFound from "@/views/PageNotFound.vue";
+import ClanListPage from "@/views/ClanListPage.vue";
 
 
 const routes = [
@@ -22,6 +23,12 @@ const routes = [
     name: "ClanPage",
     component: ClanPage,
     props: true
+  },
+  {
+    path: "/users/:id/clans",
+    name: "ClanListPage",
+    component: ClanListPage,
+    props:true
   },
   {
     path: "/profile",
