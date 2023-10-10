@@ -10,10 +10,6 @@ const GameSchema = new Schema({
     teamSize: {
         type: Number,
         min: [1, 'Team size must be at least 1'],
-        required: true
-    },
-    description: {
-        type: String,
         required: false
     },
 });

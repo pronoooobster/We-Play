@@ -1,7 +1,6 @@
 <template>
-    <TopBar />
-    <GamesList />
-
+  <TopBar />
+  <GamesList />
 </template>
 
 <script>

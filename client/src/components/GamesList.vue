@@ -1,14 +1,15 @@
 <template>
   <div>
     <h1 style="font-family: 'Press Start 2P'; margin-top: 10px;">Games</h1>
-    <ul v-for= "game in gamesFromApi" :key="game.id" class="games">
-        <div class="card" style="width: 400px;">
+    <ul v-for= "game in gamesFromRAWG" :key="game.id" class="games">
+        <div class="card" style="width: 900px;">
             <img :src="game.background_image" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">{{ game.name }}</h5>
-                <v-if game.description><p class="card-text">{{ game.description }}</p></v-if>
-                <v-else><p class="card-text">No description available</p></v-else>
-                <!-- TODO: Find a way of finding the description, styling page :D -->
+                    <p class="card-text" v-if="game.description">{{ game.description }}</p>
+                    <p class="card-text" v-else>No description available</p>
+                <p v-if="game.teamSize === undefined">Team size: Unlimited!</p>
+                <p v-else>Team size: {{ game.teamSize }}</p>
             </div>
         </div>
     </ul>
@@ -21,46 +22,51 @@ export default {
     name: 'GamesList',
     data() {
         return {
-            gamesFromApi: [], //store games from API    
-            gamesFromFile: [], //store specified games in the external file
-        }
+            gamesFromRAWG: [],
+            gamesFromMongo: [], //store specified games
+        };
     },
-
-    mounted() { //request game list from RAWG API
-        this.fetchGamesFromFile();
-        this.fetchGamesFromDatabase();
+    mounted() {
+        this.fetchGamesFromAPIs();
     },
-
     methods: {
-        async fetchGamesFromFile(){ //get the games from the JSON file and put them on the array
+        async fetchGamesFromAPIs() {
             try {
-                //TODO: change to the real file and figure out how to take it from the JSON
-                // const response = await fetch(require("@/assets/games.json")); 
-                // this.gamesFromFile = await response.json();
-                this.gamesFromFile = ["Tetris", "Valorant", "CS:GO", "Minecraft"];
-                console.log(this.gamesFromFile);
+                const response = await axios.get('http://localhost:3000/api/games'); //Get the list of games from the mongo database
+                const responseData = response.data;
+                this.gamesFromMongo = responseData.map(game => ({
+                    name: game.name,
+                    teamSize: game.teamSize,
+                }));
+                console.log(this.gamesFromMongo);
+                //loop through the array to find the games in the RAWG api by using a search querry with the name of the game
+                for (const gameName of this.gamesFromMongo) {
+                    const nameForFinding = gameName.name;
+                    const response = await axios.get(`https://api.rawg.io/api/games?key=4179ef8b1acb4bae99d6f2675731f8a3&search=${nameForFinding}`); //get the game from the API
+                    const data = response.data.results[0]; //get the first result
+                    //add the team size field
+                    data.teamSize = gameName.teamSize;
 
-            } catch (error) {
+                    //get the description of the game
+                    const responseForDescription = await axios.get(`https://api.rawg.io/api/games/${data.id}?key=4179ef8b1acb4bae99d6f2675731f8a3`);
+                    const descriptionData = responseForDescription.data;
+                    data.description = descriptionData.description_raw;
+                    
+
+                    console.log(data);
+                    if (data) {
+                        this.gamesFromRAWG.push(data); //add the game to the array
+                    }
+                    else {
+                        console.log("Game not found");
+                    }
+                }
+            }
+            catch (error) {
                 console.log(error);
             }
         },
-        async fetchGamesFromDatabase(){
-            try {
-                //loop through the array of games using as refference the names stated on the JSON file
-                for (const gameName of this.gamesFromFile){
-                    const response = await axios.get(`https://api.rawg.io/api/games?key=4179ef8b1acb4bae99d6f2675731f8a3&search=${gameName}`); //get the game from the API
-                    //maybe add a find by ID to get the description, but his would send too many requests
-                    const data = response.data.results[0]; //get the first result
-                if (data){
-                    this.gamesFromApi.push(data); //add the game to the array
-                } else {console.log("Game not found")}
-            }            
-            } catch (error) {
-                console.log(error);
-            }
-
-        }
-    }
+    },
 }
 </script>
 
