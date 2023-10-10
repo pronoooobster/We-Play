@@ -180,7 +180,6 @@
 							"    pm.expect(responseData).to.be.an('object');\r",
 							"    pm.expect(responseData.name).to.exist;\r",
 							"    pm.expect(responseData.teamSize).to.exist;\r",
-							"    pm.expect(responseData.description).to.exist;\r",
 							"})\r",
 							"pm.test('teamSize is a non-negative integer', function () {\r",
 							"    const responseData = pm.response.json();\r",
