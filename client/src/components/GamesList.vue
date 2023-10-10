@@ -6,8 +6,15 @@
                 <h5 class="card-header">{{ game.name }}</h5>
                 <img :src="game.background_image" class="card-img" alt="...">
                 <div class="card-body">
-                    <p v-if="game.teamSize === undefined">Team size: Unlimited!</p>
-                    <p v-else>Team size: {{ game.teamSize }}</p>
+                    <div class="row">
+                        <div class="col">
+                            <p v-if="game.teamSize === undefined">Team size: Unlimited!</p>
+                            <p v-else>Team size: {{ game.teamSize }}</p>
+                        </div>
+                        <div class="col">
+                            <p>Metacritic Rating: {{ game.metacritic }}</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="accordion" id="accordionGames">
                     <h2 class="accordion-header" id="gamesDescription">
@@ -98,8 +105,12 @@ export default {
 .card-header{
     font-family: 'Martian Mono';
     font-weight:400;
-    font-size: 30px;
+    font-size: 40px;
     background-color: #F7D063;
+}
+.card-body{
+    font-family: 'Martian Mono';
+    font-size: 20px;
 }
 .accordion{
     background-color: #F7D063;
@@ -109,7 +120,7 @@ export default {
     font-weight:bold;
     text-align: center;
     display: block;
-    font-size: 20px;
+    font-size: 30px;
     font-weight: 400;
     color: #F7D063;
     background-color: #60418B;
