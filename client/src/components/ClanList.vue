@@ -2,7 +2,7 @@
   <div>
     <div class="card-1" mx-auto v-if="usersClans">
       <p class="clans" v-for="(clan, index) in usersClans" :key="index">
-        {{ clan._id }}
+        {{ clan.name }}
       </p>
     </div>
   </div>
