@@ -38,7 +38,7 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
     try {
-        const clan = await Clan.findOne({ name: req.params.id });
+        const clan = await Clan.findOne({ name: req.params.id }).populate("users");
         if (!clan) {
             return res.status(204).json({ 'message': 'Clan not found with a given id' });
         }
