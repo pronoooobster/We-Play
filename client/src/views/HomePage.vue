@@ -98,7 +98,7 @@ export default {
           })
 
           console.log(authResult)
-
+ 
           // refresh the page or not
           return false;
         },
