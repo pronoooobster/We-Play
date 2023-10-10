@@ -1,13 +1,18 @@
 <template>
   <div>
-    <h1 style="font-family: 'Press Start 2P'; margin-top: 10px;">Games</h1>
+    <h1 style="font-family: 'Press Start 2P'; margin-top: 1%; margin-bottom: 1%; font-size: 50px;">Games</h1>
     <ul v-for= "game in gamesFromRAWG" :key="game.id" class="games">
         <div class="card" style="width: 900px;">
             <img :src="game.background_image" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">{{ game.name }}</h5>
+            <h5 class="card-title">{{ game.name }}</h5>
+            <button data-bs-toggle="collapse"  :data-bs-target="'#descriptionToggle' + game.id">Game Description</button>
+            <div :id="'descriptionToggle' + game.id" class="collapse">
+                <div class="card-body">
                     <p class="card-text" v-if="game.description">{{ game.description }}</p>
                     <p class="card-text" v-else>No description available</p>
+                </div>
+        </div>
+            <div class="card-body">
                 <p v-if="game.teamSize === undefined">Team size: Unlimited!</p>
                 <p v-else>Team size: {{ game.teamSize }}</p>
             </div>
