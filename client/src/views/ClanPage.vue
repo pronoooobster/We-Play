@@ -72,13 +72,9 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 * {
   font-family: 'Martian Mono';
-}
-
-body {
-  background-color: black;
 }
 
 .card-1 {
