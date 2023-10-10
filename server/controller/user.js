@@ -129,6 +129,50 @@ router.post('/:id/clans', async (req, res, next) => {
     }
 });
 
+// squad
+router.get('/:id/squad', async (req, res, next) => {
+    try {
+        const user = await User.findOne({ _id: req.params.id }).populate('currentSquad');
+        if (!user) {
+            return res.status(204).json({ 'message': 'User not found with a given id' });
+        }
+
+        res.send(user.currentSquad);
+    } catch (err) {
+        return next(err);
+    }
+});
+
+router.post('/:id/squad', async (req, res, next) => {
+    try {
+        const user = await User.findOne({ _id: req.params.id });
+        if (!user) {
+            return res.status(204).json({ 'message': 'User not found with a given id' });
+        }
+
+        user.currentSquad = req.body;
+        user.save();
+        res.json(user);
+    } catch (err) {
+        return next(err);
+    }
+});
+
+router.delete('/:id/squad', async (req, res, next) => {
+    try {
+        const user = await User.findOne({ _id: req.params.id });
+        if (!user) {
+            return res.status(204).json({ 'message': 'User not found with a given id' });
+        }
+
+        user.currentSquad = null;
+        user.save();
+        res.json(user);
+    } catch (err) {
+        return next(err);
+    }
+});
+
 // specific clan
 
 router.get('/:id/clans/:clanId', async (req, res, next) => {
@@ -191,7 +235,9 @@ router.post('/:id/friendslist', async (req, res, next) => {
             return res.status(204).json({ 'message': 'User not found with a given id' });
         }
 
-        res.send(user.friendslist);
+        user.friendslist.push(req.body);
+        user.save();
+        res.json(user);
     } catch (err) {
         return next(err);
     }
