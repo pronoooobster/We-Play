@@ -6,6 +6,9 @@ const UserSchema = new Schema({
         type: String,
         required: true,
     },
+    name: {
+        type: String,
+    },
     friendslist: {
         type: [{ type: Schema.Types.ObjectId, ref: 'User' }],
         required: false
