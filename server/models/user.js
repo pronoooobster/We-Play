@@ -19,6 +19,11 @@ const UserSchema = new Schema({
         required: false,
         default: false
     },
+    currentSquad: {
+        type: Schema.Types.ObjectId,
+        ref: 'Squad',
+        required: false
+    },
 });
 
 module.exports = mongoose.model('User', UserSchema);

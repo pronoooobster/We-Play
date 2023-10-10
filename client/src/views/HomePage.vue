@@ -55,11 +55,7 @@ export default {
       // go to the dashboard page after signing in
       signinSuccessUrl: '/dashboard',
       signInOptions: [
-        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-        {
-          provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-          signInMethod: firebase.auth.EmailAuthProvider.EMAIL_LINK_SIGN_IN_METHOD
-        },
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID
       ],
       callbacks: {
         signInSuccessWithAuthResult: function (authResult) {
@@ -90,7 +86,7 @@ export default {
             if (response.data == '') {
               // create a new user
               axios.post('http://localhost:3000/api/users', {
-                "UID": authResult.user.uid
+                "_id": authResult.user.uid
               }).then((response) => {
                 console.log(response)
               }).catch((error) => {
