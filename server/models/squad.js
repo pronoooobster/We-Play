@@ -17,9 +17,10 @@ const SquadSchema = new Schema({
     },
     description: {
         type: String,
+        required: false
     },
     game: {
-        type: [{ type: Schema.Types.String, ref: 'User'}],
+        type: Schema.Types.ObjectId,
         ref: 'Game',
         required: false
     },

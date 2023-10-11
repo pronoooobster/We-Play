@@ -94,25 +94,27 @@
                         <!-- join squad modal -->
                         <div class="modal fade" id="joinSquadModal" tabindex="-1" aria-labelledby="joinSquadModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                <div class="modal-header">
-                                        <h5 class="modal-title" id="createSquadModalLabel">Join a squad</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <!-- list of all the available squads -->
-                                    <div v-for="availableSquad in availableSquads" :key="availableSquad._id">
-                                        <!-- squad name -->
-                                        <p class="text-2">{{ availableSquad.name }}</p>
-                                        <!-- game name -->
-                                        <p class="text-2">Game: {{ availableSquad.game.name }}</p>
-                                        <!-- join button -->
-                                        <button type="button" class="btn btn-primary" @click="joinSquad(availableSquad._id)">
-                                            Join
-                                        </button>
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                            <h5 class="modal-title" id="createSquadModalLabel">Join a squad</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                </div>
-                                <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <div class="modal-body">
+                                        <!-- list of all the available squads -->
+                                        <div v-for="availableSquad in availableSquads" :key="availableSquad._id">
+                                            <!-- squad name -->
+                                            <p class="text-2" style="font-weight: bold;">{{ availableSquad.name }}</p>
+                                            <!-- game name -->
+                                            <p class="text-2">Game: {{ availableSquad.game.name }}</p>
+                                            <!-- join button -->
+                                            <button type="button" class="btn btn-primary" @click="joinSquad(availableSquad._id)">
+                                                Join
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -211,6 +213,17 @@ export default {
                     // if the squad has no more players, delete it
                     if (this.squad.currentPlayers.length <= 1) {
                         axios.delete('http://localhost:3000/api/v1/squads/' + this.squad._id)
+                            .then(res => {
+                                console.log(res)
+                                // reload the page
+                                location.reload()
+                            })
+                            .catch(err => {
+                                console.log(err)
+                            });
+                    } else {
+                        // remove the user from the squad
+                        axios.delete('http://localhost:3000/api/v1/squads/' + this.squad._id + '/users/' + this.user.uid)
                             .then(res => {
                                 console.log(res)
                                 // reload the page
