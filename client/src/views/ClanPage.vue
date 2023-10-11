@@ -10,7 +10,7 @@
         <div v-if="clan.users.length > 0">
           <h3> Members: </h3>
           <p class="users" v-for="(user, index) in clan.users" :key="index">
-            {{ user }}
+            {{ user.name }}
           </p>
         </div>
         <div v-else>

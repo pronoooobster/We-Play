@@ -241,7 +241,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\" : 3,\r\n    \"name\": \"amigos\",\r\n    \"maxPlayers\" : \"3\",\r\n    \"currentPlayers\" : [\"65034d8caac97a6c04d5fd8c\"],\r\n    \"description\": \"this squad is only for the reals\",\r\n    \"game\" : \"65034d18aac97a6c04d5fd85\"\r\n}",
+					"raw": "{\r\n    \"name\": \"amigos\",\r\n    \"maxPlayers\" : \"3\",\r\n    \"currentPlayers\" : [\"65034d8caac97a6c04d5fd8c\"],\r\n    \"description\": \"this squad is only for the reals\",\r\n    \"game\" : \"65034d18aac97a6c04d5fd85\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -259,41 +259,6 @@
 						"api",
 						"v1",
 						"squads"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "delete a specific squad",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test('Response status code is 200', function () {\r",
-							"    pm.expect(pm.response.code).to.equal(200);\r",
-							"})"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3000/api/v1/squads/3",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3001",
-					"path": [
-						"api",
-						"v1",
-						"squads",
-						"3"
 					]
 				}
 			},

@@ -6,6 +6,9 @@ const UserSchema = new Schema({
         type: String,
         required: true,
     },
+    name: {
+        type: String,
+    },
     friendslist: {
         type: [{ type: Schema.Types.ObjectId, ref: 'User' }],
         required: false
@@ -18,6 +21,11 @@ const UserSchema = new Schema({
         type: Boolean,
         required: false,
         default: false
+    },
+    currentSquad: {
+        type: Schema.Types.ObjectId,
+        ref: 'Squad',
+        required: false
     },
 });
 
