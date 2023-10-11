@@ -50,6 +50,31 @@ router.get('/:id', async (req, res, next) => {
     }
 });
 
+// get the game using the id
+router.get('/v2/:id', async (req, res, next) => {
+    try {
+        const game = await Game.findById(req.params.id);
+        if (!game) {
+            return res.status(204).json({ 'message': 'Game not found with a given id' });
+        }
+
+        const response = {
+            name: game.name,
+            teamSize: game.teamSize,
+            description: game.description,
+            _links: {
+                self: { href: `http://localhost:3000/api/games/${game.name}` },
+                collection: { href: 'http://localhost:3000/api/games' },
+            },
+        };
+
+        res.status(200).json(response);
+    } catch (err) {
+        return next(err);
+    }
+});
+
+
 router.delete('/:id', async (req, res, next) => {
     try {
         const game = await Game.findOneAndDelete({ name: req.params.id });

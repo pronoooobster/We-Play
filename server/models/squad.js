@@ -12,14 +12,14 @@ const SquadSchema = new Schema({
         required: true
     },
     currentPlayers: {
-        type: [{ type: Schema.Types.ObjectId, ref: 'User'}],
+        type: [{ type: Schema.Types.String, ref: 'User'}],
         required: false
     },
     description: {
         type: String,
     },
     game: {
-        type: Schema.Types.ObjectId,
+        type: [{ type: Schema.Types.String, ref: 'User'}],
         ref: 'Game',
         required: false
     },

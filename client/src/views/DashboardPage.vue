@@ -25,7 +25,7 @@
                         <!-- in the squad - display members and leave button -->
                         <div v-else class="center-section" id="squad-section">
                             <p class="text-1" style="font-weight: bold;">{{ squad.name }}</p>
-                            <p class="text-1">Game: {{ squadGame }}</p>
+                            <p class="text-1">Game: {{ squadGame.name }}</p>
                             <p class="text-1">Squad Size: {{ squad.maxPlayers }}</p>
                             <p class="text-1">Squad Members:</p>
                             <ul>
@@ -140,9 +140,6 @@ export default {
             // add the game id to the json object
             squadData.game = game._id
 
-            // TODO: add a currentPlayers array field to the json object and put the user id in it
-            // squadData.currentPlayers = this.user.uid
-
             // post the form data to the server
             axios.post('http://localhost:3000/api/v1/squads', squadData)
                 .then(res => {
@@ -152,15 +149,26 @@ export default {
                     axios.post('http://localhost:3000/api/users/' + this.user.uid + '/squad', {
                         "_id": res.data._id
                     })
-                        .then(res => {
-                            console.log(res)
+                        .then(res2 => {
+                            console.log(res2)
+                            // add a user to the squad
+                            axios.post('http://localhost:3000/api/v1/squads/' + res.data._id + '/users', {
+                                "_id": this.user.uid
+                            })
+                                .then(res => {
+                                    console.log(res)
+                                    location.reload()
+
+                                })
+                                .catch(err => {
+                                    console.log(err)
+                                });
                         })
                         .catch(err => {
                             console.log(err)
                         });
 
                     // reload the page
-                    location.reload()
                 })
                 .catch(err => {
                     console.log(err)
@@ -201,7 +209,9 @@ export default {
             user: null,
             squad: null,
             games: null,
-            squadGame: null
+            squadGame: {
+                name: "Loading..."
+            }
         };
     },
     setup() {
@@ -231,7 +241,7 @@ export default {
                     this.squad = res.data
                     
                     // get the squad game
-                    axios.get('http://localhost:3000/api/games/' + this.squad.game)
+                    axios.get('http://localhost:3000/api/games/v2/' + this.squad.game)
                         .then(res => {
                             this.squadGame = res.data
                             console.log(this.squadGame)
