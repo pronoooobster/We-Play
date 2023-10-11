@@ -17,6 +17,7 @@ const SquadSchema = new Schema({
     },
     description: {
         type: String,
+        required: false
     },
     game: {
         type: Schema.Types.ObjectId,
