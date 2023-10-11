@@ -86,7 +86,8 @@ export default {
             if (response.data == '') {
               // create a new user
               axios.post('http://localhost:3000/api/users', {
-                "_id": authResult.user.uid
+                "_id": authResult.user.uid,
+                "name": authResult.user.displayName
               }).then((response) => {
                 console.log(response)
               }).catch((error) => {

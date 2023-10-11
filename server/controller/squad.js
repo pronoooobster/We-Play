@@ -22,6 +22,21 @@ router.get('/', async (req, res, next) => {
     }
 });
 
+// get all the squads that are not full
+router.get('/notfull', async (req, res, next) => {
+    try {
+        // find squads with less players than maxPlayers
+        const squads = await Squad.find( { $expr: { $lt: [ "$currentPlayers.length", "$maxPlayers" ] } } ).populate('game');
+        if (squads.length === 0) {
+            return res.status(204).json({ 'message': 'No squads' });
+        }
+
+        res.status(200).json(squads);
+    } catch (err) {
+        return next(err);
+    }
+});
+
 
 router.get('/:id', async (req, res, next) => {
     try {

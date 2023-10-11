@@ -25,12 +25,14 @@
                         <!-- in the squad - display members and leave button -->
                         <div v-else class="center-section" id="squad-section">
                             <p class="text-1" style="font-weight: bold;">{{ squad.name }}</p>
-                            <p class="text-1">Game: {{ squadGame }}</p>
+                            <p class="text-1">Game: {{ squadGame.name }}</p>
                             <p class="text-1">Squad Size: {{ squad.maxPlayers }}</p>
                             <p class="text-1">Squad Members:</p>
-                            <ul>
-                                <li v-for="member in squad.currentPlayers" :key="member._id">{{ member.username }}</li>
-                            </ul>
+                            <!-- list of members -->
+                            <div v-for="member in squadMembers" :key="member._id">
+                                <p class="text-2">{{ member.name }}</p>
+                                <hr>
+                            </div>
                             <!-- leave squad button -->
                             <button type="button" class="btn btn-danger" @click="leaveSquad">
                                 Leave Squad
@@ -88,6 +90,32 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- join squad modal -->
+                        <div class="modal fade" id="joinSquadModal" tabindex="-1" aria-labelledby="joinSquadModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-header">
+                                        <h5 class="modal-title" id="createSquadModalLabel">Join a squad</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- list of all the available squads -->
+                                    <div v-for="availableSquad in availableSquads" :key="availableSquad._id">
+                                        <!-- squad name -->
+                                        <p class="text-2">{{ availableSquad.name }}</p>
+                                        <!-- game name -->
+                                        <p class="text-2">Game: {{ availableSquad.game.name }}</p>
+                                        <!-- join button -->
+                                        <button type="button" class="btn btn-primary" @click="joinSquad(availableSquad._id)">
+                                            Join
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
                         
                     </div>
                     <div class="col-lg-4 vh-100 right">
@@ -139,9 +167,6 @@ export default {
             // add the game id to the json object
             squadData.game = game._id
 
-            // TODO: add a currentPlayers array field to the json object and put the user id in it
-            // squadData.currentPlayers = this.user.uid
-
             // post the form data to the server
             axios.post('http://localhost:3000/api/v1/squads', squadData)
                 .then(res => {
@@ -151,15 +176,26 @@ export default {
                     axios.post('http://localhost:3000/api/users/' + this.user.uid + '/squad', {
                         "_id": res.data._id
                     })
-                        .then(res => {
-                            console.log(res)
+                        .then(res2 => {
+                            console.log(res2)
+                            // add a user to the squad
+                            axios.post('http://localhost:3000/api/v1/squads/' + res.data._id + '/users', {
+                                "_id": this.user.uid
+                            })
+                                .then(res => {
+                                    console.log(res)
+                                    location.reload()
+
+                                })
+                                .catch(err => {
+                                    console.log(err)
+                                });
                         })
                         .catch(err => {
                             console.log(err)
                         });
 
                     // reload the page
-                    location.reload()
                 })
                 .catch(err => {
                     console.log(err)
@@ -172,24 +208,48 @@ export default {
             axios.delete('http://localhost:3000/api/users/' + this.user.uid + '/squad')
                 .then(res => {
                     console.log(res)
+                    // if the squad has no more players, delete it
+                    if (this.squad.currentPlayers.length <= 1) {
+                        axios.delete('http://localhost:3000/api/v1/squads/' + this.squad._id)
+                            .then(res => {
+                                console.log(res)
+                                // reload the page
+                                location.reload()
+                            })
+                            .catch(err => {
+                                console.log(err)
+                            });
+                    }
                 })
                 .catch(err => {
                     console.log(err)
                 });
+        },
 
-            // if the squad has no more players, delete it
-            if (this.squad.currentPlayers.length <= 1) {
-                axios.delete('http://localhost:3000/api/v1/squads/' + this.squad._id)
-                    .then(res => {
-                        console.log(res)
+        // join squad
+        joinSquad(squadId) {
+            // add the squad to the user
+            axios.post('http://localhost:3000/api/users/' + this.user.uid + '/squad', {
+                "_id": squadId
+            })
+                .then(res => {
+                    console.log(res)
+                    // add a user to the squad
+                    axios.post('http://localhost:3000/api/v1/squads/' + squadId + '/users', {
+                        "_id": this.user.uid
                     })
-                    .catch(err => {
-                        console.log(err)
-                    });
-            }
-
-            // reload the page
-            location.reload()
+                        .then(res => {
+                            console.log(res)
+                            // reload the page
+                            location.reload()
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        });
+                })
+                .catch(err => {
+                    console.log(err)
+                });
         }
     },
     components: {
@@ -200,7 +260,15 @@ export default {
             user: null,
             squad: null,
             games: null,
-            squadGame: null
+            squadGame: {
+                name: "Loading..."
+            },
+            squadMembers: [
+                {
+                    name: "Loading..."
+                }
+            ],
+            availableSquads: null
         };
     },
     setup() {
@@ -230,10 +298,30 @@ export default {
                     this.squad = res.data
                     
                     // get the squad game
-                    axios.get('http://localhost:3000/api/games/' + this.squad.game)
+                    axios.get('http://localhost:3000/api/games/v2/' + this.squad.game)
                         .then(res => {
                             this.squadGame = res.data
                             console.log(this.squadGame)
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        });
+
+                    // get the squad members
+                    axios.get('http://localhost:3000/api/v1/squads/' + this.squad._id + '/users')
+                        .then(res => {
+                            this.squadMembers = res.data
+                            console.log(this.squadMembers)
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        });
+
+                    // get the squads that are not full
+                    axios.get('http://localhost:3000/api/v1/squads/notfull')
+                        .then(res => {
+                            this.availableSquads = res.data
+                            console.log(this.availableSquads)
                         })
                         .catch(err => {
                             console.log(err)
@@ -263,10 +351,21 @@ export default {
     font-family: 'Martian Mono';
 }
 
+li {
+    font-size: 20px;
+    font-family: 'Martian Mono';
+}
+
 .text-1 {
     font-size: 30px;
     font-family: 'Martian Mono';
     margin-bottom: 4%;
+}
+
+.text-2 {
+    font-size: 20px;
+    font-family: 'Martian Mono';
+    color: darkslategrey;
 }
 
 .modal-title {
