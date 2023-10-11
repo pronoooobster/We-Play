@@ -26,7 +26,7 @@ router.get('/', async (req, res, next) => {
 router.get('/notfull', async (req, res, next) => {
     try {
         // find squads with less players than maxPlayers
-        const squads = await Squad.find( { $expr: { $lt: [ "$currentPlayers.length", "$maxPlayers" ] } } ).populate('game');
+        const squads = await Squad.find( { $expr: { $gt: [ "$currentPlayers.length", "$maxPlayers" ] } } ).populate('game');
         if (squads.length === 0) {
             return res.status(204).json({ 'message': 'No squads' });
         }

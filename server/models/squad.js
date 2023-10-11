@@ -19,7 +19,7 @@ const SquadSchema = new Schema({
         type: String,
     },
     game: {
-        type: [{ type: Schema.Types.String, ref: 'User'}],
+        type: Schema.Types.ObjectId,
         ref: 'Game',
         required: false
     },
