@@ -5,6 +5,7 @@ import ClanPage from "@/views/ClanPage.vue";
 import UserProfilePage from "@/views/UserProfilePage.vue";
 import PageNotFound from "@/views/PageNotFound.vue";
 import ClanListPage from "@/views/ClanListPage.vue";
+import GamesPage from "@/views/GamesPage.vue";
 
 
 const routes = [
@@ -34,6 +35,11 @@ const routes = [
     path: "/profile",
     name: "Profile",
     component: UserProfilePage,
+  },
+  {
+    path: "/games",
+    name: "Games",
+    component: GamesPage,
   },
   {
     path: "/:catchAll(.*)",
