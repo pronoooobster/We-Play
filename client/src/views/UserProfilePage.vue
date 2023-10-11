@@ -66,7 +66,7 @@ export default {
 
 
 </script>
-<style>
+<style scoped>
     .big-picture {
         width: 200px;
         height: 200px;
