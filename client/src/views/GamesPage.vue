@@ -27,7 +27,7 @@
     background-color: #474747;
 }
 .container-md{
-    margin-top: 1%;
+    margin-top: 3%;
     background-color: #1F1F1F;
     border-radius: 21px;
 
