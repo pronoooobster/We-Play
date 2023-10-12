@@ -34,6 +34,7 @@ router.get('/:id', async (req, res, next) => {
             email: user.email,
             friendslist: user.friendslist,
             clansList: user.clansList,
+            isAdmin: user.isAdmin,
             _links: {
                 self: { href: `http://localhost:3000/api/users/${user._id}` },
                 collection: { href: 'http://localhost:3000/api/users' },
@@ -90,6 +91,9 @@ router.patch('/:id', async (req, res, next) => {
 
         if (req.body.friendslist) {
             user.friendslist = req.body.friendslist;
+        }
+        if(req.body.isAdmin){
+            user.isAdmin = req.body.isAdmin;
         }
 
         user.save();

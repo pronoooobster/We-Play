@@ -20,7 +20,7 @@
             </div>
     </div>
     </div>
-    </div>
+</div>
 </template>
 
 <script>
@@ -38,24 +38,25 @@ export default {
     data(){
         return {
             user: {
-                isAdmin: false,
+                isAdmin: true
             }
         }
 
     },
 
-    methods: {
-        isAdmin(){
+    created(){
+            console.log("isAdmin");
             const auth = getAuth();
             auth.onAuthStateChanged(user => {
                 this.user = user;
-
+    
                 axios.get('http://localhost:3000/api/users/' + this.user.uid)
                     .then(res => {
                         this.user = res.data;
                         console.log(this.user);
                         if(this.user.isAdmin == true){
                             this.user.isAdmin = true;
+                            console.log(this.user.isAdmin);
                         }
                         else{
                             this.user.isAdmin = false;
@@ -63,11 +64,14 @@ export default {
                     })
             })  
         },
+
+    methods: {
         
         deleteAllGames(){
             axios.delete('http://localhost:3000/api/games')
                 .then(res => {
                     console.log(res);
+                    location.reload();
                 })
         }
         
@@ -77,15 +81,15 @@ export default {
 </script>
 
 <style scoped>
-#background{
-    background-color: #474747;
-}
+
 .container-md{
     margin-top: 3%;
     background-color: #1F1F1F;
     border-radius: 21px;
 
 }
+
+
 
 </style>
 
