@@ -10,7 +10,7 @@ const UserSchema = new Schema({
         type: String,
     },
     friendslist: {
-        type: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+        type: [{ type: Schema.Types.String, ref: 'User' }],
         required: false
     },
     clansList: {

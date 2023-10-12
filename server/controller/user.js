@@ -32,13 +32,16 @@ router.get('/:id', async (req, res, next) => {
         const response = {
             _id: user._id,
             email: user.email,
-            friendslist: user.friendslist,
+            name: user.name,
+            friendslist: user.friendslist || [],
             clansList: user.clansList,
+            currentSquad: user.currentSquad,
             _links: {
                 self: { href: `http://localhost:3000/api/users/${user._id}` },
                 collection: { href: 'http://localhost:3000/api/users' },
                 clans: { href: `http://localhost:3000/api/users/${user._id}/clans` },
                 friendslist: { href: `http://localhost:3000/api/users/${user._id}/friendslist` },
+                currentSquad: { href: `http://localhost:3000/api/v1/squads/${user.currentSquad}` }
             },
         };  
         res.status(200).json(response);
@@ -230,9 +233,15 @@ router.get('/:id/friendslist', async (req, res, next) => {
 
 router.post('/:id/friendslist', async (req, res, next) => {
     try {
-        const user = await User.findOne({ _id: req.params.id }).populate('friendslist');
+        const user = await User.findById(req.params.id);
         if (!user) {
             return res.status(404).json({ 'message': 'User not found with a given id' });
+        }
+
+        // if the user is already in the friends list, don't add them again
+        const friend = user.friendslist.find(friend => friend === req.body._id);
+        if (friend) {
+            return res.status(204).json({ 'message': 'User is already in friends list' });
         }
 
         user.friendslist.push(req.body);
