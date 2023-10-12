@@ -26,7 +26,7 @@ router.get('/:id', async (req, res, next) => {
     try {
         const user = await User.findOne({ _id: req.params.id });
         if (!user) {
-            return res.status(204).json({ 'message': 'User not found with a given id' });
+            return res.status(404).json({ 'message': 'User not found with a given id' });
         }
 
         const response = {
@@ -51,7 +51,7 @@ router.delete('/:id', async (req, res, next) => {
     try {
         const user = await User.findOneAndDelete({ _id: req.params.id });
         if (!user) {
-            return res.status(204).json({ 'message': 'User not found with a given id' });
+            return res.status(404).json({ 'message': 'User not found with a given id' });
         }
 
         res.status(200).json(user);
@@ -64,7 +64,7 @@ router.put('/:id', async (req, res, next) => {
     try{
         const user = await User.findOneAndUpdate({ _id: req.params.id }, req.body);
         if (!user) {
-            return res.status(204).json({ 'message': 'User not found with a given id' });
+            return res.status(404).json({ 'message': 'User not found with a given id' });
         }
 
         res.status(200).json(user);
@@ -77,7 +77,7 @@ router.patch('/:id', async (req, res, next) => {
     try{
         const user = await User.findOne({ _id: req.params.id });
         if (!user) {
-            return res.status(204).json({ 'message': 'User not found with a given id' });
+            return res.status(404).json({ 'message': 'User not found with a given id' });
         }
 
         if (req.body._id) {
@@ -105,7 +105,7 @@ router.get('/:id/clans', async (req, res, next) => {
     try {
         const user = await User.findOne({ _id: req.params.id }).populate('clansList');
         if (!user) {
-            return res.status(204).json({ 'message': 'User not found with a given id' });
+            return res.status(404).json({ 'message': 'User not found with a given id' });
         }
 
         res.send(user.clansList);
@@ -118,7 +118,7 @@ router.post('/:id/clans', async (req, res, next) => {
     try {
         const user = await User.findOne({ _id: req.params.id });
         if (!user) {
-            return res.status(204).json({ 'message': 'User not found with a given id' });
+            return res.status(404).json({ 'message': 'User not found with a given id' });
         }
 
         user.clansList.push(req.body);
@@ -134,7 +134,7 @@ router.get('/:id/squad', async (req, res, next) => {
     try {
         const user = await User.findOne({ _id: req.params.id }).populate('currentSquad');
         if (!user) {
-            return res.status(204).json({ 'message': 'User not found with a given id' });
+            return res.status(404).json({ 'message': 'User not found with a given id' });
         }
 
         res.send(user.currentSquad);
@@ -147,7 +147,7 @@ router.post('/:id/squad', async (req, res, next) => {
     try {
         const user = await User.findOne({ _id: req.params.id });
         if (!user) {
-            return res.status(204).json({ 'message': 'User not found with a given id' });
+            return res.status(404).json({ 'message': 'User not found with a given id' });
         }
 
         user.currentSquad = req.body;
@@ -162,7 +162,7 @@ router.delete('/:id/squad', async (req, res, next) => {
     try {
         const user = await User.findOne({ _id: req.params.id });
         if (!user) {
-            return res.status(204).json({ 'message': 'User not found with a given id' });
+            return res.status(404).json({ 'message': 'User not found with a given id' });
         }
 
         user.currentSquad = null;
@@ -179,7 +179,7 @@ router.get('/:id/clans/:clanId', async (req, res, next) => {
     try {
         const user = await User.findOne({ _id: req.params.id }).populate('clansList');
         if (!user) {
-            return res.status(204).json({ 'message': 'User not found with a given id' });
+            return res.status(404).json({ 'message': 'User not found with a given id' });
         }
 
         const clan = user.clansList.find(clan => clan.name === req.params.clanId);
@@ -197,7 +197,7 @@ router.delete('/:id/clans/:clanId', async (req, res, next) => {
     try {
         const user = await User.findOne({ _id: req.params.id }).populate('clansList');
         if (!user) {
-            return res.status(204).json({ 'message': 'User not found with a given id' });
+            return res.status(404).json({ 'message': 'User not found with a given id' });
         }
 
         const clan = user.clansList.find(clan => clan.name === req.params.clanId);
@@ -219,7 +219,7 @@ router.get('/:id/friendslist', async (req, res, next) => {
     try {
         const user = await User.findOne({ _id: req.params.id }).populate('friendslist');
         if (!user) {
-            return res.status(204).json({ 'message': 'User not found with a given id' });
+            return res.status(404).json({ 'message': 'User not found with a given id' });
         }
 
         res.send(user.friendslist);
@@ -232,7 +232,7 @@ router.post('/:id/friendslist', async (req, res, next) => {
     try {
         const user = await User.findOne({ _id: req.params.id }).populate('friendslist');
         if (!user) {
-            return res.status(204).json({ 'message': 'User not found with a given id' });
+            return res.status(404).json({ 'message': 'User not found with a given id' });
         }
 
         user.friendslist.push(req.body);
@@ -249,11 +249,11 @@ router.get('/:id/friendslist/:id', async (req, res, next) => {
     try {
         const user = await User.findOne({ _id: req.params.id }).populate('friendslist');
         if(!user) {
-            return res.status(204).json({ 'message': 'User not found with a given id' });
+            return res.status(404).json({ 'message': 'User not found with a given id' });
         }
     const friend = user.friendslist.find(friend => friend._id === req.params.id);
     if (!friend){
-        return res.status(204).json({ 'message': 'Friend not found with a given id' });
+        return res.status(404).json({ 'message': 'Friend not found with a given id' });
     }
 
     res.send(friend);
