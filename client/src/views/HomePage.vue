@@ -89,7 +89,7 @@ export default {
                 "_id": authResult.user.uid,
                 "name": authResult.user.displayName
               }).then((response) => {
-                console.log(response)
+                console.log(response) 
               }).catch((error) => {
                 console.log(error)
               })

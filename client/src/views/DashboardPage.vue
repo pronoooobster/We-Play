@@ -52,7 +52,7 @@
                                             <!-- squad name field -->
                                             <div class="mb-3">
                                                 <label for="squadName" class="form-label">Squad Name</label>
-                                                <input name="name" type="text" class="form-control" id="squadName" placeholder="Enter squad name" required>
+                                                <input name="name" type="text" class="form-control" id="squadName" autocomplete="off" placeholder="Enter squad name" required>
                                                 <div class="valid-feedback">
                                                     Looks good!
                                                 </div>
@@ -121,7 +121,9 @@
                         
                     </div>
                     <div class="col-lg-4 vh-100 right">
-
+                        <p class="text-1" style="margin-top: 10%;">Followed players:</p>
+                        <!-- Friends list -->
+                        <FriendsList v-if="user" class="center-section" :uid="user.uid" />
                     </div>
                 </div>
             </div>
@@ -133,6 +135,8 @@
 <script>
 
 import TopBar from "@/components/TopBar.vue";
+import FriendsList from "@/components/FriendsList.vue";
+
 import firebase from "firebase/compat/app";
 import { getAuth } from "firebase/auth"; // Import Firebase authentication
 import router from "@/router";
@@ -266,7 +270,8 @@ export default {
         }
     },
     components: {
-        TopBar
+        TopBar,
+        FriendsList
     },
     data() {
         return {
@@ -413,6 +418,13 @@ li {
 
 .right {
     background-color: #9f9cff;
+
+    /* centering everything inside */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 .center-section {
