@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="background">
     <div class="card-1" mx-auto v-if="usersClans">
       <p class="clans" v-for="(clan, index) in usersClans" :key="index">
         {{ clan.name }}
@@ -52,15 +52,17 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 .card-1 {
   margin: 4%;
-  padding-bottom: 4%;
+  padding: 3%;
   background-color: #fed665 !important;
-  border-radius: 30px;
+  border-radius: 15px;
 }
 
 .clans {
-  text-align: center;
+  line-height: 4px;
+  text-align: left;
+  font-family: 'Martian Mono';
 }
 </style>

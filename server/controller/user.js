@@ -24,7 +24,7 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
     try {
-        const user = await User.findOne({ _id: req.params.id });
+        const user = await User.findOne({ _id: req.params.id }).populate("clansList");
         if (!user) {
             return res.status(404).json({ 'message': 'User not found with a given id' });
         }

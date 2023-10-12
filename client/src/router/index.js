@@ -2,7 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import HomePage from "@/views/HomePage.vue";
 import DashboardPage from "@/views/DashboardPage.vue";
 import ClanPage from "@/views/ClanPage.vue";
-import UserProfilePage from "@/views/UserProfilePage.vue";
+import MyProfilePage from "@/views/MyProfilePage.vue";
 import PageNotFound from "@/views/PageNotFound.vue";
 import ClanListPage from "@/views/ClanListPage.vue";
 import GamesPage from "@/views/GamesPage.vue";
@@ -32,9 +32,9 @@ const routes = [
     props:true
   },
   {
-    path: "/profile",
-    name: "Profile",
-    component: UserProfilePage,
+    path: "/myprofile",
+    name: "myrofile",
+    component: MyProfilePage,
   },
   {
     path: "/games",
