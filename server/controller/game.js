@@ -27,6 +27,9 @@ router.get('/', async (req, res, next) => {
     }
 });
 
+//delete the entire collection
+
+
 router.get('/:id', async (req, res, next) => {
     try {
         const game = await Game.findOne({ name: req.params.id });

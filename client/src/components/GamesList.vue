@@ -1,6 +1,5 @@
 <template>
     <div class="background">
-        <h1 style="font-family: 'Press Start 2P'; margin-top: 1%; margin-bottom: 2%; color:#F7D063;">GAMES</h1>
         <ul v-for="game in gamesFromRAWG" :key="game.id" class="games">
             <div class="card" style="width: 900px;">
                 <h5 class="card-header">{{ game.name }}</h5>
