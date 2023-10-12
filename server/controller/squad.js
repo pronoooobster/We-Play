@@ -22,6 +22,19 @@ router.get('/', async (req, res, next) => {
     }
 });
 
+//delete the entire collection
+router.delete('/', async (req, res, next) => {
+    try {
+        const squads = await Squad.deleteMany({});
+        if (!squads) {
+            return res.status(404).json({ 'message': 'Squads not found' });
+        }
+        res.status(200).json(games);
+    } catch (err) {
+        return next(err);
+    }
+});
+
 // get all the squads that are not full
 router.get('/notfull', async (req, res, next) => {
     try {
