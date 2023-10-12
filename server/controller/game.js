@@ -31,7 +31,7 @@ router.get('/:id', async (req, res, next) => {
     try {
         const game = await Game.findOne({ name: req.params.id });
         if (!game) {
-            return res.status(204).json({ 'message': 'Game not found with a given id' });
+            return res.status(404).json({ 'message': 'Game not found with a given id' });
         }
 
         const response = {
@@ -55,7 +55,7 @@ router.get('/v2/:id', async (req, res, next) => {
     try {
         const game = await Game.findById(req.params.id);
         if (!game) {
-            return res.status(204).json({ 'message': 'Game not found with a given id' });
+            return res.status(404).json({ 'message': 'Game not found with a given id' });
         }
 
         const response = {
@@ -79,7 +79,7 @@ router.delete('/:id', async (req, res, next) => {
     try {
         const game = await Game.findOneAndDelete({ name: req.params.id });
         if (!game) {
-            return res.status(204).json({ 'message': 'Game not found with a given id' });
+            return res.status(404).json({ 'message': 'Game not found with a given id' });
         }
 
         res.status(200).json(game);
@@ -92,7 +92,7 @@ router.put('/:id', async (req, res, next) => {
     try {
         const game = await Game.findOneAndUpdate({ name: req.params.id }, req.body);
         if (!game) {
-            return res.status(204).json({ 'message': 'Game not found with a given id' });
+            return res.status(404).json({ 'message': 'Game not found with a given id' });
         }
 
         res.status(200).json(game);
@@ -106,7 +106,7 @@ router.patch('/:id', async (req, res, next) => {
     try {
         const game = await Game.findOne({ name: req.params.id });
         if (!game) {
-            return res.status(204).json({ 'message': 'Game not found with a given id' });
+            return res.status(404).json({ 'message': 'Game not found with a given id' });
         }
 
         if (req.body.teamSize) {

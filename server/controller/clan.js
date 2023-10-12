@@ -40,7 +40,7 @@ router.get('/:id', async (req, res, next) => {
     try {
         const clan = await Clan.findOne({ name: req.params.id }).populate("users");
         if (!clan) {
-            return res.status(204).json({ 'message': 'Clan not found with a given id' });
+            return res.status(404).json({ 'message': 'Clan not found with a given id' });
         }
 
         const response = {
@@ -67,7 +67,7 @@ router.delete('/:id', async (req, res, next) => {
     try {
         const clan = await Clan.findOneAndDelete({ name: req.params.id });
         if (!clan) {
-            return res.status(204).json({ 'message': 'Clan not found with a given id' });
+            return res.status(404).json({ 'message': 'Clan not found with a given id' });
         }
 
         res.status(200).json(clan);
@@ -80,7 +80,7 @@ router.put('/:id', async (req, res, next) => {
     try {
         const clan = await Clan.findOneAndUpdate({ name: req.params.id }, req.body);
         if (!clan) {
-            return res.status(204).json({ 'message': 'Clan not found with a given id' });
+            return res.status(404).json({ 'message': 'Clan not found with a given id' });
         }
 
         res.status(200).json(clan);
@@ -95,7 +95,7 @@ router.get('/:id/games', async (req, res, next) => {
     try {
         const clan = await Clan.findOne({ name: req.params.id }).populate('gamesList');
         if (!clan) {
-            return res.status(204).json({ 'message': 'Clan not found with a given id' });
+            return res.status(404).json({ 'message': 'Clan not found with a given id' });
         }
 
         res.send(clan.gamesList);
@@ -108,7 +108,7 @@ router.get('/:id/users', async (req, res, next) => {
     try {
         const clan = await Clan.findOne({ name: req.params.id }).populate('users');
         if (!clan) {
-            return res.status(204).json({ 'message': 'Clan not found with a given id' });
+            return res.status(404).json({ 'message': 'Clan not found with a given id' });
         }
     
         res.send(clan.users);
@@ -122,7 +122,7 @@ router.post('/:id/users', async (req, res, next) => {
     try {
         const clan = await Clan.findOne({ name: req.params.id });
         if (!clan) {
-            return res.status(204).json({ 'message': 'Clan not found with a given id' });
+            return res.status(404).json({ 'message': 'Clan not found with a given id' });
         }
 
         clan.users.push(req.body);
@@ -137,7 +137,7 @@ router.post('/:id/games', async (req, res, next) => {
     try {
         const clan = await Clan.findOne({ name: req.params.id });
         if (!clan) {
-            return res.status(204).json({ 'message': 'Clan not found with a given id' });
+            return res.status(404).json({ 'message': 'Clan not found with a given id' });
         }
 
         clan.gamesList.push(req.body);
@@ -154,12 +154,12 @@ router.get('/:id/users/:userId', async (req, res, next) => {
     try {
         const clan = await Clan.findOne({ name: req.params.id }).populate('users');
         if (!clan) {
-            return res.status(204).json({ 'message': 'Clan not found with a given id' });
+            return res.status(404).json({ 'message': 'Clan not found with a given id' });
         }
 
         const user = clan.users.find(user => user._id === req.params.userId);
         if (!user) {
-            return res.status(204).json({ 'message': 'User not found with a given id' });
+            return res.status(404).json({ 'message': 'User not found with a given id' });
         }
         
         res.send(user);
@@ -172,12 +172,12 @@ router.get('/:id/games/:gameId', async (req, res, next) => {
     try {
         const clan = await Clan.findOne({ name: req.params.id }).populate('gamesList');
         if (!clan) {
-            return res.status(204).json({ 'message': 'Clan not found with a given id' });
+            return res.status(404).json({ 'message': 'Clan not found with a given id' });
         }
 
         const game = clan.gamesList.find(game => game.name === req.params.gameId);
         if (!game) {
-            return res.status(204).json({ 'message': 'Game not found with a given id' });
+            return res.status(404).json({ 'message': 'Game not found with a given id' });
         }
 
         res.send(game);
@@ -191,12 +191,12 @@ router.delete('/:id/games/:gameId', async (req, res, next) => {
     try {
         const clan = await Clan.findOne({ name: req.params.id }).populate('gamesList');
         if (!clan) {
-            return res.status(204).json({ 'message': 'Clan not found with a given id' });
+            return res.status(404).json({ 'message': 'Clan not found with a given id' });
         }
 
         const game = clan.gamesList.find(game => game.name === req.params.gameId);
         if (!game) {
-            return res.status(204).json({ 'message': 'Game not found with a given id' });
+            return res.status(404).json({ 'message': 'Game not found with a given id' });
         }
 
         clan.gamesList.pull(game);
@@ -212,12 +212,12 @@ router.delete('/:id/users/:userId', async (req, res, next) => {
     try {
         const clan = await Clan.findOne({ name: req.params.id }).populate('users');
         if (!clan) {
-            return res.status(204).json({ 'message': 'Clan not found with a given id' });
+            return res.status(404).json({ 'message': 'Clan not found with a given id' });
         }
 
         const user = clan.users.find(user => user._id === req.params.userId);
         if (!user) {
-            return res.status(204).json({ 'message': 'User not found with a given id' });
+            return res.status(404).json({ 'message': 'User not found with a given id' });
         }
 
         clan.users.pull(user);
