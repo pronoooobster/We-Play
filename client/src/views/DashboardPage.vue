@@ -123,7 +123,7 @@
                     <div class="col-lg-4 vh-100 right">
                         <p class="text-1" style="margin-top: 10%;">Followed players:</p>
                         <!-- Friends list -->
-                        <FriendsList v-if="user" class="center-section" :uid="user.uid" />
+                        <FriendsList v-if="user" class="center-section" :id="user.uid" />
                     </div>
                 </div>
             </div>

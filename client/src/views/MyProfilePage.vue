@@ -31,9 +31,7 @@
                     </div>
                     <div class="friends">
                         <h2 id="title"> Friends</h2>
-                        <div>
-
-                        </div>
+                        <FriendsList :id="user.uid" />
                     </div>
                 </div>
             </div>
@@ -43,15 +41,17 @@
 
 <script>
 import ClanList from "@/components/ClanList.vue";
+import FriendsList from "@/components/FriendsList.vue";
 import TopBar from "@/components/TopBar.vue";
 import { getAuth } from "firebase/auth";
 
 export default {
 
     components: {
-        TopBar,
-        ClanList
-    },
+    TopBar,
+    ClanList,
+    FriendsList
+},
     data() {
         return {
             user: null,
