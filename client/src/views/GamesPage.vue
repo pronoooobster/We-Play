@@ -104,22 +104,28 @@ export default {
     methods: {   
         createGame(){
             const form = document.getElementById('gameCreation');
-
             const formData = new FormData(form);
-
             let game = {};
 
             formData.forEach((value, key) => {
                 game[key] = value;
             });
-
             console.log(game);
-            
-            if(game.unlimitedSize == "on"){
+
+            if(game.gameName == "" || game.gameName == undefined){ //prevent name field being empty
+                alert("Please insert a game name");
+                return;
+            }
+             
+            if(game.unlimitedSize == "on"){ //if the checkbox is checked, set the team size to undefined
                 game.teamSize = undefined;
             }else{
-                game.teamSize = parseInt(game.teamSize);
+                if(!game.teamSize || game.teamSize < 1){ //prevent team size being less than 1 or being empty
+                    alert("Please insert a valid team size");
+                    return;
+                }else{game.teamSize = parseInt(game.teamSize);}
             }
+                
 
             console.log(game.gameName);
      
@@ -161,11 +167,15 @@ export default {
         },
         
         deleteAllGames(){
-            axios.delete('http://localhost:3000/api/games')
-                .then(res => {
-                    console.log(res);
-                    location.reload();
-                })
+            let confirmationText = "Are you sure you want to delete all games? This action cannot be undone";
+
+            if(confirm(confirmationText) == true){
+                axios.delete('http://localhost:3000/api/games')
+                    .then(res => {
+                        console.log(res);
+                        location.reload();
+                    })
+            }
         }
         
     }
