@@ -68,7 +68,7 @@ router.get('/:id', async (req, res, next) => {
             _links: {
                 self: { href: `http://localhost:3000/api/v1/squads/${squad.id}` },
                 collection: { href: 'http://localhost:3000/api/v1/squads' },
-                game: { href: `http://localhost:3000/api/v1/squads/${squad.game}` },
+                game: { href: `http://localhost:3000/api/games/v2/${squad.game}` },
             },
         };
 
