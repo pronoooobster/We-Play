@@ -51,36 +51,35 @@ export default {
     methods: {
         async fetchGamesFromAPIs() {
             try {
-                    const response = await axios.get('http://localhost:3000/api/games'); //Get the list of games from the mongo database                                
-                    const responseData = response.data;
-                    this.gamesFromMongo = responseData.map(game => ({
-                        name: game.name,
-                        teamSize: game.teamSize,
-                    }));
-                    console.log(this.gamesFromMongo);
-                    //loop through the array to find the games in the RAWG api by using a search querry with the name of the game
-    
-                    for (const gameName of this.gamesFromMongo) {
-                        const nameForFinding = gameName.name;
-                        const response = await axios.get(`https://api.rawg.io/api/games?key=4179ef8b1acb4bae99d6f2675731f8a3&search=${nameForFinding}`); //get the game from the API
-                        const data = response.data.results[0]; //get the first result
-                        //add the team size field
-                        data.teamSize = gameName.teamSize;
-    
-                        //get the description of the game
-                        const responseForDescription = await axios.get(`https://api.rawg.io/api/games/${data.id}?key=4179ef8b1acb4bae99d6f2675731f8a3`);
-                        const descriptionData = responseForDescription.data;
-                        data.description = descriptionData.description_raw;
-                        
-    
-                        console.log(data);
-                        if (data) {
-                            this.gamesFromRAWG.push(data); //add the game to the array
-                        }
-                        else {
-                            console.log("Game not found");
-                        }
+                const response = await axios.get('http://localhost:3000/api/games'); //Get the list of games from the mongo database                                
+                const responseData = response.data;
+                this.gamesFromMongo = responseData.map(game => ({
+                    name: game.name,
+                    teamSize: game.teamSize,
+                }));
+                console.log(this.gamesFromMongo);
+
+                //loop through the array to find the games in the RAWG api by using a search querry with the name of the game   
+                for (const gameName of this.gamesFromMongo) {
+                    const nameForFinding = gameName.name;
+                    const response = await axios.get(`https://api.rawg.io/api/games?key=4179ef8b1acb4bae99d6f2675731f8a3&search=${nameForFinding}`); //get the game from the API
+                    const data = response.data.results[0]; //get the first result
+                    //add the team size field
+                    data.teamSize = gameName.teamSize;
+
+                    //get the description of the game
+                    const responseForDescription = await axios.get(`https://api.rawg.io/api/games/${data.id}?key=4179ef8b1acb4bae99d6f2675731f8a3`);
+                    const descriptionData = responseForDescription.data;
+                    data.description = descriptionData.description_raw;
+
+
+                    console.log(data);
+                    if (data) {
+                        this.gamesFromRAWG.push(data); //add the game to the array
+                    }else{
+                        console.log("No game found");
                     }
+                }
             }
             catch (error) {
                 console.log(error);
