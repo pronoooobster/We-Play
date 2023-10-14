@@ -12,6 +12,8 @@
         <input class="form-check-input" type="checkbox" id="remember-me">
         <label class="form-check-label" for="flexSwitchCheckDefault">Remember me 😉</label>
       </div>
+      <!-- note about using firebase -->
+      <p style="font-size: 10px; margin-top: 10px;">Note! User accounts are partially handled by Google Firebase, read more: <a href="https://firebase.google.com/support/privacy" target="_blank">Firebase</a></p>
     </div>
     <div id="loader">Loading...</div>
     <br>

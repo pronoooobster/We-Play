@@ -26,10 +26,31 @@
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
                     <li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>
                     <li><a class="dropdown-item" href="#" @click="signOut">Sign Out</a></li>
-                </ul>
+                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                            data-bs-target="#deleteAccountModal">Delete Account</a></li>
+                        </ul>
+                        <!-- delete user confirmation modal -->
+                        <div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                            <h5 class="modal-title" id="createSquadModalLabel">ARE YOU SURE YOU WANT TO DELETE YOUR ACCOUNT?</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        
+                                    </div>
+                                    <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                            <button type="button" class="btn btn-danger" @click="deleteAccount" data-bs-dismiss="modal">Delete Account</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
             </div>
 
         </div>
+
 
     </nav>
 </template>
@@ -37,8 +58,9 @@
 <script>
 
 // import firebase from "firebase/compat/app";
-import { getAuth, signOut as firebaseSignOut } from "firebase/auth"; // Import Firebase authentication
+import { getAuth, signOut as firebaseSignOut} from "firebase/auth"; // Import Firebase authentication
 import router from "@/router";
+import axios from 'axios';
 
 // import { onBeforeUnmount } from "vue";
 
@@ -68,6 +90,30 @@ export default {
                 })
                 .catch(error => {
                     console.error("Error signing out:", error);
+                });
+        },
+
+        deleteAccount() {
+            // remove the record from mongo database
+            axios.delete('http://localhost:3000/api/users/' + this.user.uid)
+                .then(response => {
+                    console.log(response);
+
+                    // remove the record from firebase authentication
+
+                    const userAccount = getAuth().currentUser;
+
+                    userAccount.delete()
+                        .then(() => {
+                            console.log("User account deleted successfully");
+                            router.push("/"); // Redirect to the login page after deleting the account
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        });
+                })
+                .catch(error => {
+                    console.log(error);
                 });
         }
     }
