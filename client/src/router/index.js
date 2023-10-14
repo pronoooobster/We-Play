@@ -32,9 +32,10 @@ const routes = [
     props:true
   },
   {
-    path: "/myprofile",
+    path: "/profile/:id",
     name: "myrofile",
     component: MyProfilePage,
+    props: true
   },
   {
     path: "/games",
