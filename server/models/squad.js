@@ -27,4 +27,12 @@ const SquadSchema = new Schema({
 
 });
 
+// middleware to delete the squad if its empty
+SquadSchema.pre('update', async function (next) {
+    if (this.currentPlayers.length === 0) {
+        await this.remove();
+    }
+    next();
+});
+
 module.exports = mongoose.model('Squad', SquadSchema);

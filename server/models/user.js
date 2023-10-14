@@ -33,4 +33,28 @@ const UserSchema = new Schema({
     },
 });
 
+// middleware that will handle deleting all the mentions of a user in other documents
+UserSchema.pre('remove', async function (next) {
+    // if the user has a squad
+    if (this.currentSquad) {
+        // remove user from the squad
+        await this.model('Squad').updateOne(
+            { _id: this.currentSquad },
+            { $pull: { currentPlayers: this._id } }
+        );
+    }
+
+    // remove user from all the other users friendslist
+    await this.model('User').updateMany(
+        { friendslist: this._id },
+        { $pull: { friendslist: this._id } }
+    );
+
+    // remove user from all the clans
+    await this.model('Clan').updateMany(
+        { users: this._id },
+        { $pull: { users: this._id } }
+    );
+});
+
 module.exports = mongoose.model('User', UserSchema);
