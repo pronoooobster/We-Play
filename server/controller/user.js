@@ -36,6 +36,7 @@ router.get('/:id', async (req, res, next) => {
             photoURL: user.photoURL,
             friendslist: user.friendslist || [],
             clansList: user.clansList,
+            isAdmin: user.isAdmin,
             currentSquad: user.currentSquad,
             _links: {
                 self: { href: `http://localhost:3000/api/users/${user._id}` },
@@ -94,6 +95,9 @@ router.patch('/:id', async (req, res, next) => {
 
         if (req.body.friendslist) {
             user.friendslist = req.body.friendslist;
+        }
+        if(req.body.isAdmin){
+            user.isAdmin = req.body.isAdmin;
         }
 
         user.save();
