@@ -1,6 +1,6 @@
 <template>
     <div>
-        <TopBar style="z-index: 1 !important;" />
+        <TopBar />
         <!-- split screen in two if the website is on desktop -->
         <section class="d-none d-lg-block">
 
@@ -53,7 +53,7 @@
 
         <!-- section to be displayed only on the mobile -->
         <!-- side by side, swipaable -->
-        <div id="mobileCarousel" class="carousel slide d-block d-lg-none mobile-carousel" data-bs-ride="carousel" data-bs-interval="600000">
+        <div style="z-index: -1 !important;" id="mobileCarousel" class="carousel slide d-block d-lg-none mobile-carousel" data-bs-ride="carousel" data-bs-interval="600000">
             <!-- indicators DONT TOUCH -->
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#mobileCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>

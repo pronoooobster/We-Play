@@ -12,6 +12,8 @@
         <input class="form-check-input" type="checkbox" id="remember-me">
         <label class="form-check-label" for="flexSwitchCheckDefault">Remember me 😉</label>
       </div>
+      <!-- note about using firebase -->
+      <p style="font-size: 10px; margin-top: 10px;">Note! User accounts are partially handled by Google Firebase, read more: <a href="https://firebase.google.com/support/privacy" target="_blank">Firebase</a></p>
     </div>
     <div id="loader">Loading...</div>
     <br>
@@ -82,20 +84,20 @@ export default {
 
           // try to get the current user's data from the database
           axios.get('http://localhost:3000/api/users/' + authResult.user.uid).then((response) => {
+            console.log(response)
+          }).catch((error) => {
+            console.log(error)
             // if it gives back an empty object
-            if (response.data == '') {
               // create a new user
               axios.post('http://localhost:3000/api/users', {
                 "_id": authResult.user.uid,
-                "name": authResult.user.displayName
+                "name": authResult.user.displayName,
+                "photoURL": authResult.user.photoURL
               }).then((response) => {
                 console.log(response) 
               }).catch((error) => {
                 console.log(error)
               })
-            }
-          }).catch((error) => {
-            console.log(error)
           })
 
           console.log(authResult)
