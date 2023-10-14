@@ -10,10 +10,9 @@
 
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="/squads">Squads</a></li>
                     <li class="nav-item"><a class="nav-link" href="/clans">Clans</a></li>
                     <li class="nav-item"><a class="nav-link" href="/games">Games</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/friends">Friends</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/people">People</a></li>
                 </ul>
             </div>
 

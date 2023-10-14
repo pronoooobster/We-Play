@@ -6,6 +6,7 @@ import UserProfilePage from "@/views/UserProfilePage.vue";
 import PageNotFound from "@/views/PageNotFound.vue";
 import ClanListPage from "@/views/ClanListPage.vue";
 import GamesPage from "@/views/GamesPage.vue";
+import PeoplePage from "@/views/PeoplePage.vue";
 
 
 const routes = [
@@ -40,6 +41,11 @@ const routes = [
     path: "/games",
     name: "Games",
     component: GamesPage,
+  },
+  {
+    path: "/people",
+    name: "People",
+    component: PeoplePage,
   },
   {
     path: "/:catchAll(.*)",

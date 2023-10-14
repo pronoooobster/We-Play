@@ -27,6 +27,10 @@ const UserSchema = new Schema({
         ref: 'Squad',
         required: false
     },
+    photoURL: {
+        type: String,
+        required: false
+    },
 });
 
 module.exports = mongoose.model('User', UserSchema);
