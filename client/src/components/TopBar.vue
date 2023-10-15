@@ -14,39 +14,42 @@
                     <li class="nav-item"><a class="nav-link" href="/games">Games</a></li>
                     <li class="nav-item"><a class="nav-link" href="/people">People</a></li>
                 </ul>
+                <!-- google profile picture image with sign out option -->
+                <div v-if="user" class="dropdown user-profile">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <img v-if="user.photoURL" :src="user.photoURL" alt="Profile Picture" class="profile-img" width="50" height="50">
+                        <img v-else src="../assets/default-profile.png" alt="Profile Picture" class="profile-img" width="50" height="50">
+                    </button>
+
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>
+                        <li><a class="dropdown-item" href="#" @click="signOut">Sign Out</a></li>
+                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                data-bs-target="#deleteAccountModal">Delete Account</a></li>
+                            </ul>
+                </div>
             </div>
 
-            <!-- google profile picture image with sign out option -->
-            <div v-if="user" class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    <img v-if="user.photoURL" :src="user.photoURL" alt="Profile Picture" class="profile-img" width="50" height="50">
-                    <img v-else src="../assets/default-profile.png" alt="Profile Picture" class="profile-img" width="50" height="50">
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>
-                    <li><a class="dropdown-item" href="#" @click="signOut">Sign Out</a></li>
-                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
-                            data-bs-target="#deleteAccountModal">Delete Account</a></li>
-                        </ul>
-                        <!-- delete user confirmation modal -->
-                        <div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                            <h5 class="modal-title" id="createSquadModalLabel">ARE YOU SURE YOU WANT TO DELETE YOUR ACCOUNT?</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        
-                                    </div>
-                                    <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                            <button type="button" class="btn btn-danger" @click="deleteAccount" data-bs-dismiss="modal">Delete Account</button>
-                                    </div>
-                                </div>
-                            </div>
+            
+
+            <!-- delete user confirmation modal -->
+            <div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                                <h5 class="modal-title" id="createSquadModalLabel">ARE YOU SURE YOU WANT TO DELETE YOUR ACCOUNT?</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
+                        <div class="modal-body">
+                            
+                        </div>
+                        <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-danger" @click="deleteAccount" data-bs-dismiss="modal">Delete Account</button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -124,6 +127,21 @@ export default {
 <style>
 .navbar {
     height: 130px;
+}
+
+.user-profile {
+    position: relative;
+    /* put on the right */
+    float: right;
+}
+
+@media (min-width: 1000px) {
+    .user-profile {
+        /* positioned on the right */
+        position: absolute;
+        right: 0;
+        margin: 3%;
+    }
 }
 
 .navbar-brand {
