@@ -1,22 +1,30 @@
 <template>
-  <div>
-    <!-- weplay logo -->
-    <img src="../assets/logo.png" alt="WePlay Logo" style="max-width: 20%; height: auto; margin: 20px;">
-
-    <h1> Welcome to WePlay! </h1>
-    <div id="firebaseui-auth-container"></div>
-    <!-- put a remember me checkbox -->
-    <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
-      <!-- Remember me checkbox -->
-      <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" id="remember-me">
-        <label class="form-check-label" for="flexSwitchCheckDefault">Remember me 😉</label>
-      </div>
-      <!-- note about using firebase -->
-      <p style="font-size: 10px; margin-top: 10px;">Note! User accounts are partially handled by Google Firebase, read more: <a href="https://firebase.google.com/support/privacy" target="_blank">Firebase</a></p>
+  <div class="row">
+      <div class="col-lg-9">
+          <!-- background video -->
+            <video id="background-video" autoplay loop muted>
+            <source src="../assets/background-video.mp4" type="video/mp4">
+          </video>
     </div>
-    <div id="loader">Loading...</div>
-    <br>
+    <div class="col-lg-3" id="side-bar">
+      <h1> Welcome to WePlay! </h1>
+      <div id="login-container">
+        <p>Sign in to get started!</p>
+        <div id="firebaseui-auth-container"></div>
+        <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+          <!-- Remember me checkbox -->
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="remember-me">
+            <label class="form-check-label" for="flexSwitchCheckDefault">Remember me 😉</label>
+          </div>
+          <!-- note about using firebase -->
+          <p style="font-size: 10px; margin-top: 10px; color:#9EB3C2">Note! User accounts are partially handled by Google Firebase, <br>
+            read more: <a href="https://firebase.google.com/support/privacy" target="_blank">Firebase</a></p>
+        </div>
+        <div id="loader">Loading...</div>
+        <br>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -123,6 +131,39 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.row {
+  margin: 0; /*avoids horizontal scroll*/
+}
+.transparent{
+  color: #1F1F1F;
+}
+
+#background-video {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+
+#login-container {
+  margin-top: 50%;
+}
+#side-bar{
+  background-color: #1F1F1F;
+  height: 100vh;
+  padding: 20px;
+  color: #F7D063;
+}
+p{
+  font-family: 'Martian Mono';
+}
 h3 {
   margin: 40px 0 0;
 }
