@@ -3,7 +3,7 @@
       <div class="col-lg-9">
           <!-- background video -->
             <video id="background-video" autoplay loop muted>
-            <source src="../assets/background-video.mp4" type="video/mp4">
+            <source src="../assets/backgroundvideo.mp4" type="video/mp4">
           </video>
     </div>
     <div class="col-lg-3" id="side-bar">
