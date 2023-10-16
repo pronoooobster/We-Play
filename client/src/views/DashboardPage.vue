@@ -53,7 +53,7 @@
 
         <!-- section to be displayed only on the mobile -->
         <!-- side by side, swipaable -->
-        <div style="z-index: -1 !important;" id="mobileCarousel" class="carousel slide d-block d-lg-none mobile-carousel" data-bs-ride="carousel" data-bs-interval="600000">
+        <div class="carousel slide d-block d-lg-none mobile-carousel" data-bs-ride="carousel" data-bs-interval="600000">
             <!-- indicators DONT TOUCH -->
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#mobileCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
