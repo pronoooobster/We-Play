@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand-lg navbar-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="z-index: 1 !important;">
         <div class="container-fluid" style="background-color: #1F1F1F;">
             <a class="navbar-brand" id="weyellow" href="/"><img src="../assets/Weyellow.png" alt="WePlay Yellow" width="70"
                     height="70"></a>
@@ -10,6 +10,7 @@
 
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
                     <li class="nav-item"><a class="nav-link" href="/clans">Clans</a></li>
                     <li class="nav-item"><a class="nav-link" href="/games">Games</a></li>
                     <li class="nav-item"><a class="nav-link" href="/people">People</a></li>
@@ -23,32 +24,11 @@
                     </button>
 
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>
+                        <!-- usre profile page link -->
+                        <li v-if="user" ><a class="dropdown-item" :href="'/profile/' + user.uid">My Profile</a></li>
                         <li><a class="dropdown-item" href="#" @click="signOut">Sign Out</a></li>
-                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                data-bs-target="#deleteAccountModal">Delete Account</a></li>
+                        <li><a class="dropdown-item" href="#" @click="deleteAccount">Delete Account</a></li>
                             </ul>
-                </div>
-            </div>
-
-            
-
-            <!-- delete user confirmation modal -->
-            <div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                                <h5 class="modal-title" id="createSquadModalLabel">ARE YOU SURE YOU WANT TO DELETE YOUR ACCOUNT?</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            
-                        </div>
-                        <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button type="button" class="btn btn-danger" @click="deleteAccount" data-bs-dismiss="modal">Delete Account</button>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -97,27 +77,42 @@ export default {
         },
 
         deleteAccount() {
-            // remove the record from mongo database
-            axios.delete('http://localhost:3000/api/users/' + this.user.uid)
-                .then(response => {
-                    console.log(response);
+            if(confirm("Are you sure you want to delete your account?")) {
+                // remove the record from mongo database
+                axios.delete('http://localhost:3000/api/users/' + this.user.uid)
+                    .then(response => {
+                        console.log(response);
+    
+                        // remove the record from firebase authentication
+    
+                        const userAccount = getAuth().currentUser;
+    
+                        userAccount.delete()
+                            .then(() => {
+                                console.log("User account deleted successfully");
+                                router.push("/"); // Redirect to the login page after deleting the account
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                            });
+                    })
+                    .catch(error => {
+                        console.log(error);
 
-                    // remove the record from firebase authentication
+                        const userAccount = getAuth().currentUser;
 
-                    const userAccount = getAuth().currentUser;
-
-                    userAccount.delete()
-                        .then(() => {
-                            console.log("User account deleted successfully");
-                            router.push("/"); // Redirect to the login page after deleting the account
-                        })
-                        .catch((error) => {
-                            console.log(error);
-                        });
-                })
-                .catch(error => {
-                    console.log(error);
-                });
+                        userAccount.delete()
+                            .then(() => {
+                                console.log("User account deleted successfully");
+                                router.push("/"); // Redirect to the login page after deleting the account
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                            });
+                    });
+            } else {
+                return;
+            }
         }
     }
 }
