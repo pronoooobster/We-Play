@@ -1,7 +1,7 @@
 <template>
     <div class="card-1" v-if="usersFriends">
         <!-- display the list of pepople you follow -->
-        <div class="friend-item" v-for="(friend, index) in usersFriends" :key="index">
+        <div class="friend-item" v-for="(friend, index) in usersFriends" :key="index" @click="redirect(friend._id)">
             <!-- name -->
             <p style="font-weight: bold;">{{ friend.name }}</p>
             <!-- current squad -->
@@ -21,6 +21,12 @@ import { ref, onMounted } from 'vue';
 export default {
 
     props: ["id"],
+
+    methods: {
+        redirect(_uid) {
+            this.$router.push(`/profile/${_uid}`);
+        }
+    },
 
     setup(props) {
         const usersFriends = ref(null);
