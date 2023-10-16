@@ -1,31 +1,31 @@
 <template>
-    <div>
+    <div class="page-content">
         <TopBar />
         <!-- split screen in two if the website is on desktop -->
         <section class="d-none d-lg-block">
 
             <div class="container-fluid px-0">
                 <div class="row g-0">
-                    <div  class="col-lg-8 vh-100 left">
+                    <div  class="col-lg-8 vh-100 left" id="squad-section">
                         <!-- base option (create or join squad) -->
                         <div v-if="!squad" class="center-section" id="base-section">
                             <p class="text-1">You are not currentry in a squad!</p>
                             <!-- create squad button -->
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#createSquadModal">
+                                data-bs-target="#createSquadModal" style="background-color: #F7D063; border: 0px">
                                 Create Squad
                             </button>
                             <br>
                             <!-- join squad button -->
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#joinSquadModal">
+                                data-bs-target="#joinSquadModal" style="background-color: #F7D063; border: 0px" >
                                 Join Squad
                             </button>
                         </div>
                         <!-- in the squad - display members and leave button -->
-                        <div v-else class="center-section" id="squad-section">
-                            <p class="text-1" style="font-weight: bold;">{{ squad.name }}</p>
-                            <p class="text-1">Game: {{ squadGame.name }}</p>
+                        <div v-else class="center-section" id="squad-section" style="">
+                            <p class="text-1" style="font-weight: bold; font-size: 110px; color:#F7D063; text-decoration:underline;">{{ squad.name }}</p>
+                            <p class="text-1">Playing: {{ squadGame.name }}</p>
                             <p class="text-1">Squad Size: {{ squad.maxPlayers }}</p>
                             <p class="text-1">Squad Members:</p>
                             <!-- list of members -->
@@ -103,11 +103,12 @@
                                         <!-- list of all the available squads -->
                                         <div v-for="availableSquad in availableSquads" :key="availableSquad._id">
                                             <!-- squad name -->
-                                            <p class="text-2" style="font-weight: bold;">{{ availableSquad.name }}</p>
+                                            <p class="text-2" style="font-weight: bold; text-decoration: underline;">{{ availableSquad.name }}</p>
                                             <!-- game name -->
-                                            <p class="text-2">Game: {{ availableSquad.game.name }}</p>
+                                            <p class="text-2">Playing: {{ availableSquad.game.name }}</p>
                                             <!-- join button -->
-                                            <button type="button" class="btn btn-primary" @click="joinSquad(availableSquad._id)">
+                                            <button type="button" class="btn btn-primary" @click="joinSquad(availableSquad._id)" 
+                                            style="background-color: #1F1F1F; border: 0px; color: #F7D063;">
                                                 Join
                                             </button>
                                         </div>
@@ -120,7 +121,7 @@
                         </div>
                         
                     </div>
-                    <div class="col-lg-4 vh-100 right">
+                    <div class="col-lg-4 vh-100" id="friends-section">
                         <p class="text-1" style="margin-top: 10%;">Followed players:</p>
                         <!-- Friends list -->
                         <FriendsList v-if="user" class="center-section" :id="user.uid" />
@@ -506,7 +507,23 @@ export default {
 </script>
 
 <style scoped>
+.page-content { /*prevent scroll bar*/
+    height: 100vh;
+    overflow: hidden;   
+}
+#squad-section{
+    background-color: #1F1F1F;
+}
+#friends-section {
+    background-color: #474747;
 
+    /* centering everything inside */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
 .carousel-first {
     background-color: #F5F5F5;
 }
@@ -536,12 +553,13 @@ li {
     font-size: 30px;
     font-family: 'Martian Mono';
     margin-bottom: 4%;
+    color: #9EB3C2;
 }
 
 .text-2 {
     font-size: 20px;
-    font-family: 'Martian Mono';
-    color: darkslategrey;
+    font-family: 'Martian Mono'; 
+    color: #F7D063;
 }
 
 .modal-title {
@@ -574,19 +592,11 @@ li {
     text-align: center;
 }
 
-.right {
-    background-color: #9f9cff;
-
-    /* centering everything inside */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
 
 .center-section {
     margin: auto;
 }
+#squad-section{
 
+}
 </style>
