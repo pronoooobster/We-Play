@@ -33,8 +33,10 @@ router.get('/:id', async (req, res, next) => {
             _id: user._id,
             email: user.email,
             name: user.name,
+            photoURL: user.photoURL,
             friendslist: user.friendslist || [],
             clansList: user.clansList,
+            isAdmin: user.isAdmin,
             currentSquad: user.currentSquad,
             _links: {
                 self: { href: `http://localhost:3000/api/users/${user._id}` },
@@ -96,6 +98,9 @@ router.patch('/:id', async (req, res, next) => {
 
         if (req.body.friendslist) {
             user.friendslist = req.body.friendslist;
+        }
+        if(req.body.isAdmin){
+            user.isAdmin = req.body.isAdmin;
         }
 
         user.save();
@@ -257,18 +262,39 @@ router.post('/:id/friendslist', async (req, res, next) => {
 
 //get specific friend
 
-router.get('/:id/friendslist/:id', async (req, res, next) => {
+router.get('/:id/friendslist/:friendId', async (req, res, next) => {
     try {
         const user = await User.findOne({ _id: req.params.id }).populate('friendslist');
         if (!user) {
             return res.status(404).json({ 'message': 'User not found with a given id' });
         }
-        const friend = user.friendslist.find(friend => friend._id === req.params.id);
-        if (!friend) {
-            return res.status(404).json({ 'message': 'Friend not found with a given id' });
-        }
+    const friend = user.friendslist.find(friend => friend._id === req.params.friendId);
+    if (!friend){
+        return res.status(404).json({ 'message': 'Friend not found with a given id' });
+    }
 
         res.send(friend);
+    } catch (err) {
+        return next(err);
+    }
+});
+
+// remove friend from friends list
+
+router.delete('/:id/friendslist/:friendId', async (req, res, next) => {
+    try {
+        const user = await User.findOne({ _id: req.params.id }).populate('friendslist');
+        if(!user) {
+            return res.status(404).json({ 'message': 'User not found with a given id' });
+        }
+    const friend = user.friendslist.find(friend => friend._id === req.params.friendId);
+    if (!friend){
+        return res.status(404).json({ 'message': 'Friend not found with a given id' });
+    }
+
+    user.friendslist.pull(friend);
+    user.save();
+    res.send(user);
     } catch (err) {
         return next(err);
     }

@@ -26,5 +26,9 @@ export default {
   margin-top: 0px;
 
 }
-
+#background {
+    background-color: #474747;  
+    position:relative;
+    min-height: 100vh;
+}
 </style>

@@ -27,6 +27,21 @@ router.get('/', async (req, res, next) => {
     }
 });
 
+//delete the entire collection
+router.delete('/', async (req, res, next) => {
+    try {
+        const games = await Game.deleteMany({});
+        if (!games) {
+            return res.status(404).json({ 'message': 'Games not found' });
+        }
+
+        res.status(200).json(games);
+    } catch (err) {
+        return next(err);
+    }
+});
+
+
 router.get('/:id', async (req, res, next) => {
     try {
         const game = await Game.findOne({ name: req.params.id });
