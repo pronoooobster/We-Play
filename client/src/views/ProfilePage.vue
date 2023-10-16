@@ -7,7 +7,7 @@
                     <!--If the user is accessing its own userpage show more info-->
                     <div v-if="DBuser._id == user.uid">
                         <h1 class="text-center" id="title">MY PROFILE</h1>
-                        <img v-if="user.photoURL" :src="user.photoURL" alt="Profile Picture" class="big-picture" />
+                        <img v-if="DBuser.photoURL" :src="DBuser.photoURL" alt="Profile Picture" class="big-picture" />
                         <div class="data">
                             <div class="row">
                                 <div class="col-sm-4">
@@ -66,6 +66,7 @@
                     <!--Show this if the user is accessing some else's-->
                     <div v-else>
                         <h1 class="text-center" id="title">{{ DBuser.name }}`s PROFILE</h1>
+                        <img v-if="DBuser.photoURL" :src="DBuser.photoURL" alt="Profile Picture" class="big-picture" />
                     </div>
                     <!--Show this regardless of if the user is accessing its own profile page-->
                     <div class="clans">
@@ -101,7 +102,6 @@ export default {
     data() {
         return {
             user: null,
-            Dbuser: null,
         };
     },
 
@@ -169,6 +169,7 @@ export default {
     width: 20%;
     aspect-ratio: 1 / 1;
     margin-top: 3px;
+    margin: 2%;
 }
 
 .data {
