@@ -38,87 +38,6 @@
                                 Leave Squad
                             </button>
                         </div>
-
-                        <!-- create sqad modal -->
-                        <div class="modal fade" id="createSquadModal" tabindex="-1" aria-labelledby="createSquadModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="createSquadModalLabel">Create a squad</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form id="squadCreateForm" @submit.prevent>
-                                            <!-- squad name field -->
-                                            <div class="mb-3">
-                                                <label for="squadName" class="form-label">Squad Name</label>
-                                                <input name="name" type="text" class="form-control" id="squadName" autocomplete="off" placeholder="Enter squad name" required>
-                                                <div class="valid-feedback">
-                                                    Looks good!
-                                                </div>
-                                            </div>
-                                            <!-- game selection dropdown -->
-                                            <div class="mb-3">
-                                                <label for="gameSelection" class="form-label">Game</label>
-                                                <!-- datalist with the parsed games -->
-                                                <input name="game" class="form-control" list="gamesDatalist" id="gameSelection" placeholder="Type to search..." required>
-                                                <datalist aria-label="GameSelection" id="gamesDatalist" required>
-                                                    <!-- <option selected disabled value="">Select a game</option> -->
-                                                    <option v-for="game in games" :key="game.name">{{ game.name }}</option>
-                                                </datalist>
-                                                <div class="valid-feedback">
-                                                    Looks good!
-                                                </div>
-                                            </div>
-                                            <!-- squad size field -->
-                                            <div class="mb-3">
-                                                <label for="squadSize" class="form-label">Squad Size</label>
-                                                <input name="maxPlayers" type="number" class="form-control" id="squadSize" placeholder="Enter squad size between 2 and 7" min="2" max="7" required>
-                                                <div class="valid-feedback">
-                                                    Looks good!
-                                                </div>
-                                                <div class="invalid-feedback">
-                                                    Please enter a squad size between 2 and 7!
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                        <button type="submit" class="btn btn-primary" form="squadCreateForm" @click="createSquad">Create</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- join squad modal -->
-                        <div class="modal fade" id="joinSquadModal" tabindex="-1" aria-labelledby="joinSquadModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                            <h5 class="modal-title" id="createSquadModalLabel">Join a squad</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <!-- list of all the available squads -->
-                                        <div v-for="availableSquad in availableSquads" :key="availableSquad._id">
-                                            <!-- squad name -->
-                                            <p class="text-2" style="font-weight: bold; text-decoration: underline;">{{ availableSquad.name }}</p>
-                                            <!-- game name -->
-                                            <p class="text-2">Playing: {{ availableSquad.game.name }}</p>
-                                            <!-- join button -->
-                                            <button type="button" class="btn btn-primary" @click="joinSquad(availableSquad._id)" 
-                                            style="background-color: #1F1F1F; border: 0px; color: #F7D063;">
-                                                Join
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         
                     </div>
                     <div class="col-lg-4 vh-100" id="friends-section">
@@ -133,7 +52,7 @@
 
         <!-- section to be displayed only on the mobile -->
         <!-- side by side, swipaable -->
-        <div class="carousel slide d-block d-lg-none mobile-carousel" data-bs-ride="carousel" data-bs-interval="600000">
+        <div class="carousel slide d-block d-lg-none mobile-carousel" data-bs-ride="carousel" data-bs-interval="600000" id="mobileCarousel">
             <!-- indicators DONT TOUCH -->
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#mobileCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -179,7 +98,7 @@
                     <!-- second page -->
                     <p class="text-1" style="margin-top: 10%;">Followed players:</p>
                         <!-- Friends list -->
-                    <FriendsList v-if="user" class="center-section" :uid="user.uid" />
+                    <FriendsList v-if="user" class="center-section" :id="user.uid" />
                 </div>
             </div>
             <!-- buttons DONT TOUCH -->
