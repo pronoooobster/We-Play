@@ -23,7 +23,7 @@
                                 <div class="col-sm-4">
                                     <p>{{ user.email }}</p>
                                 </div>
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                <button type="button" id="change-name-button" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#nameModal">
                                     Change name
                                 </button>
@@ -44,12 +44,12 @@
                                                     v-model="newName" />
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary" @click="editName(newName)"
+                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" >
+                                                    Cancel
+                                                </button>
+                                                <button id="accept-button" type="button" class="btn btn-primary" @click="editName(newName)"
                                                     aria-label="Close">
                                                     Accept
-                                                </button>
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                    Cancel
                                                 </button>
                                             </div>
                                         </div>
@@ -177,6 +177,12 @@ export default {
 
 h2 {
     font-size: 140%;
+}
+
+#change-name-button {
+    color: #474747;
+    background-color: #f7d063;
+    border-color: #f7d063;
 }
 
 #box {

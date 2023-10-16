@@ -94,5 +94,4 @@ export default {
 .users {
   text-align: left;
 }
-
 </style>
