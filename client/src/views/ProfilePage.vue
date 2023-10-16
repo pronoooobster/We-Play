@@ -4,6 +4,7 @@
         <div v-if="user && DBuser" class="container-md" id="box">
             <div id="component" class="container-fluid py-3">
                 <div class="bg-dark rounded-4" id="box">
+                    <!--If the user is accessing its own userpage show more info-->
                     <div v-if="DBuser._id == user.uid">
                         <h1 class="text-center" id="title">MY PROFILE</h1>
                         <img v-if="user.photoURL" :src="user.photoURL" alt="Profile Picture" class="big-picture" />
@@ -13,6 +14,7 @@
                                     <p>Display Name:</p>
                                 </div>
                                 <div class="col-sm-4">
+                                    <!--"DBuser" is the user info taken from our database-->
                                     <p>{{ DBuser.name }}</p>
                                 </div>
                             </div>
@@ -20,13 +22,15 @@
                                 <div class="col-sm-4">
                                     <p>Email:</p>
                                 </div>
-                                <div class="col-sm-4">
+                                <div id="email" class="col-sm-4">
+                                    <!--"user" is the user info taken from firebase-->
                                     <p>{{ user.email }}</p>
                                 </div>
                                 <button type="button" id="change-name-button" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#nameModal">
                                     Change name
                                 </button>
+                                <!--edit name modal-->
                                 <div class="modal fade" id="nameModal" tabindex="-1" aria-labelledby="nameModalLabel"
                                     aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -44,11 +48,12 @@
                                                     v-model="newName" />
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" >
+                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
                                                     Cancel
                                                 </button>
-                                                <button id="accept-button" type="button" class="btn btn-primary" @click="editName(newName)"
-                                                    aria-label="Close">
+                                                <!--Accept name change button-->
+                                                <button id="accept-button" type="button" class="btn btn-primary"
+                                                    @click="editName(newName)" aria-label="Close">
                                                     Accept
                                                 </button>
                                             </div>
@@ -58,9 +63,11 @@
                             </div>
                         </div>
                     </div>
+                    <!--Show this if the user is accessing some else's-->
                     <div v-else>
                         <h1 class="text-center" id="title">{{ DBuser.name }}`s PROFILE</h1>
                     </div>
+                    <!--Show this regardless of if the user is accessing its own profile page-->
                     <div class="clans">
                         <h2 id="title">Clans</h2>
                         <ClanList :id="DBuser._id" />
@@ -99,6 +106,8 @@ export default {
     },
 
     methods: {
+
+        //patch request to edit name
         editName(newName) {
             axios
                 .patch(`http://localhost:3000/api/users/` + this.user.uid, {
@@ -116,6 +125,7 @@ export default {
     setup(props) {
         const DBuser = ref(null);
 
+        //get request to get the info of the user specified in the URL
         const fetchUserClans = () => {
             axios
                 .get(`http://localhost:3000/api/users/${props.id}`)
@@ -144,7 +154,7 @@ export default {
         const auth = getAuth(); // Get the authentication instance
 
         auth.onAuthStateChanged((user) => {
-            //getting the user information
+            //getting the currently logged in user information
             this.user = user;
             console.log(user);
         });
@@ -168,7 +178,6 @@ export default {
     color: #9eb3c2;
     text-align: left;
     font-family: "Martian Mono";
-    overflow: auto;
 }
 
 .clans {
@@ -177,6 +186,10 @@ export default {
 
 h2 {
     font-size: 140%;
+}
+
+#email {
+    overflow: auto;
 }
 
 #change-name-button {
