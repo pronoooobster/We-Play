@@ -86,7 +86,7 @@ export default {
 
 .card-2 {
   margin: 7%;
-  padding: 2%;
+  padding: 3%;
   background-color: rgb(203, 174, 250);
   border-radius: 20px;
 }
@@ -94,5 +94,4 @@ export default {
 .users {
   text-align: left;
 }
-
 </style>

@@ -24,7 +24,7 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
     try {
-        const user = await User.findOne({ _id: req.params.id });
+        const user = await User.findOne({ _id: req.params.id }).populate("clansList");
         if (!user) {
             return res.status(404).json({ 'message': 'User not found with a given id' });
         }
@@ -45,7 +45,7 @@ router.get('/:id', async (req, res, next) => {
                 friendslist: { href: `http://localhost:3000/api/users/${user._id}/friendslist` },
                 currentSquad: { href: `http://localhost:3000/api/v1/squads/${user.currentSquad}` }
             },
-        };  
+        };
         res.status(200).json(response);
     } catch (err) {
         return next(err);
@@ -66,7 +66,7 @@ router.delete('/:id', async (req, res, next) => {
 });
 
 router.put('/:id', async (req, res, next) => {
-    try{
+    try {
         const user = await User.findOneAndUpdate({ _id: req.params.id }, req.body);
         if (!user) {
             return res.status(404).json({ 'message': 'User not found with a given id' });
@@ -79,14 +79,17 @@ router.put('/:id', async (req, res, next) => {
 });
 
 router.patch('/:id', async (req, res, next) => {
-    try{
+    try {
         const user = await User.findOne({ _id: req.params.id });
         if (!user) {
             return res.status(404).json({ 'message': 'User not found with a given id' });
         }
 
-        if (req.body._id) {
-            user._id = req.body._id;
+        console.log("hello43242")
+
+        if (req.body.name) {
+            console.log("hello")
+            user.name = req.body.name
         }
 
         if (req.body.email) {
@@ -262,7 +265,7 @@ router.post('/:id/friendslist', async (req, res, next) => {
 router.get('/:id/friendslist/:friendId', async (req, res, next) => {
     try {
         const user = await User.findOne({ _id: req.params.id }).populate('friendslist');
-        if(!user) {
+        if (!user) {
             return res.status(404).json({ 'message': 'User not found with a given id' });
         }
     const friend = user.friendslist.find(friend => friend._id === req.params.friendId);
@@ -270,7 +273,7 @@ router.get('/:id/friendslist/:friendId', async (req, res, next) => {
         return res.status(404).json({ 'message': 'Friend not found with a given id' });
     }
 
-    res.send(friend);
+        res.send(friend);
     } catch (err) {
         return next(err);
     }
