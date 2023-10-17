@@ -3,20 +3,35 @@
         <TopBar />
         <div class="container-md" id="box">
             <div id="component" class="container-fluid py-3">
+                <div class="row">
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-8">
+                        <h1 style="font-family: 'Press Start 2P'; color:#F7D063; margin-top:5%; margin-bottom: 5%;">DISCOVER PEOPLE</h1>
+                    </div>
+                    <div class="col-lg-2"></div>
+                </div>
                 <div v-if="people.length > 0">
                     <div v-for="person in people" :key="person._id">
                         <div class="row">
                             <div class="col-2">
-                                <img v-if="person.photoURL" :src="person.photoURL" alt="Profile Picture" class="profile-img" width="50" height="50">
-                                <img v-else src="../assets/default-profile.png" alt="Profile Picture" class="profile-img" width="50" height="50">
+                                <div class="profile-img" @click="redirect(person._id)">
+                                    <img v-if="person.photoURL" :src="person.photoURL" alt="Profile Picture" class="profile-img" width="50" height="50">
+                                    <img v-else src="../assets/default-profile.png" alt="Profile Picture" class="profile-img" width="50" height="50">
+                                </div>
                             </div>
                             <div class="col-8">
-                                <h4>{{ person.name }}</h4>
+                                <h4 @click="redirect(person._id)">{{ person.name }}</h4>
                             </div>
-                            <div class="col-2">
-                                <button v-if="!person.isFriend" class="btn btn-primary" @click="follow(person)">Follow</button>
+                            <div class="col-2" style="margin-top: 1%;" >
+                                <section class="d-none d-lg-block">
+                                    <button v-if="!person.isFriend" class="btn btn-primary" @click="follow(person)">Follow</button>
+                                    <button v-else class="btn btn-danger" @click="unfollow(person)">Unfollow</button>
+                                </section>
+                            </div>
+                            <section class="d-lg-none">
+                                <button v-if="!person.isFriend" class="btn btn-primary" @click="follow(person)">Follow  </button>
                                 <button v-else class="btn btn-danger" @click="unfollow(person)">Unfollow</button>
-                            </div>
+                            </section>
                         </div>
                         <hr>
                     </div>
@@ -46,6 +61,10 @@
         },
 
         methods: {
+            redirect(_uid) {
+            this.$router.push(`/profile/${_uid}`);
+
+            },
             follow(person) {
                 axios.post('http://localhost:3000/api/users/' + this.user._id + '/friendslist', {
                     _id: person._id
@@ -122,6 +141,9 @@
 <style scoped>
 #background{
     background-color: #474747;
+    height: 100vh;
+    width: 100vw;
+    overflow: auto;
 }
 .container-md{
     margin-top: 3%;
@@ -129,6 +151,29 @@
     border-radius: 21px;
 
 }
+#box{
+    font-family: 'Martian Mono';
+}
 
+h4{
+    margin-top: 3%;
+    color:  #9EB3C2;
+    transition: all .2s ease-in-out; 
+}
+h4:hover{
+    color: #FED665;
+    cursor: pointer;
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+.profile-img{
+    border-radius: 30%;
+    transition: all .2s ease-in-out; 
+}
+.profile-img:hover{
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+
+}
 </style>
 
