@@ -100,6 +100,13 @@ p {
     padding: 10px;
     border: 1px solid black;
     border-radius: 5px;
+    transition: background-color 0.5s ease, border-radius 0.5s ease;
+}
+
+.friend-item:hover {
+    cursor: pointer;
+    background-color: #ddbb5b;
+    border-radius: 20px;
 }
 
 .scrollable {
@@ -118,10 +125,6 @@ p {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,1); 
 }
 
-.friend-item:hover {
-    cursor: pointer;
-    background-color: #ddbb5b;
-}
 
 #title {
     font-family: "Press Start 2P";
