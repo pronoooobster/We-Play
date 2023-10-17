@@ -45,7 +45,9 @@
                                             <div class="modal-body">
                                                 <input name="newName" type="text" class="form-control" id="newName"
                                                     autocomplete="off" placeholder="Enter new name" required
-                                                    v-model="newName" />
+                                                    v-model="newName" 
+                                                    maxlength="16"
+                                                    />
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
@@ -70,7 +72,6 @@
                     </div>
                     <!--Show this regardless of if the user is accessing its own profile page-->
                     <div class="clans">
-                        <h2 id="title">Clans</h2>
                         <ClanList :id="DBuser._id" />
                     </div>
                     <div class="friends">

@@ -2,13 +2,18 @@ var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
 
+/**
+ * post a new user
+ */
 router.post('/', function (req, res, next) {
     User.create(req.body).then(function (user) {
-        // res.send(user);
         res.status(201).json(user);
     }).catch(next);
 });
 
+/**
+ * get all the users
+ */
 router.get('/', async (req, res, next) => {
     try {
         const users = await User.find({});
@@ -22,6 +27,9 @@ router.get('/', async (req, res, next) => {
     }
 });
 
+/**
+ * get a specific user by id
+ */
 router.get('/:id', async (req, res, next) => {
     try {
         const user = await User.findOne({ _id: req.params.id });
@@ -52,6 +60,9 @@ router.get('/:id', async (req, res, next) => {
     }
 });
 
+/**
+ * delete a specific user by id
+ */
 router.delete('/:id', async (req, res, next) => {
     try {
         const user = await User.findOneAndDelete({ _id: req.params.id });
@@ -65,6 +76,9 @@ router.delete('/:id', async (req, res, next) => {
     }
 });
 
+/**
+ * put a specific user by id
+ */
 router.put('/:id', async (req, res, next) => {
     try {
         const user = await User.findOneAndUpdate({ _id: req.params.id }, req.body);
@@ -78,6 +92,9 @@ router.put('/:id', async (req, res, next) => {
     }
 });
 
+/**
+ * patch a specific user by id
+ */
 router.patch('/:id', async (req, res, next) => {
     try {
         const user = await User.findOne({ _id: req.params.id });
@@ -111,7 +128,9 @@ router.patch('/:id', async (req, res, next) => {
 });
 
 // relationships
-
+/**
+ * get the clans of a specific user
+ */
 router.get('/:id/clans', async (req, res, next) => {
     try {
         const user = await User.findOne({ _id: req.params.id }).populate('clansList');
@@ -125,6 +144,9 @@ router.get('/:id/clans', async (req, res, next) => {
     }
 });
 
+/**
+ * post a new clan to a specific user
+ */
 router.post('/:id/clans', async (req, res, next) => {
     try {
         const user = await User.findOne({ _id: req.params.id });
@@ -140,7 +162,9 @@ router.post('/:id/clans', async (req, res, next) => {
     }
 });
 
-// squad
+/**
+ * get a squad of a specific user
+ */
 router.get('/:id/squad', async (req, res, next) => {
     try {
         const user = await User.findOne({ _id: req.params.id }).populate('currentSquad');
@@ -154,6 +178,9 @@ router.get('/:id/squad', async (req, res, next) => {
     }
 });
 
+/**
+ * assign a squad of a specific user
+ */
 router.post('/:id/squad', async (req, res, next) => {
     try {
         const user = await User.findOne({ _id: req.params.id });
@@ -169,6 +196,9 @@ router.post('/:id/squad', async (req, res, next) => {
     }
 });
 
+/**
+ * remove a squad of a specific user
+ */
 router.delete('/:id/squad', async (req, res, next) => {
     try {
         const user = await User.findOne({ _id: req.params.id });
@@ -184,8 +214,9 @@ router.delete('/:id/squad', async (req, res, next) => {
     }
 });
 
-// specific clan
-
+/**
+ * delete the entire squads collection
+ */
 router.get('/:id/clans/:clanId', async (req, res, next) => {
     try {
         const user = await User.findOne({ _id: req.params.id }).populate('clansList');
@@ -197,13 +228,15 @@ router.get('/:id/clans/:clanId', async (req, res, next) => {
         if (!clan) {
             return res.status(204).json({ 'message': 'Clan not found with a given id' });
         }
-        + '?_method=DELETE'
         res.send(clan);
     } catch (err) {
         return next(err);
     }
 });
 
+/**
+ * remove a specific clan of a specific user
+ */
 router.delete('/:id/clans/:clanId', async (req, res, next) => {
     try {
         const user = await User.findOne({ _id: req.params.id }).populate('clansList');
@@ -224,8 +257,9 @@ router.delete('/:id/clans/:clanId', async (req, res, next) => {
     }
 });
 
-//friends list
-
+/**
+ * get the friends list of a specific user
+ */
 router.get('/:id/friendslist', async (req, res, next) => {
     try {
         const user = await User.findOne({ _id: req.params.id }).populate('friendslist');
@@ -239,6 +273,9 @@ router.get('/:id/friendslist', async (req, res, next) => {
     }
 });
 
+/**
+ * post a new friend to a specific user
+ */
 router.post('/:id/friendslist', async (req, res, next) => {
     try {
         const user = await User.findById(req.params.id);
@@ -249,7 +286,7 @@ router.post('/:id/friendslist', async (req, res, next) => {
         // if the user is already in the friends list, don't add them again
         const friend = user.friendslist.find(friend => friend === req.body._id);
         if (friend) {
-            return res.status(204).json({ 'message': 'User is already in friends list' });
+            return res.status(400).json({ 'message': 'User is already in friends list' });
         }
 
         user.friendslist.push(req.body);
@@ -260,8 +297,9 @@ router.post('/:id/friendslist', async (req, res, next) => {
     }
 });
 
-//get specific friend
-
+/**
+ * get a specific friend of a specific user
+ */
 router.get('/:id/friendslist/:friendId', async (req, res, next) => {
     try {
         const user = await User.findOne({ _id: req.params.id }).populate('friendslist');
@@ -279,8 +317,10 @@ router.get('/:id/friendslist/:friendId', async (req, res, next) => {
     }
 });
 
-// remove friend from friends list
 
+/**
+ * remove a specific friend from friends list
+ */
 router.delete('/:id/friendslist/:friendId', async (req, res, next) => {
     try {
         const user = await User.findOne({ _id: req.params.id }).populate('friendslist');
