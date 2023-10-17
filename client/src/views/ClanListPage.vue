@@ -1,48 +1,49 @@
 <template>
   <div id="background">
     <TopBar />
+    <div class="container-md" id="box">
+      <div v-if="clans">
 
-    <div v-if="clans" class="container-md" id="box">
-      <div class="clans" v-for="clan in clans" :key="clan._id">
+        <div id="component" class="container-fluid py-3">
+          <div class="clans" v-for="clan in clans" :key="clan._id">
 
-        <div class="row">
-          <div class="col-2">
-            <h4>{{ clan.name }}</h4>
-          </div>
-          <div class="col-8">
-            <h4>{{ clan.size }}</h4>
-          </div>
-          <!--fix to avoid scrolling when its not necessary on a small screen-->
-          <div class="col-2">
-            <section class="d-none d-lg-block">
-              <div v-if="!clan.joined">
-                <button class="btn btn-primary" @click="joinClan(clan)">Join</button>
+            <div class="row">
+              <div id="animated" style="font-family: 'Press Start 2P'; color: #F7D063; " class="col-6">
+                <h4 @click="redirect(clan.name)">{{ clan.name }}</h4>
               </div>
-              <div v-else>
-                <button class="btn btn-danger" @click="leaveClan(clan)">Leave</button>
-                <button type="button" class="btn btn-danger" @click="deleteClan(clan)">Delete</button>
+              <!--fix to avoid scrolling when its not necessary on a small screen-->
+              <div class="col-6">
+                <section class="d-none d-lg-block" id="buttons">
+                  <div v-if="!clan.joined">
+                    <button class="btn btn-primary" @click="joinClan(clan)">Join</button>
+                  </div>
+                  <div v-else>
+                    <button class="btn btn-danger" @click="leaveClan(clan)">Leave</button>
+                    <button type="button" class="btn btn-danger" @click="deleteClan(clan)">Delete</button>
+                  </div>
+                </section>
               </div>
-            </section>
+              <section class="d-lg-none" id="buttons">
+                <div v-if="!clan.joined">
+                  <button class="btn btn-primary" @click="joinClan(clan)">Join</button>
+                </div>
+                <div v-else>
+                  <button class="btn btn-danger" @click="leaveClan(clan)">Leave</button>
+                  <button type="button" class="btn btn-danger" @click="deleteClan(clan)">Delete</button>
+                </div>
+
+              </section>
+
+            </div>
           </div>
-          <section class="d-lg-none">
-            <div v-if="!clan.joined">
-              <button class="btn btn-primary" @click="joinClan(clan)">Join</button>
-            </div>
-            <div v-else>
-              <button class="btn btn-danger" @click="leaveClan(clan)">Leave</button>
-              <button type="button" class="btn btn-danger" @click="deleteClan(clan)">Delete</button>
-            </div>
-
-          </section>
-
         </div>
       </div>
-    </div>
-    <div>
       <!-- create clan button -->
       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createClanModal">
         Create Clan
       </button>
+    </div>
+    <div>
     </div>
     <div class="modal fade" id="createClanModal" tabindex="-1" aria-labelledby="createClanModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -121,6 +122,10 @@ export default {
 
   methods: {
 
+    redirect(name) {
+      this.$router.push(`/clans/${name}`);
+    },
+
     // create squad
     createClan() {
       // get the form
@@ -185,10 +190,13 @@ export default {
     },
 
     deleteClan(clan) {
-      axios.delete(`http://localhost:3000/api/clans/` + clan.name).then(response => {
-        console.log(response);
-        location.reload();
-      })
+
+      if (confirm("Are you sure you want to delete the clan?")) {
+        axios.delete(`http://localhost:3000/api/clans/` + clan.name).then(response => {
+          console.log(response);
+          location.reload();
+        })
+      }
     },
 
     joinClan(clan) {
@@ -293,14 +301,37 @@ export default {
 <style scoped>
 #background {
   height: 100vh;
-  max-width: 100vw;
   overflow: auto;
+}
+
+#animated {
+  font-size: 30px;
+  /* hover controls */
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.6s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+}
+
+#animated:hover {
+  cursor: pointer;
+  -webkit-transform: scale(0.95);
+  transform: scale(0.95);
+}
+
+.col-6 {
+  align-self: center;
+}
+
+.btn {
+  margin: 5%;
 }
 
 #box {
   padding: 5%;
   min-height: auto;
-  max-width: 100vw;
 }
 
 .container-md {
