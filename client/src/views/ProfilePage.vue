@@ -45,7 +45,9 @@
                                             <div class="modal-body">
                                                 <input name="newName" type="text" class="form-control" id="newName"
                                                     autocomplete="off" placeholder="Enter new name" required
-                                                    v-model="newName" />
+                                                    v-model="newName" 
+                                                    maxlength="26"
+                                                    />
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
