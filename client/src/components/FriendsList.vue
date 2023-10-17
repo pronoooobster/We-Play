@@ -1,5 +1,5 @@
 <template>
-    <div class="card-1" v-if="usersFriends">
+    <div class="card-1 scrollable" v-if="usersFriends">
         <!-- display the list of pepople you follow -->
         <div class="friend-item" v-for="(friend, index) in usersFriends" :key="index" @click="redirect(friend._id)">
             <!-- name -->
@@ -95,4 +95,26 @@ p {
     border: 1px solid black;
     border-radius: 5px;
 }
+
+.scrollable {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.scrollable::-webkit-scrollbar {
+    width: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,1); 
+}
+
+.friend-item:hover {
+    cursor: pointer;
+    background-color: #ddbb5b;
+}
+
 </style>

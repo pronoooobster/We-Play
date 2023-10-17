@@ -39,9 +39,9 @@ router.delete('/', async (req, res, next) => {
 router.get('/notfull', async (req, res, next) => {
     try {
         // find squads with less players than maxPlayers
-        const squads = await Squad.find( { $expr: { $gt: [ "$currentPlayers.length", "$maxPlayers" ] } } ).populate('game');
+        const squads = await Squad.find( { $expr: { $gt: [ "$maxPlayers", { $size: "$currentPlayers" } ] } } ).populate('game');
         if (squads.length === 0) {
-            return res.status(404).json({ 'message': 'No squads' });
+            return res.status(204).json({ 'message': 'No squads' });
         }
 
         res.status(200).json(squads);
@@ -156,6 +156,17 @@ router.post('/:id/users', async (req, res, next) => {
         const squad = await Squad.findById(req.params.id);
         if (!squad) {
             return res.status(404).json({ 'message': 'Squad not found with a given id' });
+        }
+
+        // check if the user is already in the squad
+        const user = squad.currentPlayers.find(user => user == req.body._id);
+        if (user) {
+            return res.status(400).json({ 'message': 'User already in the squad' });
+        }
+
+        // check if the squad is full
+        if (squad.currentPlayers.length >= squad.maxPlayers) {
+            return res.status(400).json({ 'message': 'Squad is full' });
         }
 
         squad.currentPlayers.push(req.body);
