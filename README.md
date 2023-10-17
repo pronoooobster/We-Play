@@ -67,29 +67,26 @@ The system consists of a web for players so they can find other people to play w
 
 ### Pages
 
-- Home page: Welcome message Suggested games, clans overview.
-- Squads tab: Create a squad or find a squad options.
-- Create a squad: Form for creating a squad.
-- Find a squad: Recommended squads, filter by game, search.
-- Create a clan: Form for creating a clan.
-Clan page: Clan name, games played, size of the clan, members list, recent activity.
-- Profile: Overview of your profile, edit function, friends.
-- Game info page: Game name, game description, number of players, suggested squads.
+- Home page: Login with google, remember me toggle.
+- Dashboard: Options to create a squad, find a squad, see information about a squad: name, game, number of players, players in the squad, leave squad button. Followed people list.
+- Profile page: Profile picture, username, email, clans and the list of followed users. Edit username if the page is of the logged in user.
+- Games page: list of games, their pictures, names, descriptions, team sizes, their metacritic rating, if the user is an admin - add and delete buttons.
+- People page: list of people, their pictures, usernames, options to follow or unfollow them.
+- Clans page: list of clans, clan name, join buttons, if the user is in the clan - leave and delete clan buttons.
+- Clan details page: clan name, list of clan members, list of games that the clan plays. Options to add or delete games for the members.
 ### Entity-Relationship (ER) Diagram
 
 ![ER Diagram](./images/er_diagram.png)
 
-The system consists of a team finder app for online games. It is aimed for players of different ages, from teenagers to adults. The system would have the most popular online games in it.
+The system consists of a team finder app for online games. It is aimed for players of different ages, from teenagers to adults. The system has the most popular online games in it.
 
- Players register by choosing a unique username, using their email, creating a password, stating their date of birth and choosing the games that they play by marking them as favorite.
+The players register using their google acount which allows for seemless login process and provides us with useful extra information such as profile picture, username, and email address. The players can also edit their username later in their profile page.
 
-Players can join a squad, these are identified with a unique ID and will only exist if they have players in them, a player creates a squad they can define a description and a maximum size for it, the squad can only be playing one game at the time. Squads have a defined size and if there are no players in it it will be automatically deleted.
+Players can join a squad, these are identified with a unique ID and will only exist if they have players in them, a player creates a squad and define a maximum size for it, the squad can only be playing one game at the time. Squads have a defined size and if there are no players in it it will be automatically deleted.
 
-The system's games are to be previously defined by an administrator. They can add games, delete games and change the information about the games. The administrator has a name and an unique ID.
+The system's games are fetched from an external API called rawg.io, the games have a unique name, a number of players in a team, a short description and a metacritic rating. The games can be added or deleted by the admin.
 
-Games have a unique name, a number of players and a short description.
-
-Players can create, join and add other players to clans. Clans will stay until they are manually deleted by players and have bigger sizes than squads. Players can also play games with their clan members instead of through a squad.
+Players can create and join clans. Clans will stay until they are manually deleted by players and have bigger sizes than squads. Players can also play games with their clan members instead of through a squad.
 
 ## Teaser (MS3)
 
