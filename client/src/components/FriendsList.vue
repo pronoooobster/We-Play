@@ -1,14 +1,18 @@
 <template>
-    <div class="card-1" v-if="usersFriends">
-        <!-- display the list of pepople you follow -->
-        <div class="friend-item" v-for="(friend, index) in usersFriends" :key="index" @click="redirect(friend._id)">
-            <!-- name -->
-            <p style="font-weight: bold;">{{ friend.name }}</p>
-            <!-- current squad -->
-            <p v-if="friend.currentSquad">Squad: {{ friend.currentSquad.name }}</p>
-            <p v-else>No current squad</p>
-            <!-- game -->
-            <p v-if="friend.currentSquad">Playing: {{ friend.currentSquad.game }}</p>
+    <div>
+        <h2 v-if="usersFriends.length > 0" id="title">Following:</h2>
+        <p v-else id="title">No followed people</p>
+        <div v-if="usersFriends.length > 0" class="card-1 scrollable">
+            <!-- display the lisot of pepople you follow -->
+            <div class="friend-item" v-for="(friend, index) in usersFriends" :key="index" @click="redirect(friend._id)">
+                <!-- name -->
+                <p style="font-weight: bold;">{{ friend.name }}</p>
+                <!-- current squad -->
+                <p v-if="friend.currentSquad">Squad: {{ friend.currentSquad.name }}</p>
+                <p v-else>No current squad</p>
+                <!-- game -->
+                <p v-if="friend.currentSquad">Playing: {{ friend.currentSquad.game }}</p>
+            </div>
         </div>
     </div>
 </template>
@@ -29,7 +33,9 @@ export default {
     },
 
     setup(props) {
-        const usersFriends = ref(null);
+        const usersFriends = ref({
+            value: [],
+        });
 
         const fetchUserFriends = () => {
 
@@ -94,5 +100,39 @@ p {
     padding: 10px;
     border: 1px solid black;
     border-radius: 5px;
+    transition: background-color 0.5s ease, border-radius 0.5s ease;
 }
+
+.friend-item:hover {
+    cursor: pointer;
+    background-color: #ddbb5b;
+    border-radius: 20px;
+}
+
+.scrollable {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.scrollable::-webkit-scrollbar {
+    width: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,1); 
+}
+
+
+#title {
+    font-family: "Press Start 2P";
+    color: #f7d063;
+}
+
+h2 {
+    font-size: 140%;
+}
+
 </style>

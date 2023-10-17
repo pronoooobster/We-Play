@@ -1,4 +1,4 @@
-var mongoose = require ('mongoose');
+var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 const ClanSchema = new Schema({
@@ -17,10 +17,10 @@ const ClanSchema = new Schema({
         required: false
     },
     users: {
-        type: [{ type: Schema.Types.String, ref: 'User'}],
+        type: [{ type: Schema.Types.String, ref: 'User' }],
         required: true
     }
-    
+
 });
 
 module.exports = mongoose.model('Clan', ClanSchema);

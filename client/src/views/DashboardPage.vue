@@ -41,7 +41,6 @@
                         
                     </div>
                     <div class="col-lg-4 vh-100" id="friends-section">
-                        <p class="text-1" style="margin-top: 10%;">Followed players:</p>
                         <!-- Friends list -->
                         <FriendsList v-if="user" class="center-section" :id="user.uid" />
                     </div>
@@ -96,7 +95,6 @@
                 </div>
                 <div class="carousel-item carousel-second">
                     <!-- second page -->
-                    <p class="text-1" style="margin-top: 10%;">Followed players:</p>
                         <!-- Friends list -->
                     <FriendsList v-if="user" class="center-section" :id="user.uid" />
                 </div>
@@ -381,6 +379,7 @@ export default {
                     this.squad = res.data
                     
                     // get the squad game
+                    if(this.squad)
                     axios.get('http://localhost:3000/api/games/v2/' + this.squad.game)
                         .then(res => {
                             this.squadGame = res.data
@@ -391,14 +390,16 @@ export default {
                         });
 
                     // get the squad members
-                    axios.get('http://localhost:3000/api/v1/squads/' + this.squad._id + '/users')
-                        .then(res => {
-                            this.squadMembers = res.data
-                            console.log(this.squadMembers)
-                        })
-                        .catch(err => {
-                            console.log(err)
-                        });
+                    if(this.squad) {
+                        axios.get('http://localhost:3000/api/v1/squads/' + this.squad._id + '/users')
+                            .then(res => {
+                                this.squadMembers = res.data
+                                console.log(this.squadMembers)
+                            })
+                            .catch(err => {
+                                console.log(err)
+                            });
+                    }
 
                     // get the squads that are not full
                     axios.get('http://localhost:3000/api/v1/squads/notfull')
