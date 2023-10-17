@@ -1,5 +1,5 @@
 <template>
-    <div class="page-content">
+    <div class="page-content" style="background-color: #1F1F1F;">
         <TopBar />
         <!-- split screen in two if the website is on desktop -->
         <section class="d-none d-lg-block">
@@ -67,13 +67,13 @@
                         <p class="text-1">You are not currentry in a squad!</p>
                         <!-- create squad button -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#createSquadModal">
+                            data-bs-target="#createSquadModal" style="background-color: #F7D063; border: 0px">
                             Create Squad
                         </button>
                         <br>
                         <!-- join squad button -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#joinSquadModal">
+                            data-bs-target="#joinSquadModal" style="background-color: #F7D063; border: 0px">
                             Join Squad
                         </button>
                     </div>
@@ -116,7 +116,7 @@
         <!-- create sqad modal -->
         <div class="modal fade" id="createSquadModal" tabindex="-1" aria-labelledby="createSquadModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                <div class="modal-content">
+                <div class="modal-content" style="background-color: #1F1F1F;">
                     <div class="modal-header">
                         <h5 class="modal-title" id="createSquadModalLabel">Create a squad</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -125,7 +125,7 @@
                         <form id="squadCreateForm" @submit.prevent>
                             <!-- squad name field -->
                             <div class="mb-3">
-                                <label for="squadName" class="form-label">Squad Name</label>
+                                <label for="squadName" class="form-label text-2">Squad Name</label>
                                 <input name="name" type="text" class="form-control" id="squadName" autocomplete="off" placeholder="Enter squad name" required>
                                 <div class="valid-feedback">
                                     Looks good!
@@ -133,7 +133,7 @@
                             </div>
                             <!-- game selection dropdown -->
                             <div class="mb-3">
-                                <label for="gameSelection" class="form-label">Game</label>
+                                <label for="gameSelection" class="form-label text-2">Game</label>
                                 <!-- datalist with the parsed games -->
                                 <input name="game" class="form-control" list="gamesDatalist" id="gameSelection" placeholder="Type to search..." required>
                                 <datalist aria-label="GameSelection" id="gamesDatalist" required>
@@ -146,7 +146,7 @@
                             </div>
                             <!-- squad size field -->
                             <div class="mb-3">
-                                <label for="squadSize" class="form-label">Squad Size</label>
+                                <label for="squadSize" class="form-label text-2">Squad Size</label>
                                 <input name="maxPlayers" type="number" class="form-control" id="squadSize" placeholder="Enter squad size between 2 and 7" min="2" max="7" required>
                                 <div class="valid-feedback">
                                     Looks good!
@@ -159,7 +159,8 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary" form="squadCreateForm" @click="createSquad">Create</button>
+                        <button type="submit" class="btn btn-primary" form="squadCreateForm" @click="createSquad"
+                        style="background-color: #F7D063; border: 0px;">Create</button>
                     </div>
                 </div>
             </div>
@@ -168,7 +169,7 @@
         <!-- join squad modal -->
         <div class="modal fade" id="joinSquadModal" tabindex="-1" aria-labelledby="joinSquadModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                <div class="modal-content">
+                <div class="modal-content" style="background-color: #1F1F1F;">
                     <div class="modal-header">
                             <h5 class="modal-title" id="createSquadModalLabel">Join a squad</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -181,7 +182,8 @@
                             <!-- game name -->
                             <p class="text-2">Game: {{ availableSquad.game.name }}</p>
                             <!-- join button -->
-                            <button type="button" class="btn btn-primary" @click="joinSquad(availableSquad._id)">
+                            <button type="button" class="btn btn-primary" @click="joinSquad(availableSquad._id)" 
+                            style="background-color: #F7D063; border: 0px">
                                 Join
                             </button>
                         </div>
@@ -444,18 +446,17 @@ export default {
     text-align: center;
 }
 .carousel-first {
-    background-color: #F5F5F5;
+    background-color: #1F1F1F;
 }
 
 .carousel-item {
     padding-top: 40%;
-
     height: 100vh;
     width: 100vw;
 }
 
 .carousel-second {
-    background-color: #9f9cff;
+    background-color: #474747;
 }
 
 .form-label {
@@ -484,6 +485,7 @@ li {
 .modal-title {
     font-size: 20px;
     font-family: 'Martian Mono';
+    color : #9EB3C2;
 }
 
 .btn-primary, .btn-danger {
@@ -514,8 +516,5 @@ li {
 
 .center-section {
     margin: auto;
-}
-#squad-section{
-
 }
 </style>
