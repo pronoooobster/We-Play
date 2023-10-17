@@ -48,7 +48,7 @@ router.get('/', async (req, res, next) => {
  */
 router.get('/:id', async (req, res, next) => {
     try {
-        const clan = await Clan.findOne({ name: req.params.id }).populate("users");
+        const clan = await Clan.findOne({ name: req.params.id }).populate("users").populate("gamesList");
         if (!clan) {
             return res.status(404).json({ 'message': 'Clan not found with a given id' });
         }

@@ -123,7 +123,7 @@ export default {
     color: #F7D063;
     background-color: #60418B;
 }
-
+        
 
 
 </style>
