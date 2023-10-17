@@ -27,7 +27,7 @@ const routes = [
     props: true
   },
   {
-    path: "/users/:id/clans",
+    path: "/clans",
     name: "ClanListPage",
     component: ClanListPage,
     props:true
