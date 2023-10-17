@@ -23,15 +23,19 @@
                             </button>
                         </div>
                         <!-- in the squad - display members and leave button -->
-                        <div v-else class="center-section" id="squad-section" style="">
+                        <div v-else class="center-section" id="squad-section">
                             <p class="text-1" style="font-weight: bold; font-size: 110px; color:#F7D063; text-decoration:underline;">{{ squad.name }}</p>
                             <p class="text-1">Playing: {{ squadGame.name }}</p>
                             <p class="text-1">Squad Size: {{ squad.maxPlayers }}</p>
                             <p class="text-1">Squad Members:</p>
                             <!-- list of members -->
-                            <div v-for="member in squadMembers" :key="member._id">
-                                <p class="text-2">{{ member.name }}</p>
-                                <hr>
+                            <div class="members-list">
+                                <div v-for="member in squadMembers" :key="member._id">
+                                    <div>
+                                        <a class="text-2" :href="'/profile/' + member._id">{{ member.name }} </a>
+                                        <hr>
+                                    </div>
+                                </div>
                             </div>
                             <!-- leave squad button -->
                             <button type="button" class="btn btn-danger" @click="leaveSquad">
@@ -84,7 +88,7 @@
                         <p class="text-1">Squad Members:</p>
                         <!-- list of members -->
                         <div v-for="member in squadMembers" :key="member._id">
-                            <p class="text-2">{{ member.name }}</p>
+                            <p class="text-2" :href="'/profile/' + member._id">{{ member.name }}</p>
                             <hr>
                         </div>
                         <!-- leave squad button -->
@@ -478,9 +482,18 @@ li {
 }
 
 .text-2 {
+    text-decoration: none;
     font-size: 20px;
     font-family: 'Martian Mono'; 
     color: #F7D063;
+    transition: font-size .2s ease-in-out;
+}
+
+.text-2:hover {
+    text-decoration: none;
+    font-size: 22px;
+    font-family: 'Martian Mono'; 
+    color: #FED665;
 }
 
 .modal-title {
@@ -518,4 +531,22 @@ li {
 .center-section {
     margin: auto;
 }
+
+.members-list {
+    height: 120px;
+    margin-bottom: 15px ;
+    overflow-y: auto;
+}
+
+.members-list::-webkit-scrollbar {
+    width: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.members-list::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgb(255, 255, 255); 
+}
+
 </style>
