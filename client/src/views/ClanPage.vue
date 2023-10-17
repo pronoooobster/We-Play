@@ -38,8 +38,7 @@
                   <div class="column-lg-4"></div>
                   <div class="card-header" style="font-size: 30px; color: #1F1F1F;">Games</div>
                   <div class="column-lg-4">
-                    <button button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                      data-bs-target="#gameAdd">Add game</button>
+         
                   </div>
                 </div>
                 <div class="card-body">
@@ -59,7 +58,8 @@
               </div>
             </div>
             <div class="card-footer">
-
+              <button button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                      data-bs-target="#gameAdd">Add game</button>
             </div>
           </div>
         </div>
