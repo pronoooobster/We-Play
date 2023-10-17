@@ -74,7 +74,6 @@
                         <ClanList :id="DBuser._id" />
                     </div>
                     <div class="friends">
-                        <h2 id="title">Followed</h2>
                         <FriendsList :id="DBuser._id" />
                     </div>
                 </div>
