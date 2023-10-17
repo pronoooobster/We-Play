@@ -1,14 +1,18 @@
 <template>
-    <div class="card-1 scrollable" v-if="usersFriends">
-        <!-- display the list of pepople you follow -->
-        <div class="friend-item" v-for="(friend, index) in usersFriends" :key="index" @click="redirect(friend._id)">
-            <!-- name -->
-            <p style="font-weight: bold;">{{ friend.name }}</p>
-            <!-- current squad -->
-            <p v-if="friend.currentSquad">Squad: {{ friend.currentSquad.name }}</p>
-            <p v-else>No current squad</p>
-            <!-- game -->
-            <p v-if="friend.currentSquad">Playing: {{ friend.currentSquad.game }}</p>
+    <div>
+        <h2 v-if="usersFriends.length > 0" id="title">Following:</h2>
+        <p v-else id="title">No followed people</p>
+        <div v-if="usersFriends.length > 0" class="card-1 scrollable">
+            <!-- display the lisot of pepople you follow -->
+            <div class="friend-item" v-for="(friend, index) in usersFriends" :key="index" @click="redirect(friend._id)">
+                <!-- name -->
+                <p style="font-weight: bold;">{{ friend.name }}</p>
+                <!-- current squad -->
+                <p v-if="friend.currentSquad">Squad: {{ friend.currentSquad.name }}</p>
+                <p v-else>No current squad</p>
+                <!-- game -->
+                <p v-if="friend.currentSquad">Playing: {{ friend.currentSquad.game }}</p>
+            </div>
         </div>
     </div>
 </template>
@@ -29,7 +33,9 @@ export default {
     },
 
     setup(props) {
-        const usersFriends = ref(null);
+        const usersFriends = ref({
+            value: [],
+        });
 
         const fetchUserFriends = () => {
 
@@ -115,6 +121,15 @@ p {
 .friend-item:hover {
     cursor: pointer;
     background-color: #ddbb5b;
+}
+
+#title {
+    font-family: "Press Start 2P";
+    color: #f7d063;
+}
+
+h2 {
+    font-size: 140%;
 }
 
 </style>
