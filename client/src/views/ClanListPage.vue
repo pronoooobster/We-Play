@@ -3,7 +3,6 @@
     <TopBar />
     <div class="container-md" id="box">
       <div v-if="clans">
-
         <div id="component" class="container-fluid py-3">
           <h1 style="font-family: 'Press Start 2P'; color:#F7D063; margin-top:5%;">CREATE A CLAN</h1>
           <!-- create clan button -->
@@ -11,6 +10,7 @@
             Create Clan
           </button>
           <h1 style="font-family: 'Press Start 2P'; color:#F7D063; margin-top:2%; margin-bottom: 5%;">DISCOVER CLANS</h1>
+          <!--list of clans-->
           <div class="clans" v-for="clan in clans" :key="clan._id">
             <div class="row">
               <div id="animated" class="col-6">
@@ -19,6 +19,7 @@
               <!--fix to avoid scrolling when its not necessary on a small screen-->
               <div class="col-6">
                 <section class="d-none d-lg-block" id="buttons">
+                  <!--Show join clan button if user is not in clan-->
                   <div v-if="!clan.joined">
                     <button class="btn btn-primary" @click="joinClan(clan)">Join</button>
                   </div>
@@ -45,6 +46,7 @@
     </div>
     <div>
     </div>
+    <!--create clan modal-->
     <div class="modal fade" id="createClanModal" tabindex="-1" aria-labelledby="createClanModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
@@ -196,6 +198,7 @@ export default {
 
     deleteClan(clan) {
 
+      //Ask the user for confirmation before deleting a game
       if (confirm("Are you sure you want to delete the clan?")) {
         axios.delete(`http://localhost:3000/api/clans/` + clan.name).then(response => {
           console.log(response);
@@ -205,23 +208,22 @@ export default {
     },
 
     joinClan(clan) {
+      //post user to clan
       axios.post(`http://localhost:3000/api/users/` + this.user._id + '/clans', {
         "_id": clan._id
       }).then(response => {
         console.log(response);
-        clan.joined = true;
-        location.reload();
-      })
-        .catch(error => {
-          console.log(error);
-        });
-
-      axios.post(`http://localhost:3000/api/clans/` + clan.name + `/users/`, {
-        "_id": this.user._id
-      }).then(response => {
-        console.log(response);
-        clan.joined = true;
-        location.reload();
+        //post clan to user
+        axios.post(`http://localhost:3000/api/clans/` + clan.name + `/users/`, {
+          "_id": this.user._id
+        }).then(response => {
+          console.log(response);
+          clan.joined = true;
+          location.reload();
+        })
+          .catch(error => {
+            console.log(error);
+          });
       })
         .catch(error => {
           console.log(error);
@@ -229,21 +231,20 @@ export default {
     },
 
     leaveClan(clan) {
+      //delete clan from the user clan list
       axios.post(`http://localhost:3000/api/users/` + this.user._id + '/clans/' + clan.name + '?_method=DELETE')
         .then(response => {
           console.log(response);
-          clan.joined = false;
-          location.reload();
-        })
-        .catch(error => {
-          console.log(error);
-        });
-
-      axios.post(`http://localhost:3000/api/clans/` + clan.name + '/users/' + this.user._id + '?_method=DELETE')
-        .then(response => {
-          console.log(response);
-          clan.joined = false;
-          location.reload();
+          // delete user from the clan user list
+          axios.post(`http://localhost:3000/api/clans/` + clan.name + '/users/' + this.user._id + '?_method=DELETE')
+            .then(response2 => {
+              console.log(response2);
+              clan.joined = false;
+              location.reload();
+            })
+            .catch(error => {
+              console.log(error);
+            });
         })
         .catch(error => {
           console.log(error);
@@ -279,7 +280,7 @@ export default {
       this.user = user;
       console.log(user);
 
-      // get the full user fromm the database
+      // get the full user from the database
       axios.get('http://localhost:3000/api/users/' + user.uid)
         .then(response => {
           this.user = response.data;
