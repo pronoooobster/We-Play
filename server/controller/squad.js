@@ -2,13 +2,18 @@ var express = require('express');
 var router = express.Router();
 var Squad = require('../models/squad');
 
+/**
+ * post a new squad
+ */
 router.post('/', function (req, res, next) {
-    // save the new squad using promises
     Squad.create(req.body).then(function (squad) {
         res.status(201).json(squad);
     }).catch(next);
 });
 
+/**
+ * get all the squads
+ */
 router.get('/', async (req, res, next) => {
     try {
         const squads = await Squad.find({});
@@ -22,12 +27,14 @@ router.get('/', async (req, res, next) => {
     }
 });
 
-//delete the entire collection
+/**
+ * delete the entire squads collection
+ */
 router.delete('/', async (req, res, next) => {
     try {
         const squads = await Squad.deleteMany({});
         if (!squads) {
-            return res.status(404).json({ 'message': 'Squads not found' });
+            return res.status(204).json({ 'message': 'No squads to delete' });
         }
         res.status(200).json(games);
     } catch (err) {
@@ -35,7 +42,9 @@ router.delete('/', async (req, res, next) => {
     }
 });
 
-// get all the squads that are not full
+/**
+ * get all the squads that are not full
+ */
 router.get('/notfull', async (req, res, next) => {
     try {
         // find squads with less players than maxPlayers
@@ -50,7 +59,9 @@ router.get('/notfull', async (req, res, next) => {
     }
 });
 
-
+/**
+ * get squad by id
+ */
 router.get('/:id', async (req, res, next) => {
     try {
         const squad = await Squad.findById(req.params.id);
@@ -78,6 +89,9 @@ router.get('/:id', async (req, res, next) => {
     }
 });
 
+/**
+ * delete a specific squad
+ */
 router.delete('/:id', async (req, res, next) => {
     try {
         const squad = await Squad.findByIdAndDelete(req.params.id);
@@ -91,6 +105,9 @@ router.delete('/:id', async (req, res, next) => {
     }
 });
 
+/**
+ * put a specific squad
+ */
 router.put('/:id', async (req, res, next) => {
     try {
         const squad = await Squad.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -104,8 +121,10 @@ router.put('/:id', async (req, res, next) => {
     }
 });
 
+/**
+ * patch a specific squad
+ */
 router.patch('/:id', async (req, res, next) => {
-    // be able to change the name, game, description, currentPlayers or maxPlayers
     try {
         const squad = await Squad.findById(req.params.id);
         if (!squad) {
@@ -136,8 +155,10 @@ router.patch('/:id', async (req, res, next) => {
 
 });
 
-// relationships
 
+/**
+ * get all the players in a specific squad
+ */
 router.get('/:id/users', async (req, res, next) => {
     try {
         const squad = await Squad.findById(req.params.id).populate('currentPlayers');
@@ -151,6 +172,9 @@ router.get('/:id/users', async (req, res, next) => {
     }
 });
 
+/**
+ * post a new player to a specific squad
+ */
 router.post('/:id/users', async (req, res, next) => {
     try {
         const squad = await Squad.findById(req.params.id);
@@ -177,8 +201,9 @@ router.post('/:id/users', async (req, res, next) => {
     }
 });
 
-// specific user
-
+/** 
+ * get a specific player from the squad
+ */
 router.get('/:id/users/:userId', async (req, res, next) => {
     try {
         const squad = await Squad.findById(req.params.id).populate('currentPlayers');
@@ -197,26 +222,9 @@ router.get('/:id/users/:userId', async (req, res, next) => {
     }
 });
 
-// post for a specific user
-router.post('/:id/users/:userId', async (req, res, next) => {
-    try {
-        const squad = await Squad.findById(req.params.id);
-        if (!squad) {
-            return res.status(404).json({ 'message': 'Squad not found with a given id' });
-        }
-
-        const user = squad.currentPlayers.find(user => user.userName === req.params.userId);
-        if (!user) {
-            return res.status(404).json({ 'message': 'User not found with a given id' });
-        }
-
-        squad.currentPlayers.push(user);
-        squad.save();
-    } catch (err) {
-        return next(err);
-    }
-});
-
+/**
+ * remove a specific player from the squad
+ */
 router.delete('/:id/users/:userId', async (req, res, next) => {
     try {
         const squad = await Squad.findById(req.params.id).populate('currentPlayers');
