@@ -5,10 +5,15 @@
       <div v-if="clans">
 
         <div id="component" class="container-fluid py-3">
+          <h1 style="font-family: 'Press Start 2P'; color:#F7D063; margin-top:5%;">CREATE A CLAN</h1>
+          <!-- create clan button -->
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createClanModal">
+            Create Clan
+          </button>
+          <h1 style="font-family: 'Press Start 2P'; color:#F7D063; margin-top:2%; margin-bottom: 5%;">DISCOVER CLANS</h1>
           <div class="clans" v-for="clan in clans" :key="clan._id">
-
             <div class="row">
-              <div id="animated" style="font-family: 'Press Start 2P'; color: #F7D063; " class="col-6">
+              <div id="animated" class="col-6">
                 <h4 @click="redirect(clan.name)">{{ clan.name }}</h4>
               </div>
               <!--fix to avoid scrolling when its not necessary on a small screen-->
@@ -18,8 +23,8 @@
                     <button class="btn btn-primary" @click="joinClan(clan)">Join</button>
                   </div>
                   <div v-else>
-                    <button class="btn btn-danger" @click="leaveClan(clan)">Leave</button>
                     <button type="button" class="btn btn-danger" @click="deleteClan(clan)">Delete</button>
+                    <button class="btn btn-danger" @click="leaveClan(clan)">Leave</button>
                   </div>
                 </section>
               </div>
@@ -28,20 +33,15 @@
                   <button class="btn btn-primary" @click="joinClan(clan)">Join</button>
                 </div>
                 <div v-else>
-                  <button class="btn btn-danger" @click="leaveClan(clan)">Leave</button>
                   <button type="button" class="btn btn-danger" @click="deleteClan(clan)">Delete</button>
+                  <button class="btn btn-danger" @click="leaveClan(clan)">Leave</button>
                 </div>
-
               </section>
-
+              <hr>
             </div>
           </div>
         </div>
       </div>
-      <!-- create clan button -->
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createClanModal">
-        Create Clan
-      </button>
     </div>
     <div>
     </div>
@@ -140,7 +140,7 @@ export default {
         return
       }
 
-      if (this.clans.some(clan => clan.name ===formData.get('name'))) {
+      if (this.clans.some(clan => clan.name === formData.get('name'))) {
         alert('Name already in use!')
         return
       }
@@ -334,8 +334,13 @@ export default {
   margin: 5%;
 }
 
+h4 {
+  color: #9EB3C2;
+  transition: all .2s ease-in-out;
+}
+
 #box {
-  padding: 5%;
+  font-family: 'Martian Mono';
   min-height: auto;
 }
 
