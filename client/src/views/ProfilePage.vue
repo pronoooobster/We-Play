@@ -72,7 +72,6 @@
                     </div>
                     <!--Show this regardless of if the user is accessing its own profile page-->
                     <div class="clans">
-                        <h2 id="title">Clans</h2>
                         <ClanList :id="DBuser._id" />
                     </div>
                     <div class="friends">

@@ -1,9 +1,16 @@
 <template>
-    <div class="card-1" mx-auto v-if="usersClans">
-      <p class="clans" v-for="(clan, index) in usersClans" :key="index">
-        {{ clan.name }}
-      </p>
+  <div v-if="usersClans">
+    <h2 id="title" v-if="usersClans.length > 0">Clans:</h2>
+    <div class="card-1" mx-auto v-if="usersClans.length > 0">
+      <div id="animated" class="clans" v-for="(clan, index) in usersClans" :key="index" @click="redirect(clan.name)">
+        <p style="font-weight: bold; font-size: 120%; margin: 3%;">{{ clan.name }}</p>
+        <hr>
+      </div>
     </div>
+    <div v-else>
+      <p id="title"> No Clans</p>
+    </div>
+  </div>
 </template>
 
 
@@ -15,6 +22,12 @@ import { ref, onMounted } from 'vue';
 export default {
 
   props: ["id"],
+
+  methods: {
+    redirect(name) {
+      this.$router.replace(`/clans/${name}`).then(() => this.$router.go());
+    }
+  },
 
   setup(props) {
     const usersClans = ref(null);
@@ -58,10 +71,35 @@ export default {
   border-radius: 15px;
 }
 
+#animated {
+  /* hover controls */
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.6s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+}
+
+#animated:hover {
+  cursor: pointer;
+  -webkit-transform: scale(0.95);
+  transform: scale(0.95);
+}
+
 .clans {
   line-height: 4px;
   text-align: left;
   font-family: 'Martian Mono';
 }
 
+#title {
+  font-family: "Press Start 2P";
+  color: #f7d063;
+  margin-bottom: 5%;
+}
+
+h2 {
+  font-size: 140%;
+}
 </style>
