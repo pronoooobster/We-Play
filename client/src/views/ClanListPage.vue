@@ -114,7 +114,7 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 #box {
   padding: 5%;
   min-height: auto;
