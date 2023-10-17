@@ -141,6 +141,13 @@ export default {
 
 .navbar-brand {
     margin: 3%;
+    transition: all .2s ease-in-out; 
+}
+.navbar-brand:hover{
+    color: #FED665;
+    cursor: pointer;
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
 }
 
 .nav-link {
@@ -152,6 +159,13 @@ export default {
     font-style: normal;
     font-weight: 300;
     line-height: normal;
+    transition: all .2s ease-in-out; 
+}
+.nav-link:hover{
+    color: #FED665;
+    cursor: pointer;
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
 }
 
 .profile-img {

@@ -169,6 +169,7 @@ export default {
     aspect-ratio: 1 / 1;
     margin-top: 3px;
     margin: 2%;
+    border-radius: 30%;
 }
 
 .data {
@@ -183,7 +184,13 @@ export default {
 .clans {
     text-align: center;
 }
+#change-name-button:hover, #change-name-button:focus, #change-name-button:active{
+    cursor: pointer;
+    background-color: #6D4B9E;
+    color: white;
+    border-color: #6D4B9E;
 
+}
 h2 {
     font-size: 140%;
 }
@@ -196,10 +203,21 @@ h2 {
     color: #474747;
     background-color: #f7d063;
     border-color: #f7d063;
+    display: inline-block;
+    vertical-align: middle;
+    /*hover animation*/
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    overflow: hidden;
+    -webkit-transition-duration: 0.3s;
+     transition-duration: 0.3s;
+    -webkit-transition-property: color, background-color;
+    transition-property: color, background-color;
 }
 
 #box {
-    padding: 5%;
+    padding: 2%;
     min-height: auto;
 }
 
