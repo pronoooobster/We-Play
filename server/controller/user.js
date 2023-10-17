@@ -197,7 +197,6 @@ router.get('/:id/clans/:clanId', async (req, res, next) => {
         if (!clan) {
             return res.status(204).json({ 'message': 'Clan not found with a given id' });
         }
-        + '?_method=DELETE'
         res.send(clan);
     } catch (err) {
         return next(err);

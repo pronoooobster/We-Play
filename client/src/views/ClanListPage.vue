@@ -11,14 +11,80 @@
           </div>
           <div class="col-8">
             <h4>{{ clan.size }}</h4>
-            <h1>{{ clan.joined }}</h1>
           </div>
           <div class="col-2">
+            <section class="d-none d-lg-block">
+              <button v-if="!clan.joined" class="btn btn-primary" @click="joinClan(clan)">Join</button>
+              <button v-else class="btn btn-danger" @click="leaveClan(clan)">Leave</button>
+            </section>
+          </div>
+          <section class="d-lg-none">
             <button v-if="!clan.joined" class="btn btn-primary" @click="joinClan(clan)">Join</button>
             <button v-else class="btn btn-danger" @click="leaveClan(clan)">Leave</button>
+          </section>
+
+        </div>
+      </div>
+
+      <div>
+        <!-- create squad button -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createClanModal">
+          Create Clan
+        </button>
+      </div>
+
+      <div class="modal fade" id="createClanModal" tabindex="-1" aria-labelledby="createClanModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="createClanModalLabel">Create a Clan</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="clanCreateForm" @submit.prevent>
+                <!-- squad name field -->
+                <div class="mb-3">
+                  <label for="squadClan" class="form-label">Clan Name</label>
+                  <input name="name" type="text" class="form-control" id="clanName" autocomplete="off"
+                    placeholder="Enter clan name" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- game selection dropdown -->
+                <div class="mb-3">
+                  <label for="gameSelection" class="form-label">Game</label>
+                  <!-- datalist with the parsed games -->
+                  <input name="game" class="form-control" list="gamesDatalist" id="gameSelection"
+                    placeholder="Type to search..." required>
+                  <datalist aria-label="GameSelection" id="gamesDatalist" required>
+                    <!-- <option selected disabled value="">Select a game</option> -->
+                    <option v-for="game in games" :key="game.name">{{ game.name }}</option>
+                  </datalist>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- clan size field -->
+                <div class="mb-3">
+                  <label for="clanSize" class="form-label">Clan Size</label>
+                  <input name="size" type="number" class="form-control" id="clanSize" placeholder="Enter clan size"
+                    required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary" form="clanCreateForm" @click="createClan">Create</button>
+            </div>
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </template>
@@ -40,10 +106,75 @@ export default {
     return {
       //declare variable
       clans: null,
+      games: null
     }
   },
 
   methods: {
+
+    // create squad
+    createClan() {
+      // get the form
+      const form = document.getElementById('clanCreateForm');
+
+      // get the form data
+      const formData = new FormData(form);
+
+      // check if the entered game is in the games list
+      if (!this.games.some(game => game.name === formData.get('game'))) {
+        alert('Please select a game from the list!')
+        return
+      }
+
+      // convert formdata to json
+      let clanData = {};
+      formData.forEach((value, key) => {
+        clanData[key] = value;
+      });
+
+      // get the game id from the games list
+      let game = this.games.find(game => game.name === clanData.game)
+
+      // add the game id to the json object
+      clanData.game = game._id
+
+      console.log(clanData)
+
+      // post the form data to the server
+      axios.post('http://localhost:3000/api/clans', clanData)
+        .then(res => {
+          console.log(res)
+
+          // add the created clan to the user
+          axios.post('http://localhost:3000/api/users/' + this.user._id + '/clans', {
+            "_id": res.data._id
+          })
+            .then(res2 => {
+              console.log(res2)
+              // add a user to the squad
+              axios.post('http://localhost:3000/api/clans/' + res.data._id + '/users', {
+                "_id": this.user.uid
+              })
+                .then(res => {
+                  console.log(res)
+                  location.reload()
+
+                })
+                .catch(err => {
+                  console.log(err)
+                });
+            })
+            .catch(err => {
+              console.log(err)
+            });
+
+          // reload the page
+        })
+        .catch(err => {
+          console.log(err)
+        });
+    },
+
     joinClan(clan) {
       axios.post(`http://localhost:3000/api/users/` + this.user._id + '/clans', {
         "_id": clan._id
@@ -58,16 +189,16 @@ export default {
     },
 
     leaveClan(clan) {
-      axios.post(`http://localhost:3000/api/users/` + this.user._id + '/clans/' + clan.name + '?_method=DELETE' )
-      .then(response => {
-        console.log(response);
-        clan.joined = false;
-        location.reload();
-      })
+      axios.post(`http://localhost:3000/api/users/` + this.user._id + '/clans/' + clan.name + '?_method=DELETE')
+        .then(response => {
+          console.log(response);
+          clan.joined = false;
+          location.reload();
+        })
         .catch(error => {
           console.log(error);
         });
-    }
+    },
   },
 
   created() {
@@ -108,16 +239,32 @@ export default {
         .catch(error => {
           console.log(error);
         });
+
+      axios.get('http://localhost:3000/api/games')
+        .then(res => {
+          this.games = res.data
+        })
+        .catch(err => {
+          console.log(err)
+        });
     });
   }
 }
 
 </script>
 
-<style>
+<style scoped>
+
+#background {
+  height: 100vh;
+  max-width: 100vw;
+  overflow: auto;
+}
+
 #box {
   padding: 5%;
   min-height: auto;
+  max-width: 100vw;
 }
 
 .container-md {
