@@ -1,5 +1,5 @@
 <template>
-    <div class="page-content" style="background-color: #1F1F1F;">
+    <div class="page-content">
         <TopBar />
         <!-- split screen in two if the website is on desktop -->
         <section class="d-none d-lg-block">
@@ -23,15 +23,19 @@
                             </button>
                         </div>
                         <!-- in the squad - display members and leave button -->
-                        <div v-else class="center-section" id="squad-section" style="">
+                        <div v-else class="center-section" id="squad-section">
                             <p class="text-1" style="font-weight: bold; font-size: 110px; color:#F7D063; text-decoration:underline;">{{ squad.name }}</p>
                             <p class="text-1">Playing: {{ squadGame.name }}</p>
                             <p class="text-1">Squad Size: {{ squad.maxPlayers }}</p>
                             <p class="text-1">Squad Members:</p>
                             <!-- list of members -->
-                            <div v-for="member in squadMembers" :key="member._id">
-                                <p class="text-2">{{ member.name }}</p>
-                                <hr>
+                            <div class="members-list">
+                                <div v-for="member in squadMembers" :key="member._id">
+                                    <div>
+                                        <a class="text-2" :href="'/profile/' + member._id">{{ member.name }} </a>
+                                        <hr>
+                                    </div>
+                                </div>
                             </div>
                             <!-- leave squad button -->
                             <button type="button" class="btn btn-danger" @click="leaveSquad">
@@ -66,13 +70,13 @@
                         <p class="text-1">You are not currentry in a squad!</p>
                         <!-- create squad button -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#createSquadModal" style="background-color: #F7D063; border: 0px">
+                            data-bs-target="#createSquadModal">
                             Create Squad
                         </button>
                         <br>
                         <!-- join squad button -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#joinSquadModal" style="background-color: #F7D063; border: 0px">
+                            data-bs-target="#joinSquadModal">
                             Join Squad
                         </button>
                     </div>
@@ -84,7 +88,7 @@
                         <p class="text-1">Squad Members:</p>
                         <!-- list of members -->
                         <div v-for="member in squadMembers" :key="member._id">
-                            <p class="text-2">{{ member.name }}</p>
+                            <p class="text-2" :href="'/profile/' + member._id">{{ member.name }}</p>
                             <hr>
                         </div>
                         <!-- leave squad button -->
@@ -114,7 +118,7 @@
         <!-- create sqad modal -->
         <div class="modal fade" id="createSquadModal" tabindex="-1" aria-labelledby="createSquadModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                <div class="modal-content" style="background-color: #1F1F1F;">
+                <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="createSquadModalLabel">Create a squad</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -123,7 +127,7 @@
                         <form id="squadCreateForm" @submit.prevent>
                             <!-- squad name field -->
                             <div class="mb-3">
-                                <label for="squadName" class="form-label text-2">Squad Name</label>
+                                <label for="squadName" class="form-label">Squad Name</label>
                                 <input name="name" type="text" class="form-control" id="squadName" autocomplete="off" placeholder="Enter squad name" required>
                                 <div class="valid-feedback">
                                     Looks good!
@@ -131,7 +135,7 @@
                             </div>
                             <!-- game selection dropdown -->
                             <div class="mb-3">
-                                <label for="gameSelection" class="form-label text-2">Game</label>
+                                <label for="gameSelection" class="form-label">Game</label>
                                 <!-- datalist with the parsed games -->
                                 <input name="game" class="form-control" list="gamesDatalist" id="gameSelection" placeholder="Type to search..." required>
                                 <datalist aria-label="GameSelection" id="gamesDatalist" required>
@@ -144,7 +148,7 @@
                             </div>
                             <!-- squad size field -->
                             <div class="mb-3">
-                                <label for="squadSize" class="form-label text-2">Squad Size</label>
+                                <label for="squadSize" class="form-label">Squad Size</label>
                                 <input name="maxPlayers" type="number" class="form-control" id="squadSize" placeholder="Enter squad size between 2 and 7" min="2" max="7" required>
                                 <div class="valid-feedback">
                                     Looks good!
@@ -157,8 +161,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary" form="squadCreateForm" @click="createSquad"
-                        style="background-color: #F7D063; border: 0px;">Create</button>
+                        <button type="submit" class="btn btn-primary" form="squadCreateForm" @click="createSquad">Create</button>
                     </div>
                 </div>
             </div>
@@ -167,7 +170,7 @@
         <!-- join squad modal -->
         <div class="modal fade" id="joinSquadModal" tabindex="-1" aria-labelledby="joinSquadModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                <div class="modal-content" style="background-color: #1F1F1F;">
+                <div class="modal-content">
                     <div class="modal-header">
                             <h5 class="modal-title" id="createSquadModalLabel">Join a squad</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -180,8 +183,7 @@
                             <!-- game name -->
                             <p class="text-2">Game: {{ availableSquad.game.name }}</p>
                             <!-- join button -->
-                            <button type="button" class="btn btn-primary" @click="joinSquad(availableSquad._id)" 
-                            style="background-color: #F7D063; border: 0px">
+                            <button type="button" class="btn btn-primary" @click="joinSquad(availableSquad._id)">
                                 Join
                             </button>
                         </div>
@@ -447,17 +449,18 @@ export default {
     text-align: center;
 }
 .carousel-first {
-    background-color: #1F1F1F;
+    background-color: #F5F5F5;
 }
 
 .carousel-item {
     padding-top: 40%;
+
     height: 100vh;
     width: 100vw;
 }
 
 .carousel-second {
-    background-color: #474747;
+    background-color: #9f9cff;
 }
 
 .form-label {
@@ -478,15 +481,23 @@ li {
 }
 
 .text-2 {
+    text-decoration: none;
     font-size: 20px;
     font-family: 'Martian Mono'; 
     color: #F7D063;
+    transition: font-size .2s ease-in-out;
+}
+
+.text-2:hover {
+    text-decoration: none;
+    font-size: 22px;
+    font-family: 'Martian Mono'; 
+    color: #FED665;
 }
 
 .modal-title {
     font-size: 20px;
     font-family: 'Martian Mono';
-    color : #9EB3C2;
 }
 
 .btn-primary, .btn-danger {
@@ -518,4 +529,22 @@ li {
 .center-section {
     margin: auto;
 }
+
+.members-list {
+    height: 120px;
+    margin-bottom: 15px ;
+    overflow-y: auto;
+}
+
+.members-list::-webkit-scrollbar {
+    width: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.members-list::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgb(255, 255, 255); 
+}
+
 </style>
