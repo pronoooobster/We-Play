@@ -28,8 +28,9 @@ export default {
 
     methods: {
         redirect(_uid) {
-            this.$router.push(`/profile/${_uid}`);
+            this.$router.replace(`/profile/${_uid}`).then(() => this.$router.go());
         }
+
     },
 
     setup(props) {
@@ -122,7 +123,7 @@ p {
 
 .scrollable::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,1); 
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 1);
 }
 
 
@@ -134,5 +135,4 @@ p {
 h2 {
     font-size: 140%;
 }
-
 </style>
