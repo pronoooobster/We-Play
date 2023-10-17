@@ -2,13 +2,18 @@ var express = require('express');
 var router = express.Router();
 var Game = require('../models/game');
 
+/**
+ * post a new game
+ */
 router.post('/', function (req, res, next) {
-    // save the new game using promises
     Game.create(req.body).then(function (game) {
         res.status(201).json(game);
     }).catch(next);
 });
 
+/**
+ * get all the games
+ */
 router.get('/', async (req, res, next) => {
     const match = {};
     if(req.query.teamSize) {
@@ -27,12 +32,14 @@ router.get('/', async (req, res, next) => {
     }
 });
 
-//delete the entire collection
+/**
+ * delete the entire games collection
+ */
 router.delete('/', async (req, res, next) => {
     try {
         const games = await Game.deleteMany({});
         if (!games) {
-            return res.status(404).json({ 'message': 'Games not found' });
+            return res.status(204).json({ 'message': 'No games to delete' });
         }
 
         res.status(200).json(games);
@@ -41,7 +48,9 @@ router.delete('/', async (req, res, next) => {
     }
 });
 
-
+/**
+ * get a specific game by name
+ */
 router.get('/:id', async (req, res, next) => {
     try {
         const game = await Game.findOne({ name: req.params.id });
@@ -65,7 +74,9 @@ router.get('/:id', async (req, res, next) => {
     }
 });
 
-// get the game using the id
+/**
+ * get a specific game by id
+ */
 router.get('/v2/:id', async (req, res, next) => {
     try {
         const game = await Game.findById(req.params.id);
@@ -89,7 +100,9 @@ router.get('/v2/:id', async (req, res, next) => {
     }
 });
 
-
+/**
+ * delete a specific game by name
+ */
 router.delete('/:id', async (req, res, next) => {
     try {
         const game = await Game.findOneAndDelete({ name: req.params.id });
@@ -103,6 +116,9 @@ router.delete('/:id', async (req, res, next) => {
     }
 });
 
+/**
+ * put a specific game by name
+ */
 router.put('/:id', async (req, res, next) => {
     try {
         const game = await Game.findOneAndUpdate({ name: req.params.id }, req.body);
@@ -116,8 +132,10 @@ router.put('/:id', async (req, res, next) => {
     }
 });
 
+/**
+ * patch a specific game by name
+ */
 router.patch('/:id', async (req, res, next) => {
-    // be able to change the team size or description
     try {
         const game = await Game.findOne({ name: req.params.id });
         if (!game) {
