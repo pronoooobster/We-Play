@@ -197,26 +197,6 @@ router.get('/:id/users/:userId', async (req, res, next) => {
     }
 });
 
-// post for a specific user
-router.post('/:id/users/:userId', async (req, res, next) => {
-    try {
-        const squad = await Squad.findById(req.params.id);
-        if (!squad) {
-            return res.status(404).json({ 'message': 'Squad not found with a given id' });
-        }
-
-        const user = squad.currentPlayers.find(user => user.userName === req.params.userId);
-        if (!user) {
-            return res.status(404).json({ 'message': 'User not found with a given id' });
-        }
-
-        squad.currentPlayers.push(user);
-        squad.save();
-    } catch (err) {
-        return next(err);
-    }
-});
-
 router.delete('/:id/users/:userId', async (req, res, next) => {
     try {
         const squad = await Squad.findById(req.params.id).populate('currentPlayers');
