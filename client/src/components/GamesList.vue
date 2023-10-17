@@ -62,7 +62,7 @@ export default {
                 //loop through the array to find the games in the RAWG api by using a search querry with the name of the game   
                 for (const gameName of this.gamesFromMongo) {
                     const nameForFinding = gameName.name;
-                    const response = await axios.get(`https://api.rawg.io/api/games?key=4179ef8b1acb4bae99d6f2675731f8a3&search=${nameForFinding}`); //get the game from the API
+                    const response = await axios.get(`https://api.rawg.io/api/games?key=802d62cc700145cea05caac57113b1fa&search=${nameForFinding}`); //get the game from the API
                     const data = response.data.results[0]; //get the first result
                     //add the team size field
                     data.teamSize = gameName.teamSize;
