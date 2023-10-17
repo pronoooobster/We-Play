@@ -12,80 +12,89 @@
           <div class="col-8">
             <h4>{{ clan.size }}</h4>
           </div>
+          <!--fix to avoid scrolling when its not necessary on a small screen-->
           <div class="col-2">
             <section class="d-none d-lg-block">
-              <button v-if="!clan.joined" class="btn btn-primary" @click="joinClan(clan)">Join</button>
-              <button v-else class="btn btn-danger" @click="leaveClan(clan)">Leave</button>
+              <div v-if="!clan.joined">
+                <button class="btn btn-primary" @click="joinClan(clan)">Join</button>
+              </div>
+              <div v-else>
+                <button class="btn btn-danger" @click="leaveClan(clan)">Leave</button>
+                <button type="button" class="btn btn-danger" @click="deleteClan(clan)">Delete</button>
+              </div>
             </section>
           </div>
           <section class="d-lg-none">
-            <button v-if="!clan.joined" class="btn btn-primary" @click="joinClan(clan)">Join</button>
-            <button v-else class="btn btn-danger" @click="leaveClan(clan)">Leave</button>
+            <div v-if="!clan.joined">
+              <button class="btn btn-primary" @click="joinClan(clan)">Join</button>
+            </div>
+            <div v-else>
+              <button class="btn btn-danger" @click="leaveClan(clan)">Leave</button>
+              <button type="button" class="btn btn-danger" @click="deleteClan(clan)">Delete</button>
+            </div>
+
           </section>
 
         </div>
       </div>
-
-      <div>
-        <!-- create squad button -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createClanModal">
-          Create Clan
-        </button>
-      </div>
-
-      <div class="modal fade" id="createClanModal" tabindex="-1" aria-labelledby="createClanModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="createClanModalLabel">Create a Clan</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <form id="clanCreateForm" @submit.prevent>
-                <!-- squad name field -->
-                <div class="mb-3">
-                  <label for="squadClan" class="form-label">Clan Name</label>
-                  <input name="name" type="text" class="form-control" id="clanName" autocomplete="off"
-                    placeholder="Enter clan name" required>
-                  <div class="valid-feedback">
-                    Looks good!
-                  </div>
+    </div>
+    <div>
+      <!-- create clan button -->
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createClanModal">
+        Create Clan
+      </button>
+    </div>
+    <div class="modal fade" id="createClanModal" tabindex="-1" aria-labelledby="createClanModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="createClanModalLabel">Create a Clan</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="clanCreateForm" @submit.prevent>
+              <!-- clan name field -->
+              <div class="mb-3">
+                <label for="squadClan" class="form-label">Clan Name</label>
+                <input name="name" type="text" class="form-control" id="clanName" autocomplete="off"
+                  placeholder="Enter clan name" required>
+                <div class="valid-feedback">
+                  Looks good!
                 </div>
-                <!-- game selection dropdown -->
-                <div class="mb-3">
-                  <label for="gameSelection" class="form-label">Game</label>
-                  <!-- datalist with the parsed games -->
-                  <input name="game" class="form-control" list="gamesDatalist" id="gameSelection"
-                    placeholder="Type to search..." required>
-                  <datalist aria-label="GameSelection" id="gamesDatalist" required>
-                    <!-- <option selected disabled value="">Select a game</option> -->
-                    <option v-for="game in games" :key="game.name">{{ game.name }}</option>
-                  </datalist>
-                  <div class="valid-feedback">
-                    Looks good!
-                  </div>
+              </div>
+              <!-- game selection dropdown -->
+              <div class="mb-3">
+                <label for="gameSelection" class="form-label">Game</label>
+                <!-- datalist with the parsed games -->
+                <input name="game" class="form-control" list="gamesDatalist" id="gameSelection"
+                  placeholder="Type to search..." required>
+                <datalist aria-label="GameSelection" id="gamesDatalist" required>
+                  <!-- <option selected disabled value="">Select a game</option> -->
+                  <option v-for="game in games" :key="game.name">{{ game.name }}</option>
+                </datalist>
+                <div class="valid-feedback">
+                  Looks good!
                 </div>
-                <!-- clan size field -->
-                <div class="mb-3">
-                  <label for="clanSize" class="form-label">Clan Size</label>
-                  <input name="size" type="number" class="form-control" id="clanSize" placeholder="Enter clan size"
-                    required>
-                  <div class="valid-feedback">
-                    Looks good!
-                  </div>
+              </div>
+              <!-- clan size field -->
+              <div class="mb-3">
+                <label for="clanSize" class="form-label">Clan Size</label>
+                <input name="size" type="number" class="form-control" id="clanSize" placeholder="Enter clan size"
+                  required>
+                <div class="valid-feedback">
+                  Looks good!
                 </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-              <button type="submit" class="btn btn-primary" form="clanCreateForm" @click="createClan">Create</button>
-            </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary" form="clanCreateForm" @click="createClan">Create</button>
           </div>
         </div>
       </div>
-
     </div>
+
   </div>
 </template>
 
@@ -141,7 +150,7 @@ export default {
       console.log(clanData)
 
       // post the form data to the server
-      axios.post('http://localhost:3000/api/clans', clanData)
+      axios.post('http://localhost:3000/api/clans/', clanData)
         .then(res => {
           console.log(res)
 
@@ -151,9 +160,9 @@ export default {
           })
             .then(res2 => {
               console.log(res2)
-              // add a user to the squad
-              axios.post('http://localhost:3000/api/clans/' + res.data._id + '/users', {
-                "_id": this.user.uid
+              // add a user to the clan
+              axios.post('http://localhost:3000/api/clans/' + res.data.name + '/users', {
+                "_id": this.user._id
               })
                 .then(res => {
                   console.log(res)
@@ -175,9 +184,27 @@ export default {
         });
     },
 
+    deleteClan(clan) {
+      axios.delete(`http://localhost:3000/api/clans/` + clan.name).then(response => {
+        console.log(response);
+        location.reload();
+      })
+    },
+
     joinClan(clan) {
       axios.post(`http://localhost:3000/api/users/` + this.user._id + '/clans', {
         "_id": clan._id
+      }).then(response => {
+        console.log(response);
+        clan.joined = true;
+        location.reload();
+      })
+        .catch(error => {
+          console.log(error);
+        });
+
+      axios.post(`http://localhost:3000/api/clans/` + clan.name + `/users/`, {
+        "_id": this.user._id
       }).then(response => {
         console.log(response);
         clan.joined = true;
@@ -190,6 +217,16 @@ export default {
 
     leaveClan(clan) {
       axios.post(`http://localhost:3000/api/users/` + this.user._id + '/clans/' + clan.name + '?_method=DELETE')
+        .then(response => {
+          console.log(response);
+          clan.joined = false;
+          location.reload();
+        })
+        .catch(error => {
+          console.log(error);
+        });
+
+      axios.post(`http://localhost:3000/api/clans/` + clan.name + '/users/' + this.user._id + '?_method=DELETE')
         .then(response => {
           console.log(response);
           clan.joined = false;
@@ -254,7 +291,6 @@ export default {
 </script>
 
 <style scoped>
-
 #background {
   height: 100vh;
   max-width: 100vw;
