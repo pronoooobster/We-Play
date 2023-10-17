@@ -140,6 +140,11 @@ export default {
         return
       }
 
+      if (this.clans.some(clan => clan.name ===formData.get('name'))) {
+        alert('Name already in use!')
+        return
+      }
+
       // convert formdata to json
       let clanData = {};
       formData.forEach((value, key) => {
