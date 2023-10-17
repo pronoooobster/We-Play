@@ -8,7 +8,7 @@ const SquadSchema = new Schema({
     },
     maxPlayers: {
         type: Number,
-        min: [1, 'Squad size must be at least 1'],
+        min: [2, 'Squad size must be at least 2'],
         required: true
     },
     currentPlayers: {
